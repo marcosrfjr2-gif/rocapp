@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2E7D32">
+    <title>Roçapp</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="icons/icon-512.svg">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        window.onerror = function (msg, url, line) {
+            alert('ERRO: ' + msg + '\nLinha: ' + line);
+        };
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="logo-area">
+                <h1>Roçapp <small style="font-size:0.5em; opacity:0.7;">v3.0</small></h1>
+                <p>Seu companheiro na lida</p>
+            </div>
+            <div class="header-info">
+                <div class="date-display" id="dateDisplay"></div>
+                <div class="moon-nav">
+                    <button class="nav-arrow" id="prevMoonBtn">&lt;</button>
+                    <div class="moon-phase" id="moonPhaseDisplay"></div>
+                    <button class="nav-arrow" id="nextMoonBtn">&gt;</button>
+                </div>
+                <div class="moon-tip" id="moonTipDisplay">
+                    <span id="moonTipText"></span>
+                    <button id="learnMoreBtn" class="learn-more-link">(saber mais)</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="dashboard">
+                <div id="analysisWarning" class="warning-banner" style="display: none;">
+                    ⚠️ <strong>Atenção:</strong> Você ainda não tem uma Análise de Solo salva.
+                    <br><small>Os guias de cultivo usarão valores genéricos. Faça uma análise para precisão
+                        máxima!</small>
+                </div>
+
+                <!-- Quick Actions Grid -->
+                <div class="quick-actions-grid"
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                    <div class="card action-card" id="btnSoilAnalysis"
+                        style="background: linear-gradient(135deg, #795548 0%, #5D4037 100%); color: white; border:none; cursor: pointer;">
+                        <span style="font-size: 1.5rem; display:block; margin-bottom: 5px;">🧬</span>
+                        <span style="font-weight: 500;">Análise de Solo</span>
+                    </div>
+                    <div class="card action-card" style="opacity: 0.5; background: #eee; color: #888;">
+                        <span style="font-size: 1.5rem; display:block; margin-bottom: 5px;">🌦️</span>
+                        <span style="font-weight: 500;">Clima (Em breve)</span>
+                    </div>
+                </div>
+
+                <div class="card summary-card">
+                    <h3>Hoje</h3>
+                    <div class="progress-ring">
+                        <span id="taskCount">0 tarefas</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Tabs (Horizontal Scroll) -->
+            <div class="tabs-container">
+                <div class="pills-scroller" id="projectTabs">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <section id="tasksView" class="view-section active">
+                <div class="section-header">
+                    <h2 id="sectionTitle">Tarefas de Hoje</h2>
+                </div>
+
+                <div id="todoList" class="task-list">
+                    <!-- Tasks will be injected here -->
+                </div>
+            </section>
+        </main>
+
+        <button id="addBtn" class="fab" aria-label="Adicionar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </button>
+
+        <!-- Modal for adding task -->
+        <div id="taskModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Nova Tarefa</h2>
+                    <button id="closeModal" class="close-btn">&times;</button>
+                </div>
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label for="taskTitle">O que precisa ser feito?</label>
+                        <input type="text" id="taskTitle" placeholder="Ex: Consertar a cerca" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDesc">Detalhes (opcional)</label>
+                        <textarea id="taskDesc" rows="3"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="taskFreq">Repetição</label>
+                            <select id="taskFreq">
+                                <option value="daily">Todo dia</option>
+                                <option value="weekly">Toda semana</option>
+                                <option value="monthly">Todo mês</option>
+                                <option value="quarterly">A cada 3 meses</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskPriority">Importância</label>
+                            <select id="taskPriority">
+                                <option value="normal">Normal</option>
+                                <option value="alta">Alta</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden" id="weekDaysGroup">
+                        <label>Dias da Semana</label>
+                        <div class="week-days-selector">
+                            <input type="checkbox" id="wd0" value="0"><label for="wd0">D</label>
+                            <input type="checkbox" id="wd1" value="1"><label for="wd1">S</label>
+                            <input type="checkbox" id="wd2" value="2"><label for="wd2">T</label>
+                            <input type="checkbox" id="wd3" value="3"><label for="wd3">Q</label>
+                            <input type="checkbox" id="wd4" value="4"><label for="wd4">Q</label>
+                            <input type="checkbox" id="wd5" value="5"><label for="wd5">S</label>
+                            <input type="checkbox" id="wd6" value="6"><label for="wd6">S</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskProject">Projeto</label>
+                        <select id="taskProject" required>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal for adding Project -->
+        <div id="projectModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Novo Projeto</h2>
+                    <button id="closeProjectModal" class="close-btn">&times;</button>
+                </div>
+                <form id="projectForm">
+                    <!-- Name input removed, name is auto-generated -->
+                    <div class="form-row">
+                        <div class="form-group" style="flex:2;">
+                            <label for="projCulture">O que vamos produzir?</label>
+                            <select id="projCulture" required>
+                                <option value="" disabled selected>Selecione a Atividade...</option>
+
+                                <optgroup label="🍃 Folhosas (Nitrogênio)">
+                                    <option value="alface">Alface</option>
+                                    <option value="couve">Couve</option>
+                                    <option value="rucula">Rúcula</option>
+                                    <option value="cheiro_verde">Cheiro-Verde</option>
+                                </optgroup>
+
+                                <optgroup label="🌿 Ervas e Temperos">
+                                    <option value="manjericao">Manjericão</option>
+                                    <option value="alecrim">Alecrim</option>
+                                    <option value="hortela">Hortelã</option>
+                                </optgroup>
+
+                                <optgroup label="🍅 Frutos e Legumes">
+                                    <option value="tomate">Tomate</option>
+                                    <option value="pimentao">Pimentão</option>
+                                    <option value="pepino">Pepino</option>
+                                    <option value="quiabo">Quiabo</option>
+                                    <option value="abobora">Abóbora</option>
+                                    <option value="morango">Morango</option>
+                                    <option value="melancia">Melancia</option>
+                                </optgroup>
+
+                                <optgroup label="🥕 Raízes e Tubérculos">
+                                    <option value="cenoura">Cenoura</option>
+                                    <option value="beterraba">Beterraba</option>
+                                    <option value="mandioca">Mandioca</option>
+                                    <option value="batata_doce">Batata Doce</option>
+                                </optgroup>
+
+                                <optgroup label="🌽 Grãos e Cereais">
+                                    <option value="milho">Milho</option>
+                                </optgroup>
+
+                                <optgroup label="🫘 Leguminosas">
+                                    <option value="feijao">Feijão</option>
+                                    <option value="vagem">Vagem</option>
+                                </optgroup>
+
+                                <optgroup label="🌳 Fruticultura (Perenes)">
+                                    <option value="pomar">Pomar Misto (Citros/Outras)</option>
+                                    <option value="banana">Banana</option>
+                                    <option value="maracuja">Maracujá</option>
+                                    <option value="abacaxi">Abacaxi</option>
+                                    <option value="cafe">Café</option>
+                                    <option value="cana">Cana-de-Açúcar</option>
+                                </optgroup>
+
+                                <optgroup label="🐔 Aves">
+                                    <option value="galinhas_poedeiras">Galinhas Poedeiras</option>
+                                    <option value="frangos_corte">Frangos de Corte</option>
+                                    <option value="codornas">Codornas</option>
+                                    <option value="patos">Patos/Marrecos</option>
+                                </optgroup>
+
+                                <optgroup label="🐂 Pecuária / Criações">
+                                    <option value="gado_leite">Gado de Leite</option>
+                                    <option value="gado_corte">Gado de Corte</option>
+                                    <option value="suinos">Suínos (Porcos)</option>
+                                    <option value="ovinos">Ovinos (Carneiros/Ovelhas)</option>
+                                    <option value="caprinos">Caprinos (Cabras)</option>
+                                </optgroup>
+
+                                <optgroup label="🐟 Outras Criações">
+                                    <option value="tilapias">Piscicultura (Tilápias)</option>
+                                    <option value="abelhas">Apicultura (Abelhas)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label for="projStartDate">Início</label>
+                            <input type="date" id="projStartDate">
+                        </div>
+                    </div>
+                    <!-- Emoji Selection Removed (Auto) -->
+                    <button type="submit" class="btn-primary" style="margin-top:20px;">Criar Projeto</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal for Moon Details -->
+        <div id="moonModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="moonModalTitle">Fase da Lua</h2>
+                    <button id="closeMoonModal" class="close-btn">&times;</button>
+                </div>
+                <div id="moonModalContent" class="moon-details-content">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Guides (How-to) -->
+        <div id="guideModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="guideModalTitle">Como Fazer</h2>
+                    <button id="closeGuideModal" class="close-btn">&times;</button>
+                </div>
+                <div id="guideModalContent" class="moon-details-content">
+                    <!-- Guide text -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Soil Analysis Input Modal -->
+        <div id="soilModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Análise de Solo (IA)</h2>
+                    <button id="closeSoilModal" class="close-btn">&times;</button>
+                </div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Insira os dados da sua análise de
+                    laboratório e nossa Inteligência (simulada) dará recomendações.</p>
+                <form id="soilForm">
+                    <div class="form-group">
+                        <label for="soilPh">pH (H₂O)</label>
+                        <input type="number" step="0.1" id="soilPh" placeholder="Ex: 5.5" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="soilV">Sat. Bases (V%)</label>
+                            <input type="number" id="soilV" placeholder="Ex: 40">
+                        </div>
+                        <div class="form-group">
+                            <label for="soilCTC">CTC (T)</label>
+                            <input type="number" step="0.1" id="soilCTC" placeholder="cmolc/dm³">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="soilP">Fósforo (mg/dm³)</label>
+                            <input type="number" step="0.1" id="soilP" placeholder="Ex: 8">
+                        </div>
+                        <div class="form-group">
+                            <label for="soilK">Potássio (cmolc)</label>
+                            <input type="number" step="0.01" id="soilK" placeholder="Ex: 0.2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="soilClay">Argila (%)</label>
+                        <input type="number" id="soilClay" placeholder="Ex: 20">
+                    </div>
+                    <div class="form-group">
+                        <label for="soilCulture">Cultura Desejada</label>
+                        <select id="soilCulture">
+                            <option value="milho">Milho</option>
+                            <option value="feijao">Feijão</option>
+                            <option value="hortalicas">Hortaliças (Geral)</option>
+                            <option value="cafe">Café</option>
+                            <option value="pastagem">Pastagem</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary" id="btnAnalyze">
+                        <span id="analyzeBtnText">✨ Analisar com IA</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Soil Result Modal -->
+        <div id="soilResultModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 style="color: #2E7D32;">🌱 Diagnóstico</h2>
+                    <button id="closeSoilResultModal" class="close-btn">&times;</button>
+                </div>
+                <div id="soilResultContent" class="moon-details-content">
+                    <!-- Dynamic Result -->
+                </div>
+                <button class="btn-primary" style="margin-top:20px; background:#444;"
+                    onclick="document.getElementById('soilResultModal').classList.remove('visible')">Fechar</button>
+            </div>
+        </div>
+
+    </div>
+    <script src="app.v3.js?v=3.1"></script>
+    <script>
+        // Force Unregister to be safe
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                for (let registration of registrations) {
+                    registration.unregister();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

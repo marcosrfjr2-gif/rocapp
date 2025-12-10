@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2E7D32">
+    <title>Roçapp</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="icons/icon-512.svg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        window.onerror = function (msg, url, line) {
+            alert('Erro: ' + msg + '\nLinha: ' + line);
+            return false;
+        };
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="logo-area">
+                <h1>Roçapp</h1>
+                <p>Seu companheiro na lida</p>
+            </div>
+            <div class="header-info">
+                <div class="date-display" id="dateDisplay"></div>
+                <div class="moon-nav">
+                    <button class="nav-arrow" id="prevMoonBtn">&lt;</button>
+                    <div class="moon-phase" id="moonPhaseDisplay"></div>
+                    <button class="nav-arrow" id="nextMoonBtn">&gt;</button>
+                </div>
+                <div class="moon-tip" id="moonTipDisplay"></div>
+            </div>
+        </header>
+
+        <main>
+            <section class="dashboard">
+                <div class="card summary-card">
+                    <h3>Hoje</h3>
+                    <div class="progress-ring">
+                        <!-- Placeholder for progress ring -->
+                        <span id="taskCount">0 tarefas</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Tabs (Horizontal Scroll) -->
+            <div class="tabs-container">
+                <div class="pills-scroller" id="projectTabs">
+                    <!-- Injected via JS: [Hoje] [Projeto A] [Projeto B] [+] -->
+                </div>
+            </div>
+
+            <section id="tasksView" class="view-section active">
+                <div class="section-header">
+                    <h2 id="sectionTitle">Tarefas de Hoje</h2>
+                </div>
+
+                <div id="todoList" class="task-list">
+                    <!-- Tasks will be injected here -->
+                </div>
+            </section>
+
+            <section id="routinesView" class="view-section hidden">
+                <div class="section-header">
+                    <h2>Rotinas Ativas</h2>
+                </div>
+                <div id="routinesList" class="task-list">
+                    <!-- Routines will be injected here -->
+                    <div class="empty-state">
+                        <p>Nenhuma rotina configurada.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <button id="addBtn" class="fab" aria-label="Adicionar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </button>
+
+        <!-- Modal for adding task -->
+        <div id="taskModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Nova Tarefa</h2>
+                    <button id="closeModal" class="close-btn">&times;</button>
+                </div>
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label for="taskTitle">O que precisa ser feito?</label>
+                        <input type="text" id="taskTitle" placeholder="Ex: Consertar a cerca" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDesc">Detalhes (opcional)</label>
+                        <textarea id="taskDesc" rows="3"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="taskDate">Para quando?</label>
+                            <input type="date" id="taskDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="taskPriority">Importância</label>
+                            <select id="taskPriority">
+                                <option value="normal">Normal</option>
+                                <option value="alta">Alta</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskFreq">Repetição (Rotina)</label>
+                        <select id="taskFreq">
+                            <option value="none">Apenas uma vez</option>
+                            <option value="daily">Todo dia</option>
+                            <option value="weekly">Toda semana</option>
+                            <option value="monthly">Todo mês</option>
+                            <option value="quarterly">A cada 3 meses</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group hidden" id="weekDaysGroup">
+                        <label>Dias da Semana</label>
+                        <div class="week-days-selector">
+                            <input type="checkbox" id="wd0" value="0"><label for="wd0">D</label>
+                            <input type="checkbox" id="wd1" value="1"><label for="wd1">S</label>
+                            <input type="checkbox" id="wd2" value="2"><label for="wd2">T</label>
+                            <input type="checkbox" id="wd3" value="3"><label for="wd3">Q</label>
+                            <input type="checkbox" id="wd4" value="4"><label for="wd4">Q</label>
+                            <input type="checkbox" id="wd5" value="5"><label for="wd5">S</label>
+                            <input type="checkbox" id="wd6" value="6"><label for="wd6">S</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskProject">Projeto</label>
+                        <select id="taskProject" required>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal for adding Project -->
+        <div id="projectModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Novo Projeto</h2>
+                    <button id="closeProjectModal" class="close-btn">&times;</button>
+                </div>
+                <form id="projectForm">
+                    <div class="form-group">
+                        <label for="projName">Nome do Projeto</label>
+                        <input type="text" id="projName" placeholder="Ex: Galinhas" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="projEmoji">Ícone (Emoji)</label>
+                        <div class="emoji-grid" id="emojiGrid">
+                            <span class="emoji-option selected">🌱</span>
+                            <span class="emoji-option">🐓</span>
+                            <span class="emoji-option">🐄</span>
+                            <span class="emoji-option">🐖</span>
+                            <span class="emoji-option">🚜</span>
+                            <span class="emoji-option">🏡</span>
+                            <span class="emoji-option">🛠️</span>
+                            <span class="emoji-option">🌽</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Criar Projeto</button>
+                </form>
+
+                <!-- Modal for Moon Details -->
+                <div id="moonModal" class="modal hidden">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="moonModalTitle">Fase da Lua</h2>
+                            <button id="closeMoonModal" class="close-btn">&times;</button>
+                        </div>
+                        <div id="moonModalContent" class="moon-details-content">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal for Guides (How-to) -->
+                <div id="guideModal" class="modal hidden">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="guideModalTitle">Como Fazer</h2>
+                            <button id="closeGuideModal" class="close-btn">&times;</button>
+                        </div>
+                        <div id="guideModalContent" class="moon-details-content">
+                            <!-- Guide text -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Debug Console -->
+            <div id="debugConsole"
+                style="position:fixed; bottom:0; left:0; right:0; background:rgba(0,0,0,0.8); color:#0f0; font-family:monospace; padding:10px; font-size:12px; height:100px; overflow-y:auto; z-index:9999; display:block;">
+                Debug Log Iniciado...<br>
+            </div>
+
+            <script src="app.js"></script>
+            <script>
+                // EMERGENCY: Unregister all Service Workers to clear cache issues
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                        for (let registration of registrations) {
+                            registration.unregister().then(function () {
+                                console.log('Service Worker removido para limpeza.');
+                            });
+                        }
+                    });
+                }
+
+                // Visual Logger Helper
+                window.logToScreen = function (msg) {
+                    const c = document.getElementById('debugConsole');
+                    if (c) {
+                        const line = document.createElement('div');
+                        line.textContent = '>' + msg;
+                        c.appendChild(line);
+                        c.scrollTop = c.scrollHeight;
+                    }
+                    console.log(msg);
+                }
+            </script>
+</body>
+
+</html>
