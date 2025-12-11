@@ -54,9 +54,10 @@
                         <span style="font-size: 1.5rem; display:block; margin-bottom: 5px;">🧬</span>
                         <span style="font-weight: 500;">Análise de Solo</span>
                     </div>
-                    <div class="card action-card" style="opacity: 0.5; background: #eee; color: #888;">
+                    <div class="card action-card" id="btnWeather"
+                        style="background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%); color: white; border:none; cursor: pointer;">
                         <span style="font-size: 1.5rem; display:block; margin-bottom: 5px;">🌦️</span>
-                        <span style="font-weight: 500;">Clima (Em breve)</span>
+                        <span style="font-weight: 500;" id="weatherBtnText">Clima</span>
                     </div>
                 </div>
 
@@ -209,6 +210,7 @@
                                 <optgroup label="🌳 Fruticultura (Perenes)">
                                     <option value="pomar">Pomar Misto (Citros/Outras)</option>
                                     <option value="banana">Banana</option>
+                                    <option value="coqueiro">Coqueiro</option>
                                     <option value="maracuja">Maracujá</option>
                                     <option value="abacaxi">Abacaxi</option>
                                     <option value="cafe">Café</option>
@@ -237,8 +239,9 @@
                             </select>
                         </div>
                         <div class="form-group" style="flex:1;">
-                            <label for="projStartDate">Início</label>
-                            <input type="date" id="projStartDate">
+                            <label for="projStartDate">Data de Início do Manejo do Solo</label>
+                            <input type="date" id="projStartDate" required>
+
                         </div>
                     </div>
                     <!-- Emoji Selection Removed (Auto) -->
@@ -340,6 +343,73 @@
                 </div>
                 <button class="btn-primary" style="margin-top:20px; background:#444;"
                     onclick="document.getElementById('soilResultModal').classList.remove('visible')">Fechar</button>
+            </div>
+        </div>
+
+        <!-- Weather Modal -->
+        <div id="weatherModal" class="modal">
+            <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-header">
+                    <h2>🌦️ Previsão do Tempo</h2>
+                    <button id="closeWeatherModal" class="close-btn">&times;</button>
+                </div>
+                <div id="weatherModalContent" style="padding: 20px;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div id="weatherModalTemp" style="font-size: 3rem; font-weight: bold; color: #1976D2;">--°C
+                        </div>
+                        <div id="weatherModalDesc" style="font-size: 1.2rem; color: #666; margin: 10px 0;">Carregando...
+                        </div>
+                        <div id="weatherModalLocation" style="font-size: 0.9rem; color: #999;">--</div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                        <div class="weather-info-card">
+                            <div style="font-size: 0.8rem; color: #999;">💧 Umidade</div>
+                            <div id="weatherHumidity" style="font-size: 1.5rem; font-weight: bold;">--%</div>
+                        </div>
+                        <div class="weather-info-card">
+                            <div style="font-size: 0.8rem; color: #999;">🌡️ Sensação</div>
+                            <div id="weatherFeelsLike" style="font-size: 1.5rem; font-weight: bold;">--°C</div>
+                        </div>
+                        <div class="weather-info-card">
+                            <div style="font-size: 0.8rem; color: #999;">💨 Vento</div>
+                            <div id="weatherWind" style="font-size: 1.5rem; font-weight: bold;">-- km/h</div>
+                        </div>
+                        <div class="weather-info-card">
+                            <div style="font-size: 0.8rem; color: #999;">🔽 Pressão</div>
+                            <div id="weatherPressure" style="font-size: 1.5rem; font-weight: bold;">-- hPa</div>
+                        </div>
+                        <div class="weather-info-card">
+                            <div style="font-size: 0.8rem; color: #999;">👁️ Visibilidade</div>
+                            <div id="weatherVisibility" style="font-size: 1.5rem; font-weight: bold;">-- km</div>
+                        </div>
+                        <div class="weather-info-card">
+                            <div style="font-size: 0.8rem; color: #999;">☁️ Nuvens</div>
+                            <div id="weatherClouds" style="font-size: 1.5rem; font-weight: bold;">--%</div>
+                        </div>
+                        <div class="weather-info-card"
+                            style="grid-column: 1 / -1; background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%); color: white;">
+                            <div style="font-size: 0.8rem; opacity: 0.9;">🌧️ Chuva Agora</div>
+                            <div id="weatherRainNow" style="font-size: 1.5rem; font-weight: bold;">-- mm/h</div>
+                        </div>
+                    </div>
+
+                    <!-- Hourly Rainfall Forecast -->
+                    <div style="margin-top: 25px; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+                        <h3 style="margin: 0 0 15px 0; font-size: 1rem; color: #1976D2;">📊 Previsão Pluviométrica
+                            (Próximas 24h)</h3>
+                        <div id="rainfallChart">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+                        <div style="font-size: 0.8rem; color: #999; margin-bottom: 5px;">🌅 Nascer do Sol</div>
+                        <div id="weatherSunrise" style="font-weight: bold;">--:--</div>
+                        <div style="font-size: 0.8rem; color: #999; margin: 10px 0 5px;">🌇 Pôr do Sol</div>
+                        <div id="weatherSunset" style="font-weight: bold;">--:--</div>
+                    </div>
+                </div>
             </div>
         </div>
 

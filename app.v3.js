@@ -4,9 +4,6 @@ const state = {
     routines: [],
     projects: [], // { id, name, emoji }
     currentProject: 'all', // 'all' or projectId
-    routines: [],
-    projects: [], // { id, name, emoji }
-    currentProject: 'all', // 'all' or projectId
     viewDate: new Date(), // Initialize with Today
     soilAnalysis: null // Stores latest analysis results { limingTonHa, npkRec, npkAmount, ... }
 };
@@ -83,6 +80,148 @@ const elements = {
 };
 
 let selectedEmoji = '🌱';
+let weatherData = null; // Store weather data globally
+let forecastData = null; // Store hourly forecast
+
+// Weather Function
+async function fetchWeather() {
+    const weatherBtnText = document.getElementById('weatherBtnText');
+
+    try {
+        // Get user's location
+        if (!navigator.geolocation) {
+            if (weatherBtnText) weatherBtnText.textContent = 'Clima (Indisponível)';
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            // OpenWeatherMap API (free tier)
+            const API_KEY = 'bd5e378503939ddaee76f12ad7a97608'; // Public demo key
+
+            // Current weather
+            const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=${API_KEY}`;
+            // Hourly forecast (for rainfall)
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=${API_KEY}`;
+
+            const [currentResponse, forecastResponse] = await Promise.all([
+                fetch(currentUrl),
+                fetch(forecastUrl)
+            ]);
+
+            const currentData = await currentResponse.json();
+            const hourlyData = await forecastResponse.json();
+
+            if (currentData.main && currentData.weather) {
+                weatherData = currentData; // Store globally
+                forecastData = hourlyData; // Store forecast
+
+                const temp = Math.round(currentData.main.temp);
+                const city = currentData.name;
+                const icon = currentData.weather[0].icon;
+
+                // Calculate total rain in next 24h
+                let totalRain = 0;
+                if (hourlyData.list) {
+                    // Sum rain from next 8 entries (24 hours, 3h intervals)
+                    for (let i = 0; i < Math.min(8, hourlyData.list.length); i++) {
+                        if (hourlyData.list[i].rain && hourlyData.list[i].rain['3h']) {
+                            totalRain += hourlyData.list[i].rain['3h'];
+                        }
+                    }
+                }
+
+                // Update button text with icon and rain info
+                if (weatherBtnText) {
+                    const iconImg = `<img src="https://openweathermap.org/img/wn/${icon}.png" style="width:24px; height:24px; vertical-align:middle; margin-right:4px;">`;
+                    const rainInfo = totalRain > 0 ? `🌧️ ${totalRain.toFixed(1)}mm` : '☀️ Sem chuva';
+                    weatherBtnText.innerHTML = `${iconImg}${temp}°C | ${rainInfo}`;
+                }
+            }
+        }, (error) => {
+            if (weatherBtnText) weatherBtnText.textContent = 'Clima (Localização negada)';
+        });
+    } catch (error) {
+        if (weatherBtnText) weatherBtnText.textContent = 'Clima (Erro)';
+        console.error('Weather error:', error);
+    }
+}
+
+function showWeatherModal() {
+    if (!weatherData) {
+        alert('Dados do clima ainda não foram carregados. Aguarde um momento.');
+        return;
+    }
+
+    const data = weatherData;
+
+    // Main info
+    document.getElementById('weatherModalTemp').innerHTML = `<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" style="width:80px; vertical-align:middle;"> ${Math.round(data.main.temp)}°C`;
+    document.getElementById('weatherModalDesc').textContent = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
+    document.getElementById('weatherModalLocation').textContent = `${data.name}, ${data.sys.country}`;
+
+    // Detailed info
+    document.getElementById('weatherHumidity').textContent = `${data.main.humidity}%`;
+    document.getElementById('weatherFeelsLike').textContent = `${Math.round(data.main.feels_like)}°C`;
+    document.getElementById('weatherWind').textContent = `${Math.round(data.wind.speed * 3.6)} km/h`;
+    document.getElementById('weatherPressure').textContent = `${data.main.pressure} hPa`;
+    document.getElementById('weatherVisibility').textContent = `${(data.visibility / 1000).toFixed(1)} km`;
+    document.getElementById('weatherClouds').textContent = `${data.clouds.all}%`;
+
+    // Current rain
+    const currentRain = data.rain ? (data.rain['1h'] || 0) : 0;
+    document.getElementById('weatherRainNow').textContent = `${currentRain.toFixed(1)} mm/h`;
+
+    // Sunrise/Sunset
+    const sunrise = new Date(data.sys.sunrise * 1000);
+    const sunset = new Date(data.sys.sunset * 1000);
+    document.getElementById('weatherSunrise').textContent = sunrise.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('weatherSunset').textContent = sunset.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+    // Render hourly rainfall chart
+    renderRainfallChart();
+
+    // Show modal
+    document.getElementById('weatherModal').classList.add('visible');
+}
+
+function renderRainfallChart() {
+    const container = document.getElementById('rainfallChart');
+    if (!forecastData || !forecastData.list) {
+        container.innerHTML = '<p style="text-align:center; color:#999;">Dados de previsão não disponíveis</p>';
+        return;
+    }
+
+    let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+
+    // Show next 24 hours (8 entries x 3h each)
+    const entries = forecastData.list.slice(0, 8);
+
+    entries.forEach(entry => {
+        const time = new Date(entry.dt * 1000);
+        const timeStr = time.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const rain = entry.rain ? (entry.rain['3h'] || 0) : 0;
+        const maxRain = 10; // mm for scale
+        const barWidth = Math.min((rain / maxRain) * 100, 100);
+
+        html += `
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="min-width: 50px; font-size: 0.85rem; color: #666;">${timeStr}</div>
+                <div style="flex: 1; background: #e0e0e0; height: 24px; border-radius: 4px; position: relative; overflow: hidden;">
+                    <div style="background: linear-gradient(90deg, #42A5F5, #1976D2); height: 100%; width: ${barWidth}%; transition: width 0.3s;"></div>
+                    <div style="position: absolute; top: 50%; left: 8px; transform: translateY(-50%); font-size: 0.75rem; font-weight: bold; color: ${barWidth > 30 ? 'white' : '#333'};">
+                        ${rain.toFixed(1)} mm
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    html += '</div>';
+    container.innerHTML = html;
+}
 
 // Initialization
 function init() {
@@ -94,6 +233,7 @@ function init() {
         renderDate();
         renderProjects();
         renderTasks();
+        fetchWeather(); // Load weather data
     } catch (e) {
         alert('ERRO ao Iniciar: ' + e.message);
         console.error(e);
@@ -140,14 +280,15 @@ function migrateData() {
     });
 
     // 3. Backfill Frequency for colors (Migration)
-    state.tasks.forEach(t => {
+    state.tasks = state.tasks.map(t => {
         if (t.fromRoutine && !t.frequency) {
             const r = state.routines.find(rout => rout.id === t.routineId);
-            if (r) {
-                t.frequency = r.frequency;
+            if (r && r.frequency) {
                 changed = true;
+                return { ...t, frequency: r.frequency };
             }
         }
+        return t;
     });
 
     if (changed) saveData();
@@ -373,6 +514,46 @@ function renderTasks() {
             guideBtnHtml = `<button class="btn-learn-more-task" style="border:1px solid #2E7D32; color:#2E7D32; background:none; border-radius:15px; font-size:0.75rem; padding:2px 8px; margin-top:5px; cursor:pointer;">📖 Saiba Como</button>`;
         }
 
+        // PLANTING SUGGESTION LOGIC
+        if (proj.culture && !task.completed) {
+            const isPlanting = ['plantio', 'semeadura', 'transplantio', 'mudança'].some(key => task.title.toLowerCase().includes(key));
+
+            if (isPlanting) {
+                const bestPhase = getBestMoonForCrop(proj.culture);
+                const currentPhase = getMoonPhase(new Date()); // Today
+
+                // If today is NOT the best phase, find next
+                if (!currentPhase.name.includes(bestPhase.replace('Lua ', '')) && currentPhase.name !== bestPhase) {
+                    // Find next occurence
+                    let tempDate = new Date();
+                    let foundNext = false;
+                    let attempts = 0;
+                    while (!foundNext && attempts < 45) {
+                        tempDate.setDate(tempDate.getDate() + 1);
+                        const p = getMoonPhase(tempDate);
+                        if (p.name.includes(bestPhase.replace('Lua ', '')) || p.name === bestPhase) {
+                            foundNext = true;
+                        }
+                        attempts++;
+                    }
+
+                    if (foundNext) {
+                        const sugDate = getLocalISODate(tempDate);
+                        const niceDate = tempDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' });
+                        guideBtnHtml += `<button onclick="applyReschedule(${task.id}, '${sugDate}')" 
+                            style="background:#FFF3E0; color:#E65100; border:1px solid #FFCC80; font-size:0.75rem; padding:4px 8px; border-radius:4px; margin-top:5px; margin-left:5px; cursor:pointer;"
+                            title="Clique para mudar a data do plantio e ajustar o cronograma">
+                            💡 Mudar p/ <b>${niceDate}</b> (${bestPhase})
+                         </button>`;
+                    }
+                } else {
+                    guideBtnHtml += `<div style="background:#E8F5E9; color:#2E7D32; font-size:0.75rem; padding:4px 8px; border-radius:4px; margin-top:5px; display:inline-block; margin-left:5px;">
+                            ✨ Lua Atual Ideal!
+                         </div>`;
+                }
+            }
+        }
+
         el.innerHTML = `
             <div class="task-check ${task.completed ? 'checked' : ''}" role="checkbox"></div>
             <div class="task-content">
@@ -528,7 +709,9 @@ function getEmojiForType(type) {
         pomar: '🍊',
         milho: '🌽',
         feijao: '🫘',
-        mandioca: '🥔'
+        mandioca: '🥔',
+        banana: '🍌',
+        coqueiro: '🥥'
     };
     return map[type] || '🌱';
 }
@@ -543,7 +726,9 @@ function getProjectNameForType(type) {
         pomar: 'Pomar',
         milho: 'Milho',
         feijao: 'Feijão',
-        mandioca: 'Mandioca'
+        mandioca: 'Mandioca',
+        banana: 'Banana',
+        coqueiro: 'Coqueiro'
     };
     return map[type] || 'Projeto';
 }
@@ -551,25 +736,54 @@ function getProjectNameForType(type) {
 function addProject(e) {
     e.preventDefault();
     try {
+        console.log('[addProject] Starting...');
         const culture = elements.inputs.projCulture.value;
-        const startDateVal = elements.inputs.projStartDate.value;
-        const startDate = startDateVal ? new Date(startDateVal) : new Date();
+        const soilManagementDateVal = elements.inputs.projStartDate.value;
+        console.log('[addProject] Culture:', culture, 'Date:', soilManagementDateVal);
+
+        // Ensure we have a string YYYY-MM-DD for soil management start
+        let soilManagementDateStr = soilManagementDateVal;
+        if (!soilManagementDateStr) {
+            soilManagementDateStr = getLocalISODate(new Date());
+        }
+
+        console.log('[addProject] Calculating prep days...');
+        // Calculate prep days (most negative day in template)
+        const template = cropTemplates[culture];
+        let prepDays = 0;
+        if (template) {
+            const days = template.map(t => t.day);
+            const minDay = Math.min(0, ...days);
+            prepDays = Math.abs(minDay);
+        }
+        console.log('[addProject] Prep days:', prepDays);
+
+        // Calculate actual planting date (Day 0) = soilManagementDate + prepDays
+        const soilDate = new Date(soilManagementDateStr + 'T12:00:00');
+        soilDate.setDate(soilDate.getDate() + prepDays);
+        const plantingDateStr = getLocalISODate(soilDate);
+        console.log('[addProject] Planting date:', plantingDateStr);
 
         // Auto-Name Logic: "Gado de Leite #1", "Gado de Leite #2", etc.
         const baseName = getProjectNameForType(culture);
         const existingCount = state.projects.filter(p => p.name.startsWith(baseName)).length;
         const finalName = `${baseName} #${existingCount + 1}`;
+        console.log('[addProject] Project name:', finalName);
 
         // Create Project
         const newProject = {
             id: Date.now(),
             name: finalName,
-            emoji: getEmojiForType(culture)
+            emoji: getEmojiForType(culture),
+            culture: culture // Save culture for future reference
         };
         state.projects.push(newProject);
+        console.log('[addProject] Project created, ID:', newProject.id);
 
-        // Generate Tasks
-        generateProjectTasks(newProject.id, culture, startDate);
+        // Generate Tasks (Pass PLANTING DATE as Day 0)
+        console.log('[addProject] Calling generateProjectTasks...');
+        generateProjectTasks(newProject.id, culture, plantingDateStr);
+        console.log('[addProject] Tasks generated successfully');
 
         saveData();
         renderProjects();
@@ -581,9 +795,11 @@ function addProject(e) {
 
         elements.projectForm.reset();
         toggleProjectModal(false);
+        console.log('[addProject] Completed successfully');
     } catch (err) {
-        alert('ERRO em addProject: ' + err.message);
-        console.error(err);
+        console.error('[addProject] ERROR:', err);
+        console.error('[addProject] Stack:', err.stack);
+        alert('ERRO em addProject: ' + err.message + '\n\nVeja o console (F12) para mais detalhes.');
     }
 }
 
@@ -899,6 +1115,7 @@ const cropTemplates = {
         { day: -30, title: 'Aração/Gradagem', desc: 'Solo Fofo.', guide: '<h3>🚜 Solo Solto = Raiz Grossa</h3><p>Para a mandioca engrossar, a terra não pode estar compactada.</p><ul><li><strong>Aração:</strong> Profunda (20-30cm).</li><li><strong>Curvas de Nível:</strong> Mandioca sofre muito com erosão. Plante cortando as águas.</li></ul>' },
         { day: 0, title: 'Plantio (Manivas)', desc: 'Seleção da Muda.', guide: '<h3>🥔 Plantio da Mandioca</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Fósforo no Sulco:</strong><br>Se recomendado, use Super Simples no fundo do sulco.</div><ul><li><strong>Origem:</strong> Use o terço médio da planta mãe.</li><li><strong>Posição:</strong> Horizontal (a 5-10cm) facilita colheita.</li></ul>' },
         { day: 30, type: 'routine', freq: 'monthly', title: 'Capina (Crítico)', desc: 'Período Crítico.', guide: '<h3>🌿 Período Crítico de Competição (PCII)</h3><p>Dos 0 aos 100 dias, a mandioca <strong>não tolera sombra</strong>.</p><ul><li>Se o mato crescer mais que a mandioca nesse tempo, a produção cai 50% ou mais.</li><li>Mantenha a roça "no limpo" até a mandioca fechar a rua e fazer sombra no mato.</li></ul>' },
+        { day: 60, title: 'Adubação de Cobertura', desc: 'Engrossar Raízes.', guide: '<h3>🥔 Potássio é Vida</h3><p>A mandioca extrai muito potássio do solo.</p><ul><li><strong>Quando:</strong> Aos 45-60 dias (após a primeira capina).</li><li><strong>O que usar:</strong> NPK 20-00-20 ou Cloreto de Potássio + Ureia.</li><li><strong>Aplicação:</strong> Em filete contínuo ou covetas laterais, longe do caule para não queimar.</li></ul>' },
         { day: 365, title: 'Ponto de Colheita', desc: 'Amido.', guide: '<h3>🥘 Ponto de Colheita</h3><p>Não tem data certa, depende do mercado e da chuva.</p><ul><li><strong>Teor de Amido:</strong> Se choveu muito e a planta brotou folha nova, ela "gastou" o amido da raiz. A mandioca fica "aguada" e não cozinha.</li><li><strong>Melhor hora:</strong> Na "dormência" da planta (época seca/inverno), quando ela está com pouca folha. A raiz está cheia de energia acumulada.</li></ul>' }
     ],
 
@@ -917,6 +1134,8 @@ const cropTemplates = {
         { day: -15, title: 'Calagem e Canteiro', desc: 'Preparo.', guide: '<h3>🍅 Tomate Exige Cálcio</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Fundo Preto (Podridão Apical):</strong><br>A falta de Cálcio (Calagem: {{CALC_GM2}}g/m²) faz o fundo do tomate ficar preto.<br>Aplique o calcário com antecedência!</div>' },
         { day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🌱 Transplantio</h3><ul><li>Use mudas sadias. Enterre até a primeira folha para enraizar melhor.</li><li><strong>Adubo NPK:</strong> Rico em Potássio (K) e Fósforo (P). Use <b>{{NPK_GM2}}g</b> por cova.</li></ul>' },
         { day: 15, title: 'Estaqueamento (Tutor)', desc: 'Suporte.', guide: '<h3>🪵 Amarrio</h3><p>O tomateiro indeterminado cresce como trepadeira. Precisa de estaca ou fitilho.</p><ul><li>Amarre com folga ("em oito") para não enforcar o caule quando engrossar.</li></ul>' },
+        { day: 25, title: 'Adubação de Cobertura 1', desc: 'Crescimento.', guide: '<h3>✨ Força no Talo</h3><p>Primeira cobertura rico em Nitrogênio e Potássio.</p><ul><li>Use NPK 20-00-20 (ou Sulfato de Amônio + Cloreto).</li><li>5 a 10g por planta. Longe do caule!</li></ul>' },
+        { day: 50, title: 'Adubação de Cobertura 2', desc: 'Florada.', guide: '<h3>🌼 Doação de Frutos</h3><p>Na florada/início da frutificação, a planta demanda muito Potássio.</p><ul><li>Aumente a dose de Potássio (K). NPK 12-06-12 ou similar.</li></ul>' },
         { day: 20, type: 'routine', freq: 'weekly', title: 'Desbrota', desc: 'Tira-Chupão.', guide: '<h3>✂️ Cirurgia Semanal</h3><p>Remova os brotos laterais que nascem na axila das folhas ("chupões").</p><ul><li>Deixe apenas a haste principal subir.</li><li>Isso concentra força nos frutos e melhora a ventilação.</li></ul>' }
     ],
 
@@ -934,188 +1153,141 @@ const cropTemplates = {
         { day: 30, type: 'routine', freq: 'monthly', title: 'Adubação Nitrogenada', desc: 'Crescimento.', guide: '<h3>✨ Nitrogênio Parcelado</h3><p>No primeiro ano, aplique N a cada 30-45 dias (nas chuvas) para formar a saia do cafeeiro.</p>' }
     ],
 
-    // --- NOVAS CRIAÇÕES DE PEQUENO PORTE ---
-
-    // 14. Piscicultura (Tilápias)
-    tilapias: [
-        { day: -15, title: 'Preparo do Tanque', desc: 'Calagem e Adubação.', guide: '<h3>🐟 A Água é a Casa</h3><p>Antes de colocar peixe, a água precisa ter "comida natural" (fitoplâncton).</p><ul><li><strong>Calagem:</strong> Jogue calcário no fundo seco ou na água para manter alcalinidade > 30.</li><li><strong>Adubação:</strong> Ureia e Super Simples (em sacos perfurados) para a água ficar verde (rica em algas). Transparência ideal: 30-40cm.</li></ul>' },
-        { day: 0, title: 'Povoamento (Alevinos)', desc: 'Aclimatação.', guide: '<h3>🌡️ Choque Térmico Mata</h3><p>Nunca solte os peixes direto!</p><ol><li>Deixe o saco boiando na água por 20 minutos (igualar temperatura).</li><li>Vá misturando a água do tanque no saco devagar.</li><li>Solte os peixes sem jogar o saco.</li></ol><ul><li><strong>Horário:</strong> Manhã cedo ou fim de tarde.</li></ul>' },
-        { day: 1, type: 'routine', freq: 'daily', title: 'Alimentação', desc: 'Arraçoamento.', guide: '<h3>🍽️ O Olho do Dono</h3><p>Peixe não tem estômago, come várias vezes ao dia.</p><ul><li><strong>Fase Inicial:</strong> Ração farelada/poeira (4-6x ao dia).</li><li><strong>Sobra:</strong> Se sobrar ração boiando depois de 15min, você jogou demais. Ração sobrando apodrece a água e mata o peixe.</li></ul>' },
-        { day: 15, type: 'routine', freq: 'weekly', title: 'Medir Qualidade da Água', desc: 'Ouro Azul.', guide: '<h3>🧪 Parâmetros Vitais</h3><ul><li><strong>Oxigênio:</strong> Peixe boquejando na superfície de manhã cedo = Falta de oxigênio. Ligue aeradores à noite.</li><li><strong>Amônia:</strong> Tóxica. Causada por excesso de comida ou fezes. Se subir, troque parte da água.</li><li><strong>pH:</strong> Ideal entre 6.8 e 7.8.</li></ul>' }
+    // 14. Banana
+    banana: [
+        { day: -60, title: 'Preparo da Área', desc: 'Limpeza e Calagem.', guide: '<h3>🍌 Bananeira Gosta de Terra Boa</h3><p>Banana é exigente em nutrientes e não tolera acidez alta.</p><ul><li><strong>Calagem:</strong> Aplicar calcário 60 dias antes para pH 6.0-6.5.</li><li><strong>Drenagem:</strong> Banana não tolera encharcamento. Evite baixadas que acumulam água.</li></ul>' },
+        { day: -30, title: 'Abertura de Covas', desc: 'Preparo.', guide: '<h3>🕳️ Covas Generosas</h3><p>Bananeira tem raízes superficiais mas precisa de espaço.</p><ul><li><strong>Tamanho:</strong> 40x40x40cm.</li><li><strong>Espaçamento:</strong> 3x3m (variedades altas) ou 2x2m (anãs).</li><li><strong>Adubação de Base:</strong> Misture 20L de esterco curtido + 200g de superfosfato na cova.</li></ul>' },
+        { day: 0, title: 'Plantio da Muda', desc: 'Implantação.', guide: '<h3>🌱 Plantio</h3><p>Use mudas tipo "chifrinho" (20-30cm) de bananeiras sadias.</p><ul><li>Plante no centro da cova, sem enterrar o rizoma muito fundo.</li><li>Regue bem após o plantio (20L de água).</li></ul>' },
+        { day: 30, title: 'Adubação de Cobertura 1', desc: 'Nitrogênio.', guide: '<h3>✨ Primeira Cobertura</h3><p>Banana precisa de muito Nitrogênio para crescer rápido.</p><ul><li>Aplique 100g de Ureia em círculo ao redor da planta (30cm do pseudocaule).</li><li>Cubra levemente com terra.</li></ul>' },
+        { day: 60, title: 'Adubação de Cobertura 2', desc: 'NPK.', guide: '<h3>🌿 Segunda Cobertura</h3><p>Agora a planta precisa de equilíbrio.</p><ul><li>Use NPK 20-05-20: 150g por planta.</li><li>Banana extrai muito Potássio do solo.</li></ul>' },
+        { day: 90, title: 'Desbaste de Perfilhos', desc: 'Família Controlada.', guide: '<h3>✂️ Controle da Touceira</h3><p>Bananeira gera muitos "filhos". Deixe apenas 3 por touceira.</p><ul><li><strong>Mãe:</strong> A planta que está produzindo.</li><li><strong>Filha:</strong> A que vai produzir depois.</li><li><strong>Neta:</strong> A reserva.</li><li>Elimine os outros com facão (corte rente ao chão).</li></ul>' },
+        { day: 120, type: 'routine', freq: 'monthly', title: 'Adubação Mensal', desc: 'Manutenção.', guide: '<h3>🔄 Adubação Contínua</h3><p>A partir do 4º mês, adube mensalmente.</p><ul><li>NPK 20-05-20: 200g/planta/mês.</li><li>Aumente para 300g quando aparecer o cacho.</li></ul>' },
+        { day: 270, title: 'Florescimento', desc: 'Cacho Aparecendo.', guide: '<h3>🌺 Nasceu o Cacho!</h3><p>Entre 9-12 meses, a bananeira emite a inflorescência.</p><ul><li><strong>Coração:</strong> A flor roxa no final do cacho pode ser cortada após as pencas se formarem (economiza energia).</li><li><strong>Ensacamento:</strong> Proteja o cacho com saco plástico azul para evitar pragas e melhorar a cor.</li></ul>' },
+        { day: 360, title: 'Colheita', desc: 'Ponto de Corte.', guide: '<h3>🍌 Hora de Colher</h3><p>Banana leva 12-15 meses do plantio até a primeira colheita.</p><ul><li><strong>Ponto:</strong> Quando os frutos estão "cheios" (quinas arredondadas), ainda verdes.</li><li>Corte o cacho inteiro com facão.</li><li>Deixe amadurecer em local sombreado e ventilado.</li></ul>' }
     ],
 
-    // 15. Apicultura (Abelhas)
-    abelhas: [
-        { day: 0, title: 'Captura ou Instalação', desc: 'Enxame.', guide: '<h3>🐝 Começando o Apiário</h3><p>Você pode capturar enxames voadores ou comprar caixas povoadas.</p><ul><li><strong>Isca:</strong> Caixas de papelão com cheiro de atrativo (capim limão/cera velha) em árvores.</li><li><strong>Local:</strong> Longe de casas (segurança), com sol da manhã e sombra à tarde. Perto de água.</li></ul>' },
-        { day: 15, type: 'routine', freq: 'monthly', title: 'Revisão da Colmeia', desc: 'Inspeção.', guide: '<h3>🧐 Abrindo a Caixa</h3><p>Use fumaça (fria) para acalmar. Nunca em dias de vento ou chuva.</p><ul><li><strong>Rainha:</strong> Verifique se tem ovos (larvas pequenas no fundo dos alvéolos). Se tem ovo, tem rainha.</li><li><strong>Espaço:</strong> Se os quadros estiverem cheios de mel/cria, coloque uma melgueira em cima para elas não enxamearem (fugirem por falta de espaço).</li></ul>' },
-        { day: 30, title: 'Alimentação de Subsistência', desc: 'Entressafra.', guide: '<h3>🍬 Época da Seca</h3><p>Se não tem flor, a colmeia morre de fome.</p><ul><li>Forneça xarope (água + açúcar 1:1) ou bife proteico.</li><li>Cuidado com pilhagem (abelhas de fora roubando o xarope). Reduza o alvado (porta).</li></ul>' }
+    // 15. Coqueiro
+    coqueiro: [
+        { day: -90, title: 'Análise de Solo', desc: 'Preparo Antecipado.', guide: '<h3>🥥 Coqueiro é Investimento de Longo Prazo</h3><p>Coqueiro vive 60+ anos. Prepare bem o solo.</p><ul><li><strong>pH Ideal:</strong> 5.5-6.5.</li><li><strong>Calagem:</strong> Aplicar 90 dias antes se pH < 5.5.</li><li><strong>Drenagem:</strong> Essencial. Coqueiro não tolera raiz encharcada.</li></ul>' },
+        { day: -60, title: 'Abertura de Covas', desc: 'Covas Profundas.', guide: '<h3>🕳️ Cova de Coqueiro</h3><p>Coqueiro tem raízes profundas nos primeiros anos.</p><ul><li><strong>Tamanho:</strong> 80x80x80cm (cova grande!).</li><li><strong>Espaçamento:</strong> 7x7m (Anão) ou 9x9m (Gigante).</li><li><strong>Adubação de Base:</strong> 40L de esterco + 500g de superfosfato + 200g de FTE (micronutrientes).</li></ul>' },
+        { day: 0, title: 'Plantio da Muda', desc: 'Implantação.', guide: '<h3>🌴 Plantio</h3><p>Use mudas com 6-8 meses, já com 4-6 folhas.</p><ul><li>Plante no nível do solo (não enterre o colo).</li><li><strong>Tutoramento:</strong> Amarre a muda a uma estaca para evitar tombar com vento.</li><li>Regue abundantemente (40L).</li></ul>' },
+        { day: 30, title: 'Adubação de Formação 1', desc: 'Nitrogênio.', guide: '<h3>✨ Primeira Cobertura</h3><p>Nos primeiros 2 anos, o foco é crescimento vegetativo.</p><ul><li>Aplique 200g de Ureia em círculo (50cm do caule).</li><li>Não deixe o adubo encostar no tronco.</li></ul>' },
+        { day: 60, type: 'routine', freq: 'monthly', title: 'Adubação Mensal (Ano 1-2)', desc: 'Crescimento.', guide: '<h3>🔄 Adubação de Formação</h3><p>Nos primeiros 2 anos, adube mensalmente.</p><ul><li><strong>Fórmula:</strong> NPK 20-05-20 ou similar.</li><li><strong>Dose:</strong> 200g/mês no 1º ano, 400g/mês no 2º ano.</li><li><strong>Micronutrientes:</strong> Aplique FTE BR-12 (50g) a cada 6 meses.</li></ul>' },
+        { day: 180, title: 'Controle de Pragas', desc: 'Anel Vermelho.', guide: '<h3>🪲 Broca-do-Olho (Rhynchophorus)</h3><p>A principal praga do coqueiro.</p><ul><li><strong>Prevenção:</strong> Evite ferir o palmito. Não deixe restos de poda acumulados.</li><li><strong>Armadilha:</strong> Use pedaços de cana ou estipe de coqueiro velho como isca com inseticida.</li></ul>' },
+        { day: 730, title: 'Início da Produção', desc: 'Primeiros Cocos.', guide: '<h3>🥥 Primeira Floração</h3><p>Coqueiro Anão começa a produzir com 2-3 anos. Gigante com 5-7 anos.</p><ul><li><strong>Adubação de Produção:</strong> Aumente a dose de Potássio (K). Use NPK 16-04-24.</li><li><strong>Dose:</strong> 1-2 kg/planta/ano, dividido em 4 aplicações.</li></ul>' },
+        { day: 1095, title: 'Produção Plena', desc: 'Maturidade.', guide: '<h3>🌴 Coqueiro Adulto</h3><p>Com 3+ anos, o coqueiro atinge produção estável.</p><ul><li><strong>Produção:</strong> Anão: 100-150 cocos/ano. Gigante: 60-80 cocos/ano.</li><li><strong>Colheita:</strong> Coco verde aos 6-7 meses. Coco seco aos 11-12 meses.</li><li><strong>Adubação:</strong> Mantenha NPK 16-04-24 (2kg/planta/ano) + Esterco (40L/ano).</li></ul>' }
     ],
 
-    // 16. Ovinos/Caprinos
-    ovinos: [
-        { day: 0, title: 'Chegada', desc: 'Quarentena.', guide: '<h3>🐑 Pequenos Ruminantes</h3><p>São mais sensíveis que o gado.</p><ul><li>Deixe isolados por 15 dias antes de misturar com o rebanho.</li><li>Verifique os cascos e vermifugue na chegada.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Controle Verminose (Famacha)', desc: 'Anemia.', guide: '<h3>👁️ Método FAMACHA</h3><p>Ovelha morre de verme (Haemonchus) que chupa sangue.</p><ul><li>Olhe a mucosa do olho:</li><li><strong>Vermelho:</strong> Saudável.</li><li><strong>Pálido/Branco:</strong> Anemia grave (Vermifugue urgente!).</li><li>Não vermifugue todo mundo sempre (cria resistência). Só quem precisa.</li></ul>' },
-        { day: 60, type: 'routine', freq: 'monthly', title: 'Casqueamento', desc: 'Cascos.', guide: '<h3>✂️ Manicure de Ovelha</h3><p>Casco cresce e dobra, acumulando sujeira (podridão dos cascos).</p><ul><li>Corte as sobras de casco com tesoura própria.</li><li>Em locais úmidos, passe formol ou sulfato de cobre no casco para endurecer.</li></ul>' }
+    // --- DETALHAMENTO ESPECÍFICO (SEM CLONES GENÉRICOS) ---
+
+
+    // 20. Couve (Brásicas)
+    couve: [
+        { day: -10, title: 'Preparo com Calcário', desc: 'Indispensável.', guide: '<h3>🥬 Couve Ama Cálcio</h3><p>Sem calcário, a borda da folha queima e dá pulgão fácil.</p><ul><li>Use <b>{{CALC_GM2}}g/m²</b>.</li><li>Incorpore bem matéria orgânica.</li></ul>' },
+        { day: 0, title: 'Plantio das Mudas', desc: 'Espaçamento.', guide: '<h3>🌱 Espaço para Crescer</h3><p>Couve cresce muito.</p><ul><li><strong>Espaçamento:</strong> 50cm a 80cm entre plantas.</li><li>Enterre até as primeiras folhas para firmar o talo.</li></ul>' },
+        { day: 15, title: 'Controle de Pulgão', desc: 'Praga nº 1.', guide: '<h3>🐞 O Terror da Couve</h3><p>Pulgão cinzento ama couve.</p><ul><li><strong>Receita:</strong> Calda de sabão de coco + fumo ou óleo de neem.</li><li>Aplique no final da tarde, focando debaixo da folha.</li></ul>' },
+        { day: 30, type: 'routine', freq: 'weekly', title: 'Colheita e Limpeza', desc: 'De Baixo pra Cima.', guide: '<h3>✂️ Colheita Certa</h3><p>Colha as folhas de baixo para cima.</p><ul><li>Elimine folhas amarelas (dreno de energia).</li><li>Mantenha o caule limpo.</li></ul>' }
     ],
 
-    // 17. Maracujá
-    maracuja: [
-        { day: -30, title: 'Preparo das Espaldeiras', desc: 'Cerca.', guide: '<h3>🏗️ A Sustentação</h3><p>Maracujá precisa de uma "cerca" (espaldeira) para subir.</p><ul><li>Mourões a cada 4-6 metros. Um fio de arame liso grosso a 1.80m de altura.</li><li>Se usar madeira verde, ela apodrece antes do maracujá morrer. Use madeira tratada.</li></ul>' },
-        { day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🌱 Plantio no Morro</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação:</strong><br>Use NPK <b>{{NPK_FORMULA}}</b>: <b>{{NPK_GM2}}g</b>/cova. Misture bem.</div>' },
-        { day: 60, title: 'Tutoramento', desc: 'Subida.', guide: '<h3>🧗 Ensinando a Subir</h3><p>Conduza a planta com um barbante até o arame.</p><ul><li>Vá tirando todos os brotos laterais até ela chegar no arame lá em cima.</li><li>Quando chegar no arame, corte a ponta para ela soltar os braços laterais (cortina).</li></ul>' },
-        { day: 100, title: 'Polinização Manual', desc: 'Mamangava.', guide: '<h3>🌼 O Segredo da Produção</h3><p>Se não tem abelha grande (Mamangava), não dá fruto.</p><ul><li><strong>Manual:</strong> Pegue o pólen de uma flor e passe na outra (com o dedo mesmo).</li><li>Faça isso à tarde (depois das 13h) quando a flor abre.</li></ul>' }
+    // 21. Rúcula
+    rucula: [
+        { day: 0, title: 'Semeadura Direta', desc: 'Não transplantar.', guide: '<h3>🌱 Direto na Terra</h3><p>Rúcula não gosta de transplante (espiga rápido).</p><ul><li>Faça sulcos rasos (1cm).</li><li>Semeie "pitadas" a cada 10cm.</li><li>Cobre rapidíssimo (30-40 dias).</li></ul>' },
+        { day: 20, title: 'Adubação Nitrogenada', desc: 'Vigor.', guide: '<h3>✨ Folhas Tenras</h3><p>Use adubo rico em N (Esterco líquido ou Ureia diluída) para a folha crescer rápido e não ficar picante demais/dura.</p>' }
     ],
 
-    // 18. Ervas e Temperos (Genérico)
-    ervas: [
-        { day: 0, title: 'Plantio', desc: 'Vasos ou Canteiros.', guide: '<h3>🌿 Horta Medicinal/Temperos</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação Orgânica:</strong><br>Ervas preferem muito composto orgânico/húmus à adubação química forte.</div><ul><li><strong>Drenagem:</strong> Essencial. Alecrim e Hortelã odeiam raiz encharcada.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Poda de Colheita', desc: 'Manutenção.', guide: '<h3>✂️ Pode sem dó</h3><p>Ervas precisam ser podadas para encher.</p><ul><li>Hortelã: Se não podar, invade tudo.</li><li>Manjericão: Corte as flores! Se deixar florir, a folha perde o cheiro e a planta morre (ciclo encerra).</li></ul>' }
+    // 22. Cheiro-Verde (Cebolinha/Salsa)
+    cheiro_verde: [
+        { day: 0, title: 'Plantio Misto', desc: 'Consórcio.', guide: '<h3>🌿 O Duelo</h3><ul><li><strong>Salsa:</strong> Demora a nascer (até 20 dias). Deixe de molho na água por 1 dia antes.</li><li><strong>Cebolinha:</strong> Nasce rápido. Pode plantar por mudas (touceiras) ou semente.</li></ul>' },
+        { day: 30, type: 'routine', freq: 'monthly', title: 'Corte e Rebrote', desc: 'Colheita.', guide: '<h3>✂️ Colheita Contínua</h3><ul><li><strong>Cebolinha:</strong> Corte a 2 dedos do chão. Ela rebrota.</li><li><strong>Salsa:</strong> Tire as folhas de fora. Não corte o "olho" central.</li></ul>' }
     ],
 
-    // 19. Cana
-    cana: [
-        { day: 0, title: 'Plantio (Toletes)', desc: 'Sulcos.', guide: '<h3>🎋 Cana Caiana/Forrageira</h3><ul><li>Sulcos profundos (20-30cm).</li><li>Coloque os toletes deitados, ponta com ponta.</li><li>Cubra com pouca terra (5cm) se for época seca, ou mais se for chuva.</li></ul>' },
-        { day: 365, title: 'Corte', desc: 'Colheita.', guide: '<h3>🔪 Corte Rente</h3><p>Na hora de colher, corte rente ao chão.</p><ul><li>Se deixar toco alto, brota fraco e dá doença.</li><li>A cana rebate (brota de novo) por 3 a 5 anos.</li></ul>' }
+    // 23. Manjericão/Ervas
+    manjericao: [
+        { day: 0, title: 'Plantio', desc: 'Sol Pleno.', guide: '<h3>🌿 O Rei da Horta</h3><p>Gosta de sol e água, mas odeia frio.</p><ul><li>Adube com muito composto orgânico.</li></ul>' },
+        { day: 45, type: 'routine', freq: 'weekly', title: 'Poda de Flores', desc: 'Segredo do Sabor.', guide: '<h3>✂️ Não Deixe Florir!</h3><p>Se o manjericão soltar o pendão floral, as folhas ficam amargas e pequenas.</p><ul><li>Corte as pontas (flores) toda semana. Isso força ele a soltar mais folhas laterais e virar uma moita linda.</li></ul>' }
+    ],
+    alecrim: [
+        { day: 0, title: 'Plantio em Local Seco', desc: 'Rústico.', guide: '<h3>🌿 Alecrim Odeia Pé Molhado</h3><p>Origem mediterrânea.</p><ul><li>Misture areia na terra se for argilosa.</li><li>Quase não precisa de adubo químico. Excesso de Nitrogênio mata o alecrim.</li></ul>' }
+    ],
+    hortela: [
+        { day: 0, title: 'Plantio Controlado', desc: 'Invasora.', guide: '<h3>🌿 A Invasora</h3><p>A raiz da hortelã anda por baixo da terra e invade tudo.</p><ul><li><strong>Dica:</strong> Plante dentro de um balde sem fundo enterrado no canteiro, ou em vasos/bacias separadas.</li><li>Gosta de terra úmida sempre.</li></ul>' }
     ],
 
-    // Mapeamentos para Variedades Similares (Expansão Final)
-    couve: [],
-    rucula: [],
-    cheiro_verde: [],
+    // 24. Pimentão
+    pimentao: [
+        { day: 0, title: 'Transplante', desc: 'Sensível.', guide: '<h3>🫑 Primo Rico do Tomate</h3><p>Exige solo muito fértil (Adubação: {{NPK_GM2}}g/cova).</p><ul><li>Cuidado com o colo da planta (não enterrar demais).</li></ul>' },
+        { day: 30, title: 'Tutoramento', desc: 'Peso.', guide: '<h3>🪵 Precisa de Apoio</h3><p>O galho quebra fácil com o peso / vento.</p><ul><li>Passe fitilho ou use estacas (meia-estaca).</li><li><strong>Queima de Sol:</strong> As folhas protegem os frutos. Se podar demais, o sol queima o pimentão (mancha branca).</li></ul>' }
+    ],
 
-    manjericao: [],
-    alecrim: [],
-    hortela: [],
+    // 25. Pepino
+    pepino: [
+        { day: 0, title: 'Semeadura', desc: 'Cova.', guide: '<h3>🥒 Crescimento Explosivo</h3><p>Ciclo muito rápido (45-50 dias colhendo).</p><ul><li>Adubação pesada na cova.</li></ul>' },
+        { day: 20, title: 'Condução Vertical', desc: 'Rede/Tutor.', guide: '<h3>🕸️ Subindo a Rede</h3><p>Pepino no chão dá doença e fica torto (enrola).</p><ul><li>Use rede de tutoramento ou fitilho vertical.</li><li>Tire os brotos (desbrota) até o 4º nó (perto do chão) para ventilar.</li></ul>' },
+        { day: 15, type: 'routine', freq: 'weekly', title: 'Vigilância Oídio', desc: 'Pó Branco.', guide: '<h3>⚪ Oídio (Míldio)</h3><p>Aquele pó branco nas folhas.</p><ul><li>Pepino pega muito fácil.</li><li>Use leite cru (10%) ou calda bordalesa preventiva.</li></ul>' }
+    ],
 
-    pimentao: [],
-    pepino: [],
-    quiabo: [],
-    abobora: [],
-    morango: [],
-    melancia: [],
+    // 26. Quiabo
+    quiabo: [
+        { day: 0, title: 'Plantio Solar', desc: 'Calor.', guide: '<h3>☀️ Quiabo Ama Calor</h3><p>Não adianta plantar no frio.</p><ul><li>Sementes duras: Deixe na água morna por 1 noite para germinar rápido.</li></ul>' },
+        { day: 45, type: 'routine', freq: 'daily', title: 'Colheita Diária', desc: 'Ponto de Colheita.', guide: '<h3>🔪 Não Deixe Passar</h3><p>Quiabo cresce milímetros por hora.</p><ul><li><strong>Ponto:</strong> Quebre a pontinha. Se estalar, tá bom. Se dobrar, tá fibroso (duro).</li><li>Colha todo dia ou dia sim/dia não. Se ficar velho no pé, a planta para de produzir novos.</li></ul>' }
+    ],
 
-    beterraba: [],
-    batata_doce: [],
+    // 27. Abóbora/Melancia
+    abobora: [
+        { day: 0, title: 'Covas Distantes', desc: 'Espaço.', guide: '<h3>🎃 A Gigante</h3><p>Abóbora precisa de espaço (ramas de 5m+).</p><ul><li><strong>Espaçamento:</strong> 3x3m ou 4x4m entre covas.</li><li><strong>Adubo:</strong> Coloque todo o adubo na cova (é lá que a boca está). O resto a raiz busca.</li></ul>' },
+        { day: 40, title: 'Penteado das Ramas', desc: 'Organização.', guide: '<h3>🌿 Direcionando</h3><p>Jogue as ramas para dentro da roça, não deixe invadir a estrada.</p><ul><li><strong>Polinização:</strong> Flores amarelas grandes precisam de abelhas. Não aplique inseticida de manhã (hora da abelha).</li></ul>' }
+    ],
+    melancia: [
+        { day: 0, title: 'Plantio', desc: 'Sensibilidade.', guide: '<h3>🍉 Melancia é Melindrosa</h3><p>Muito sensível a fungos nas folhas.</p><ul><li>Não molhe as folhas! Use gotejamento se possível.</li><li><strong>Fundo Preto:</strong> Falta de Cálcio também afeta melancia. Use a calagem certa ({{CALC_GM2}}g/m²).</li></ul>' },
+        { day: 45, title: 'Raleio de Frutos', desc: 'Qualidade.', guide: '<h3>✂️ Menos é Mais</h3><p>Se deixar todas, ficam pequenas e sem doce.</p><ul><li>Deixe apenas 2 ou 3 frutas por planta.</li><li>O sol deve bater nas folhas, não na fruta (queima). A fruta fica protegida debaixo da rama.</li></ul>' }
+    ],
 
-    vagem: [],
+    // 28. Morango
+    morango: [
+        { day: -15, title: 'Canteiro Alto + Mulching', desc: 'Plástico.', guide: '<h3>🍓 Cama de Lorde</h3><p>Morango não pode tocar na terra (apodrece).</p><ul><li>Faça canteiros altos (30cm).</li><li>Cubra com plástico preto (Mulching) ou muita palha.</li><li>Fure o plástico e plante a muda.</li></ul>' },
+        { day: 0, title: 'Plantio', desc: 'Coroa.', guide: '<h3>🌱 Coroa de Fora</h3><p>Não enterre o miolo (coroa) da muda, senão ela morre. Deixe o miolo aparecendo.</p>' },
+        { day: 30, type: 'routine', freq: 'weekly', title: 'Limpeza e Estolão', desc: 'Poda.', guide: '<h3>✂️ Tira-Tudo</h3><ul><li><strong>Estolões:</strong> Aqueles "cipós" que a planta solta para fazer muda nova. CORTE TUDO se quer fruta. O estolão rouba força.</li><li><strong>Folhas velhas:</strong> Tire as folhas secas/doentes de baixo sem dó.</li></ul>' }
+    ],
 
-    banana: [],
-    abacaxi: [],
+    // 29. Raízes Específicas
+    beterraba: [
+        { day: 0, title: 'Semeadura', desc: 'Glomérulo.', guide: '<h3>🌱 Uma semente = Várias plantas</h3><p>A "semente" da beterraba é um coquinho com 3 ou 4 sementes dentro.</p><ul><li>Vai nascer muita junta. Prepare-se para o desbaste.</li><li>Gosta de boro (Bórax). Se faltar, fica com o coração preto e duro.</li></ul>' },
+        { day: 25, title: 'Desbaste', desc: 'Espaçamento.', guide: '<h3>✂️ Um Corpo, Um Lugar</h3><p>Deixe apenas uma planta a cada 10cm.</p>' }
+    ],
+    batata_doce: [
+        { day: 0, title: 'Plantio de Ramas', desc: 'Leiras.', guide: '<h3>🍠 Plantio Rústico</h3><p>Não se planta batata, se planta o ramo (rama).</p><ul><li>Faça leiras (camalhões) altas de terra fofa.</li><li>Corte pontas de ramas com 30-40cm.</li><li>Enterre o meio da rama, deixando as pontas de fora.</li></ul>' },
+        { day: 60, title: 'Amontoa', desc: 'Rachadura.', guide: '<h3>🚜 Cobrir Rachaduras</h3><p>A batata cresce e empurra a terra. Se aparecer rachadura e o sol bater na batata, atrai broca (bichinho).</p><ul><li>Chegue terra nos pés (amontoa) para fechar as frestas.</li></ul>' }
+    ],
 
-    caprinos: [],
+    // 30. Abacaxi
+    abacaxi: [
+        { day: 0, title: 'Plantio de Mudas', desc: 'Filhotes.', guide: '<h3>🍍 O Rei demora 18 meses</h3><p>Use mudas do tipo "filhote" (que saem na base do fruto) ou "rebentão".</p><ul><li><strong>Cura:</strong> Deixe as mudas no sol por 1 semana viradas para baixo (para matar fungos da base).</li><li><strong>Plantio:</strong> Espaçamento largo (90x30cm) pois espeta muito na colheita.</li></ul>' },
+        { day: 300, title: 'Indução Floral (Opcional)', desc: 'Carbureto.', guide: '<h3>🌺 Forçar Florada</h3><p>Para colher todos iguais.</p><ul><li>Aos 10-12 meses (planta grande), aplica-se carbureto (etileno) no "olho" da planta à noite para ela florescer.</li><li>Sem isso, cada um dá numa época.</li></ul>' }
+    ],
 
-    codornas: [],
-    patos: []
+    // 31. Vagem
+    vagem: [
+        { day: 0, title: 'Plantio Tutorado', desc: 'Trepadeira.', guide: '<h3>🫘 Feijão de Metro?</h3><p>A maioria das vagens comerciais são trepadeiras.</p><ul><li>Precisa de cerca cruzada (tipo X) ou tutor vertical.</li><li>Ciclo rápido (60 dias colhendo).</li></ul>' },
+        { day: 50, type: 'routine', freq: 'weekly', title: 'Colheita Frequente', desc: 'Não deixe granar.', guide: '<h3>✂️ Colha Cedo</h3><p>Se o grão inchar (granar), a vagem fica fibrosa e ruim de mercado.</p><ul><li>Colha a cada 2 ou 3 dias.</li></ul>' }
+    ],
+
+    // 33. Pecuária Menor Específica
+    caprinos: [
+        { day: 0, title: 'Manejo Alimentar', desc: 'Ramoneio.', guide: '<h3>🐐 Cabra não é Ovelha</h3><p>A cabra gosta de comer "o que está no alto" (folhas de arbustos), não só pasto baixo.</p><ul><li>Permita acesso a arbustos ou forneça ramos (Amora, Leucena).</li><li><strong>Casco:</strong> Sofre muito com umidade. Mantenha local seco.</li></ul>' },
+        { day: 30, type: 'routine', freq: 'monthly', title: 'Vermifugação (Famacha)', desc: 'Controle.', guide: '<h3>👁️ Olho nela</h3><p>A cabra é muito sensível a verme. Use o método FAMACHA (cor da mucosa do olho) todo mês.</p>' }
+    ],
+    codornas: [
+        { day: 0, title: 'Ambiente Protegido', desc: 'Vento e Frio.', guide: '<h3>🐦 Sensíveis</h3><p>Codorna morre fácil com vento encanado.</p><ul><li>Gaiolas fechadas ou viveiro protegido.</li><li><strong>Proteína:</strong> Precisam de ração forte (22-24% proteína), mais que galinha.</li></ul>' },
+        { day: 40, title: 'Início Postura', desc: 'Luz.', guide: '<h3>💡 Luz = Ovo</h3><p>Codorna precisa de 14h-16h de luz por dia para botar bem.</p><ul><li>Complete o dia com lâmpada até as 21h.</li></ul>' }
+    ],
+    patos: [
+        { day: 0, title: 'Piscina?', desc: 'Água.', guide: '<h3>🦆 Aves Aquáticas</h3><p>Não *precisam* de lago para viver, mas precisam molhar a cabeça.</p><ul><li>Bebedouro tem que ser fundo o suficiente para ele enfiar o bico e lavar os olhos.</li><li>São muito rústicos e resistentes a doenças.</li></ul>' }
+    ]
 };
 
-// --- CLONING LOGIC ---
-const clone = (from, nameChange) => {
-    const fresh = JSON.parse(JSON.stringify(cropTemplates[from]));
-    if (nameChange) {
-        fresh.forEach(t => {
-            // Regex to replace common base names in title and guide
-            t.title = t.title.replace(/Alface|Tomate|Cenoura|Mandioca|Pomar|Frangos|Ovinos|Ervas/g, nameChange);
-            if (t.guide) {
-                t.guide = t.guide.replace(/Alface|Tomate|Cenoura|Mandioca|Pomar|Frangos|Ovinos|Ervas/g, nameChange);
-            }
-        });
-    }
-    return fresh;
-};
-
-// Map
-cropTemplates.couve = clone('alface', 'Couve');
-cropTemplates.rucula = clone('alface', 'Rúcula');
-cropTemplates.cheiro_verde = clone('alface', 'Cheiro-Verde');
-
-cropTemplates.manjericao = clone('ervas', 'Manjericão');
-cropTemplates.alecrim = clone('ervas', 'Alecrim');
-cropTemplates.hortela = clone('ervas', 'Hortelã');
-
-cropTemplates.pimentao = clone('tomate', 'Pimentão');
-cropTemplates.pepino = clone('tomate', 'Pepino'); // Tweak: Pepino also needs tutoring
-cropTemplates.quiabo = clone('tomate', 'Quiabo');
-cropTemplates.abobora = clone('tomate', 'Abóbora'); // Tweak: Abobora is crawling, but nutrition similar
-cropTemplates.morango = clone('tomate', 'Morango'); // High fruit demand
-cropTemplates.melancia = clone('tomate', 'Melancia');
-
-cropTemplates.beterraba = clone('cenoura', 'Beterraba');
-cropTemplates.batata_doce = clone('mandioca', 'Batata Doce');
-cropTemplates.abacaxi = clone('mandioca', 'Abacaxi'); // Rustica, mudas
-
-cropTemplates.vagem = clone('feijao', 'Vagem');
-
-cropTemplates.banana = clone('pomar', 'Banana');
-
-cropTemplates.caprinos = clone('ovinos', 'Cabras'); // Same hoof/worm issues
-cropTemplates.codornas = clone('frangos_corte', 'Codornas'); // Similar timeline but faster
-cropTemplates.patos = clone('frangos_corte', 'Patos'); // Meat birds
-
-// Final check to prevent errors
-Object.keys(cropTemplates).forEach(k => {
-    if (!cropTemplates[k] || cropTemplates[k].length === 0) {
-        // Fallback for any missed key to generic
-        console.warn('Fallback template used for', k);
-        cropTemplates[k] = clone('milho', 'Genérico');
-    }
-});
 
 
-function generateProjectTasks(projectId, culture, startDate) {
-    try {
-        const template = cropTemplates[culture];
-        if (!template) {
-            // alert('ERRO: Template não encontrado para ' + culture);
-            // Fallback for old projects or unknown types
-            return;
-        }
 
-        let taskCount = 0;
-        template.forEach(item => {
-            // Calculate Date
-            const itemDate = new Date(startDate);
-            itemDate.setDate(itemDate.getDate() + item.day);
-            const dateStr = getLocalISODate(itemDate);
-
-            // ROUTINE
-            if (item.type === 'routine') {
-                state.routines.push({
-                    id: Date.now() + Math.random(),
-                    title: item.title,
-                    description: item.desc,
-                    frequency: item.freq,
-                    projectId: projectId,
-                    nextRun: dateStr,
-                    guideContent: item.guide // Store guide for routine tasks
-                });
-            }
-            // ONE-OFF TASK
-            else {
-                state.tasks.push({
-                    id: Date.now() + Math.random(),
-                    title: item.title,
-                    description: item.desc,
-                    date: dateStr,
-                    priority: 'normal',
-                    completed: false,
-                    fromRoutine: false,
-                    projectId: projectId,
-                    frequency: 'none',
-                    isAutomated: true,
-                    guideContent: item.guide
-                });
-            }
-            taskCount++;
-        });
-
-        // Trigger routine processing
-        processRoutines();
-        // alert('Geradas ' + taskCount + ' tarefas/rotinas para ' + culture); // DEBUG
-    } catch (err) {
-        alert('ERRO em generateProjectTasks: ' + err.message);
-        console.error(err);
-    }
-}
 
 function deleteProject(id) {
     if (!confirm('⚠️ Tem certeza que deseja apagar este projeto?\n\nIsso apagará TODAS as tarefas vinculadas a ele permanentemente.')) return;
@@ -1127,7 +1299,10 @@ function deleteProject(id) {
     // Use loose comparison because sometimes IDs can be strings/numbers mismatch during storage
     state.tasks = state.tasks.filter(t => parseInt(t.projectId) !== parseInt(id));
 
-    // 3. Reset View if needed
+    // 3. Remove Linked Routines
+    state.routines = state.routines.filter(r => parseInt(r.projectId) !== parseInt(id));
+
+    // 4. Reset View if needed
     if (state.currentProject === id) {
         state.currentProject = 'all';
     }
@@ -1145,7 +1320,8 @@ function generateProjectTasks(projectId, culture, startDate) {
 
     template.forEach(item => {
         // Calculate Date
-        const itemDate = new Date(startDate);
+        // Force T12:00:00 to avoid Timezone "Yesterday" bug
+        const itemDate = new Date(startDate + 'T12:00:00');
         itemDate.setDate(itemDate.getDate() + item.day);
         const dateStr = getLocalISODate(itemDate);
 
@@ -1295,8 +1471,8 @@ function openAutoGuide(title, content) {
 }
 
 function getMoonPhase(date) {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
     const day = date.getDate();
     let c = 0, e = 0, jd = 0, b = 0;
     if (month < 3) { year--; month += 12; }
@@ -1645,6 +1821,83 @@ const fullGuides = {
     }
 };
 
+
+
+function getBestMoonForCrop(culture) {
+    let targetPhase = 'Lua Crescente'; // Default
+    const lower = culture.toLowerCase();
+
+    // Mapping Logic based on biological focus
+    if (['cenoura', 'beterraba', 'alho', 'cebola', 'rabanete'].some(c => lower.includes(c))) {
+        targetPhase = 'Lua Nova'; // Root establishing
+    }
+    else if (['mandioca', 'batata_doce', 'inhame', 'gengibre', 'batata'].some(c => lower.includes(c))) {
+        targetPhase = 'Lua Minguante'; // Root thickening/storage
+    }
+    else if (['alface', 'couve', 'rucula', 'agriao', 'repolho', 'cheiro_verde', 'manjericao', 'hortela'].some(c => lower.includes(c))) {
+        targetPhase = 'Lua Cheia'; // Leaf growth
+    }
+    else if (['tomate', 'pimentao', 'quiabo', 'abobora', 'feijao', 'milho', 'vagem', 'pepino', 'melancia', 'morango', 'frangos', 'gado'].some(c => lower.includes(c))) {
+        targetPhase = 'Lua Crescente'; // Above ground / Growth
+    }
+    else if (['galinhas_poedeiras', 'suinos', 'cafe', 'pomar', 'banana', 'coqueiro'].some(c => lower.includes(c))) {
+        targetPhase = 'Lua Nova'; // Long term / structural
+    }
+    return targetPhase;
+}
+
+
+function applyReschedule(taskId, newDateStr) {
+    const task = state.tasks.find(t => t.id == taskId);
+    if (!task) return;
+
+    if (!confirm(`Deseja alterar esta tarefa para ${newDateStr}?\nIsso vai ajustar automaticamente todas as tarefas futuras deste projeto.`)) {
+        return;
+    }
+
+    const oldDate = new Date(task.date + 'T12:00:00');
+    const newDate = new Date(newDateStr + 'T12:00:00');
+
+    // Difference in milliseconds
+    const diffTime = newDate - oldDate;
+    // Difference in days (approx)
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) return;
+
+    // Update this task and all future tasks
+    let count = 0;
+    state.tasks.forEach(t => {
+        if (t.projectId === task.projectId) {
+            const tDate = new Date(t.date + 'T12:00:00');
+
+            // Logic: Move the specific task, AND any task that is on or after the OLD date
+            // (If we use > oldDate, we might miss tasks on the same day if order matters, but >= catches same day tasks)
+            // But we don't want to double move the current task if we check ID.
+
+            let shouldMove = false;
+
+            if (t.id === task.id) {
+                shouldMove = true;
+            } else if (tDate >= oldDate) {
+                shouldMove = true;
+            }
+
+            if (shouldMove) {
+                // Apply difference
+                const nextDate = new Date(tDate);
+                nextDate.setDate(nextDate.getDate() + diffDays);
+                t.date = getLocalISODate(nextDate);
+                count++;
+            }
+        }
+    });
+
+    saveData();
+    renderTasks();
+    alert(`${count} tarefas foram reagendadas!`);
+}
+
 // Event Listeners
 function setupEventListeners() {
     if (elements.addBtn) elements.addBtn.addEventListener('click', () => toggleModal(true));
@@ -1689,6 +1942,14 @@ function setupEventListeners() {
         elements.soilResultModal.classList.remove('visible');
     });
     if (elements.soilForm) elements.soilForm.addEventListener('submit', handleSoilAnalysis);
+
+    // Weather Listeners
+    const btnWeather = document.getElementById('btnWeather');
+    const closeWeatherModal = document.getElementById('closeWeatherModal');
+    if (btnWeather) btnWeather.addEventListener('click', showWeatherModal);
+    if (closeWeatherModal) closeWeatherModal.addEventListener('click', () => {
+        document.getElementById('weatherModal').classList.remove('visible');
+    });
 
     // Emoji Selection
     document.querySelectorAll('.emoji-option').forEach(opt => {

@@ -602,3 +602,11 @@ textarea {
     font-size: 0.75rem;
     cursor: pointer;
 }
+
+/* Weather Info Cards */
+.weather-info-card {
+    background: #f5f5f5;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
