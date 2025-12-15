@@ -1,7 +1,7 @@
-
 // Tasks.js
-import { state, elements, saveData, getLocalISODate, toggleModal, getMoonPhase, showConfirm } from './app.js';
-import { getEmojiForType } from './projects.js';
+import { state, elements, saveData, getLocalISODate } from './store.js';
+import { toggleModal, getMoonPhase, showConfirm } from './ui.js';
+// import { getEmojiForType } from './projects.js';
 
 export function renderTasks() {
     const viewDateStr = getLocalISODate(state.viewDate);
@@ -165,6 +165,7 @@ export function saveTask(e) {
     }
 
     saveData();
+    renderTasks();
     elements.taskForm.reset();
     toggleModal(false);
 }
@@ -199,6 +200,7 @@ export function toggleTask(id) {
     if (task) {
         task.completed = !task.completed;
         saveData();
+        renderTasks();
     }
 }
 

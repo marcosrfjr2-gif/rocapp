@@ -1,11 +1,11 @@
-// Projects.js
-import { state, elements, saveData, getLocalISODate, toggleModal, toggleProjectModal, showConfirm } from './app.js';
+import { state, elements, saveData, getLocalISODate } from './store.js';
+import { toggleModal, toggleProjectModal, showConfirm } from './ui.js';
 import { renderTasks, processRoutines } from './tasks.js';
 
 export const cropTemplates = {
     // === 1. FOLHOSAS (Ciclo Curto) ===
     alface: [
-        { day: -15, title: 'Adubação de Canteiro', desc: 'Preparo Solo.', guide: '<h3>🥬 Preparo de Campeão</h3><p><strong>Por que?</strong> A alface tem raízes curtas e delicadas. Terra dura impede o crescimento.</p><h4>⚖️ Dosagem Exata (por m²):</h4><ul><li><strong>Calcário:</strong> 200g (1 copo americano cheio) se não tiver análise de solo.</li><li><strong>Esterco de Gado:</strong> 15 a 20 Litros (2 baldes).</li><li><strong>Esterco de Galinha:</strong> 5 Litros (meio balde).</li><li><strong>NPK 04-14-08:</strong> 150g (3/4 de copo americano).</li></ul><h4>🛠️ Passo a Passo:</h4><ul><li>Espalhe tudo sobre o canteiro e revire a 30cm com a enxada. Molhe bem.</li></ul>' },
+        { day: -15, title: 'Adubação e Calagem', desc: 'Preparo Solo.', guide: '<h3>🥬 Preparo de Campeão</h3><p><strong>Por que?</strong> A alface tem raízes curtas e delicadas. Terra dura impede o crescimento.</p><h4>⚖️ Dosagem Exata (por m²):</h4><ul><li><strong>Calcário:</strong> 200g (1 copo americano cheio) se não tiver análise de solo.</li><li><strong>Esterco de Gado:</strong> 15 a 20 Litros (2 baldes).</li><li><strong>Esterco de Galinha:</strong> 5 Litros (meio balde).</li><li><strong>NPK 04-14-08:</strong> 150g (3/4 de copo americano).</li></ul><h4>🛠️ Passo a Passo:</h4><ul><li>Espalhe tudo sobre o canteiro e revire a 30cm com a enxada. Molhe bem.</li></ul>' },
         { day: 0, title: 'Transplante (Lua Cheia/Nova)', desc: 'Mudas.', guide: '<h3>🌑🌕 O Segredo do Pegamento</h3><p><strong>Melhor Lua:</strong> Cheia ou Nova (estimula folhas).</p><h4>🌱 Como Plantar:</h4><ul><li><strong>Hidratação:</strong> Mergulhe a bandeja de mudas em água por 1 min antes de tirar.</li><li><strong>Cuidado Vital:</strong> Não enterre o "colo" (região entre a raiz e o caule), senão a planta apodrece. Deixe rente ao solo.</li><li><strong>Espaçamento:</strong> 25cm entre plantas e linhas.</li></ul>' },
         { day: 10, type: 'routine', freq: 'daily', title: 'Rega Leve e Frequente', desc: 'Manhã/Tarde.', guide: '<h3>💧 Estratégia de Água</h3><p><strong>A Regra:</strong> Solo sempre úmido, nunca encharcado (se apertar a terra na mão, sai água? Tá demais).</p><ul><li><strong>Frequência:</strong> Se estiver calor, regue de manhã cedo (antes das 8h) E no final da tarde (após as 16h).</li></ul>' },
         { day: 15, title: 'Adubação de Cobertura (Nitrogênio)', desc: 'Crescimento.', guide: '<h3>✨ Explosão de Crescimento</h3><p><strong>O que usar:</strong> Sulfato de Amônio ou Ureia.</p><h4>🥄 Dose de Precisão:</h4><ul><li><strong>Por Planta:</strong> 1 colher de chá rasa (aprox 3g).</li><li><strong>Por m²:</strong> 1 colher de sopa cheia espalhada nas entrelinhas.</li><li><strong>Aplicação:</strong> Faça um círculo a 5cm do caule. NUNCA jogue nas folhas (queima!). Regue IMEDIATAMENTE após aplicar para o adubo penetrar.</li></ul>' },
@@ -20,13 +20,17 @@ export const cropTemplates = {
         { day: 60, title: 'Início da Colheita Inteligente', desc: 'Folhas Baixas.', guide: '<h3>✂️ Colheita Contínua</h3><p><strong>Como Colher:</strong> Quebre o talo da folha para baixo (sentido da base). Não deixe "tocos" no caule para não entrar fungo.</p><ul><li>Colha sempre as folhas <strong>mais velhas (de baixo)</strong> primeiro.</li><li>Mantenha sempre pelo menos 5 folhas no "olho" (topo) para a planta continuar fazendo fotossíntese.</li></ul>' }
     ],
     rucula: [
-        { day: 0, title: 'Semeadura (Lua Cheia)', desc: 'Direta.', guide: '<h3>🌕 Semeadura de Precisão</h3><p>Rúcula não gosta de transplante. Plante direto no local.</p><h4>⚖️ Adubação de Base (Canteiro):</h4><ul><li><strong>Esterco:</strong> 2kg/m².</li><li><strong>NPK 04-14-08:</strong> 100g/m² (meio copo).</li></ul><ul><li><strong>Sulcos:</strong> 20cm entre linhas. 1cm de profundidade.</li><li><strong>Semente:</strong> Derrube 1 semente a cada 2cm. Cubra com terra peneirada.</li></ul>' },
-        { day: 15, title: 'Desbaste Obrigatório', desc: 'Raleio.', guide: '<h3>✂️ Menos é Mais</h3><p>Se as plantas ficarem encostadas, elas não crescem e dão fungo.</p><ul><li><strong>Ação:</strong> Arranque as plantinhas menores. Deixe <strong>5cm livres</strong> entre cada pé de rúcula.</li><li>Use os brotos arrancados na salada.</li></ul>' },
-        { day: 20, title: 'Adubação Foliar ou Líquida', desc: 'Rápida.', guide: '<h3>✨ Booster Rápido</h3><p>O ciclo é curto (40 dias). O adubo sólido demora a reagir.</p><h4>🥄 Receita:</h4><ul><li>Dilua 1 copo de chorume (biofertilizante) em 10 litros de água.</li><li>Ou use 1 colher de chá de Ureia em 10L de água.</li><li>Regue as plantas com essa mistura no final da tarde.</li></ul>' }
+        { day: -10, title: 'Preparo do Canteiro', desc: 'Adubação.', guide: '<h3>🌿 Berço de Mudas</h3><p>Solo bem fofo e adubado.</p><h4>⚖️ Adubação (m²):</h4><ul><li><strong>Esterco:</strong> 2kg/m².</li><li><strong>NPK 04-14-08:</strong> 100g/m².</li></ul>' },
+        { day: 0, title: 'Semeadura (Lua Cheia)', desc: 'Direta.', guide: '<h3>🌕 Semeadura</h3><p>Plante em sulcos com 20cm de distância. Cubra com terra peneirada (0,5cm).</p>' },
+        { day: 15, title: 'Desbaste Obrigatório', desc: 'Raleio.', guide: '<h3>✂️ Raleio</h3><p>Deixe 5cm entre as plantas. As arrancadas podem ser consumidas.</p>' },
+        { day: 20, title: 'Adubação Foliar', desc: 'Rápida.', guide: '<h3>✨ Booster</h3><p>Use biofertilizante ou ureia diluída (0.5%) nas folhas ao entardecer.</p>' },
+        { day: 40, title: 'Colheita', desc: 'Corte.', guide: '<h3>✂️ Colheita</h3><p>Arrancar a planta inteira ou cortar as folhas maiores.</p>' }
     ],
     cheiro_verde: [
-        { day: 0, title: 'Plantio (Salsa e Cebolinha)', desc: 'Consórcio.', guide: '<h3>🌿 A Dupla Dinâmica</h3><p><strong>Preparo do Canteiro:</strong> 5kg de esterco/m² e 100g de NPK 04-14-08.</p><p><strong>Cebolinha:</strong> Gosta de Sol. Plante mudas (touceiras) cortando as folhas em cima e raízes embaixo.</p><p><strong>Salsa:</strong> Semente demora a germinar (até 20 dias!). Deixe a semente na água morna por uma noite antes de plantar.</p>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Adubação Orgânica', desc: 'Esterco.', guide: '<h3>💩 Comida Leve</h3><p>Cebolinha odeia sal (adubo químico excessivo queima a ponta).</p><h4>🥄 Dose Mensal:</h4><ul><li><strong>Esterco de Galinha:</strong> 1 punhado generoso por touceira.</li><li><strong>Húmus de Minhoca:</strong> 200g por touceira.</li><li>Espalhe ao redor e afofe a terra levemente.</li></ul>' }
+        { day: -10, title: 'Adubação do Canteiro', desc: 'Preparo.', guide: '<h3>🌿 Solo Rico</h3><p>Misture 5kg de esterco/m² e 100g de NPK 04-14-08.</p>' },
+        { day: 0, title: 'Plantio', desc: 'Mudas/Sementes.', guide: '<h3>🌱 Plantio</h3><p>Cebolinha gosta de sol. Salsa demora a nascer (hidrate a semente).</p>' },
+        { day: 30, type: 'routine', freq: 'monthly', title: 'Adubação Orgânica', desc: 'Manutenção.', guide: '<h3>💩 Comida</h3><p>Use esterco de galinha ou húmus. Evite salitre (queima a folha).</p>' },
+        { day: 60, title: 'Colheita Contínua', desc: 'Folhas Externas.', guide: '<h3>✂️ Consumo</h3><p>Colha as folhas mais velhas (externas) para a planta continuar renovando o miolo.</p>' }
     ],
 
     // === 2. FRUTOS ===
@@ -36,85 +40,183 @@ export const cropTemplates = {
         { day: 15, title: 'Tutoramento Vertical', desc: 'Amarrar.', guide: '<h3>🪵 Subindo a Serra</h3><p>O tomateiro indeterminado cresce até 2 metros.</p><ul><li>Use estacas de 2,20m.</li><li>Amarre com fitilho fazendo um "8" frouxo para não enforcar o caule quando ele engrossar.</li></ul>' },
         { day: 20, type: 'routine', freq: 'weekly', title: 'Desbrota dos Chupões', desc: 'Poda.', guide: '<h3>✂️ Limpeza de Energia</h3><p><strong>O que tirar:</strong> Brotos que nascem na axila (vão entre o caule e a folha).</p><ul><li>Arranque com a mão quando tiverem menos de 5cm.</li><li>Se deixar crescer, vira uma moita descontrolada com tomates pequenos.</li></ul>' },
         { day: 25, type: 'routine', freq: 'biweekly', title: 'Adubação de Cobertura (K/Ca)', desc: 'Frequente.', guide: '<h3>✨ Comida de Atleta</h3><p>Tomate precisa de comida a cada 15 ou 20 dias.</p><h4>🥄 Dose por Planta:</h4><ul><li><strong>Fase Verde:</strong> 1 colher de sopa de NPK 20-00-20 ou Nutriverde.</li><li><strong>Fase Flor/Fruto:</strong> 2 colheres de sopa de NPK 10-10-10 ou 1 colher de Sulfato de Potássio.</li><li>Espalhe longe do tronco (na projeção da copa) e regue.</li></ul>' },
-        { day: 60, title: 'Colheita no Ponto', desc: 'Pintou.', guide: '<h3>🍅 Colheita Estratégica</h3><p><strong>Ponto de Vez:</strong> Quando o fundo começar a ficar laranja ("pintado").</p><ul><li>Colha e deixe madurar na fruteira. Evita ataque de pássaros e broca gigante.</li></ul>' }
+        { day: 90, title: 'Colheita', desc: 'Ponto de Vez.', guide: '<h3>🍅 Colheita</h3><p>Colha quando o fruto estiver "pintando" (começando a avermelhar) para evitar ataque de pássaros.</p>' }
     ],
     pimentao: [
-        { day: 0, title: 'Plantio (Lua Crescente)', desc: 'Mudas.', guide: '<h3>🫑 Plantio Protegido</h3><p>Pimentão exige solo rico.</p><h4>⚖️ Cova (40x40cm):</h4><ul><li><strong>Esterco:</strong> 5 litros.</li><li><strong>NPK 04-14-08:</strong> 150g (3/4 de copo).</li><li><strong>Calcário:</strong> 100g.</li><li>Misture tudo muito bem.</li></ul>' },
-        { day: 20, title: 'Tutoramento em X', desc: 'Suporte.', guide: '<h3>🪵 Suporte em X</h3><p>Os galhos quebram fácil ("rasgam" no tronco).</p><ul><li>Passe fitilhos laterais para sustentar os galhos quando estiverem carregados.</li></ul>' },
-        { day: 30, title: 'Adubação de Florada', desc: 'K.', guide: '<h3>✨ Potássio para Frutos</h3><p>A flor caiu? Falta nutrição ou água irregular.</p><h4>🥄 Dose por pé:</h4><ul><li>1 colher de sopa de NPK 10-10-10 a cada 20 dias.</li><li>Se tiver cinzas de madeira, jogue 1 punhado por pé (rico em Potássio).</li></ul>' }
+        { day: -30, title: 'Calagem e Preparo', desc: 'Correção.', guide: '<h3>🫑 Solo Rico</h3><p>Aplique 100g de calcário por cova e misture bem. Adube com 5L de esterco e 150g de NPK 04-14-08.</p>' },
+        { day: 0, title: 'Plantio (Lua Crescente)', desc: 'Mudas.', guide: '<h3>🌱 Transplante</h3><p>Plante a muda com torrão. Evite cobrir o caule acima do nível original.</p>' },
+        { day: 20, title: 'Tutoramento', desc: 'Suporte.', guide: '<h3>🪵 Estaqueamento</h3><p>Pimentão tem galhos quebradiços. Use estacas de 80cm e amarre os galhos conforme crescem.</p>' },
+        { day: 30, title: 'Adubação de Cobertura', desc: 'Potássio.', guide: '<h3>✨ Frutos</h3><p>Aplique 1 colher de sopa de NPK 10-10-10 a cada 20 dias.</p>' },
+        { day: 90, title: 'Colheita', desc: 'No Tamanho.', guide: '<h3>🫑 Colheita</h3><p>Colha quando atingir o tamanho máximo e estiver firme e brilhante. Se quiser vermelho, espere madurar (mas produz menos).</p>' }
     ],
     quiabo: [
         { day: -30, title: 'Calagem Obrigatória', desc: 'Acidez.', guide: '<h3>☀️ O Rei do Verão</h3><p>Quiabo trava em solo ácido.</p><h4>⚖️ Dosagem:</h4><ul><li><strong>Calcário:</strong> 200g a 300g por m². Incorpore 30 dias antes.</li><li><strong>Adubo Plantio:</strong> 300g de cama de frango por metro linear de sulco.</li></ul>' },
         { day: 0, title: 'Semeadura Direta (Lua Crescente)', desc: 'Direta.', guide: '<h3>🌱 Quebra de Dormência</h3><p>Semente dura.</p><ul><li>Deixe de molho na água por 24h.</li><li>Plante 3 sementes a cada 40cm. Profundidade 2-3cm.</li></ul>' },
-        { day: 20, title: 'Desbaste', desc: 'Deixar a melhor.', guide: '<h3>✂️ Uma Só</h3><p>Escolha a melhor planta de cada cova e corte as outras rente ao solo. Não tenha dó.</p>' },
-        { day: 40, title: 'Adubação Nitrogenada', desc: 'Crescimento.', guide: '<h3>✨ Força Vegetativa</h3><p>Quando surgirem os botões.</p><h4>🥄 Dose:</h4><ul><li><strong>Ureia:</strong> 1 colher de chá por planta (cuidado, queima!).</li><li>Ou 1 mãozada de esterco de galinha curtido.</li></ul>' },
+        { day: 20, title: 'Desbaste', desc: 'Seleção.', guide: '<h3>✂️ Uma Só</h3><p>Deixe apenas a planta mais forte por cova.</p>' },
+        { day: 40, title: 'Adubação Nitrogenada', desc: 'Crescimento.', guide: '<h3>✨ Força</h3><p>Na floração, aplique 1 colher de chá de Ureia por planta (longe do caule).</p>' },
+        { day: 60, type: 'routine', freq: 'daily', title: 'Colheita Diária', desc: 'Ponto.', guide: '<h3>🔪 Todo Dia</h3><p>Quiabo cresce rápido e "passa" (fica duro). Colha todo dia quando a ponta quebrar fácil.</p>' }
     ],
     abobora: [
-        { day: 0, title: 'Plantio Espaçoso', desc: 'Cova.', guide: '<h3>🎃 Berço Esplêndido</h3><p>Abóbora é gulosa.</p><h4>⚖️ Cova (60x60x60cm):</h4><ul><li><strong>Esterco:</strong> 20 Litros (2 baldes) - exagere mesmo!</li><li><strong>Calcário:</strong> 200g.</li><li><strong>NPK 04-14-08:</strong> 200g.</li><li>Misture e deixe curtir 10 dias.</li></ul>' },
-        { day: 45, title: 'Polinização e Adubação', desc: 'Florada.', guide: '<h3>🐝 O Casamento</h3><p>Se as frutinhas apodrecem novas, é falta de polinização (abelha).</p><ul><li><strong>Manual:</strong> Pegue flor macho (cabo fino), tire pétalas e encoste no miolo da fêmea (tem a abobrinha).</li><li><strong>Adubo:</strong> 100g de NPK 10-10-10 por cova na florada.</li></ul>' }
+        { day: -15, title: 'Preparo da Cova', desc: 'Matéria Orgânica.', guide: '<h3>🎃 Berço</h3><p>Cova 60x60cm. Encha com 20 Litros de esterco e 200g de NPK 04-14-08.</p>' },
+        { day: 0, title: 'Plantio (Lua Crescente)', desc: 'Sementes.', guide: '<h3>🌱 Semeadura</h3><p>3 sementes por cova (2cm prof.). Desbaste deixando 2 plantas.</p>' },
+        { day: 45, title: 'Polinização Manual', desc: 'Ajuda.', guide: '<h3>🐝 O Casamento</h3><p>Pegue a flor macho (cabo fino) e esfregue no miolo da fêmea (tem a abobrinha) pela manhã.</p>' },
+        { day: 90, title: 'Colheita', desc: 'Madura.', guide: '<h3>🎃 Ponto</h3><p>Quando o cabinho (pedúnculo) secar ou a casca estiver dura (unha não entra).</p>' }
+    ],
+    pepino: [
+        { day: -10, title: 'Adubação de Cova', desc: 'Preparo.', guide: '<h3>🥒 Cova Rica</h3><p>10L de Esterco + 100g de NPK 04-14-08.</p>' },
+        { day: 0, title: 'Plantio (Lua Crescente)', desc: 'Mudas/Sementes.', guide: '<h3>🌱 Plantio</h3><p>2 sementes por cova. Precisa de suporte (cerca/tela).</p>' },
+        { day: 25, title: 'Condução', desc: 'Amarrio.', guide: '<h3>🪵 Subindo</h3><p>Conduza a rama principal verticalmente. Pode as brotações laterais até 40cm do chão.</p>' },
+        { day: 45, title: 'Adubação de Produção', desc: 'K.', guide: '<h3>✨ Frutificação</h3><p>1 colher de sopa de NPK 10-10-10 por pé a cada 15 dias.</p>' },
+        { day: 60, type: 'routine', freq: 'daily', title: 'Colheita', desc: 'Frequente.', guide: '<h3>🥒 Todo Dia</h3><p>Não deixe crescer demais senão amarga e enfraquece a planta.</p>' }
+    ],
+    melancia: [
+        { day: -20, title: 'Preparo do Solo', desc: 'Cova.', guide: '<h3>🍉 Espaço</h3><p>Espaçamento 3x3m. Cova 50x50x50 com 20L de Esterco + 300g NPK 04-14-08.</p>' },
+        { day: 0, title: 'Plantio (Lua Crescente)', desc: 'Sementes.', guide: '<h3>🌱 Semeadura</h3><p>4 sementes por cova. Depois desbaste para deixar 2 plantas.</p>' },
+        { day: 40, title: 'Penteado das ramas', desc: 'Organização.', guide: '<h3>🌿 Ramas</h3><p>Distribua as ramas uniformemente para não se cruzarem.</p>' },
+        { day: 85, title: 'Colheita', desc: 'Ponto.', guide: '<h3>🍉 O Som</h3><p>Geralmente 85-100 dias. Gavinhas secas perto do fruto. Som "oco" ao bater.</p>' }
+    ],
+    morango: [
+        { day: -20, title: 'Preparo do Canteiro', desc: 'Alto.', guide: '<h3>🍓 Camalhão</h3><p>Faça canteiros altos (30cm). Use muito composto orgânico e NPK 04-14-08.</p>' },
+        { day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🌱 Coroa</h3><p>Nunca enterre a coroa (centro) da muda. Use mulching (plástico) para forrar o chão.</p>' },
+        { day: 30, type: 'routine', freq: 'biweekly', title: 'Adubação Foliar', desc: 'Micros.', guide: '<h3>✨ Nutrição</h3><p>Adubação foliar com Cálcio e Boro ajuda na firmeza do fruto.</p>' },
+        { day: 60, title: 'Colheita', desc: 'Vermelho.', guide: '<h3>🍓 Manhã</h3><p>Colha os frutos totalmente vermelhos, cortando o talinho (não puxe).</p>' }
+    ],
+    abacaxi: [
+        { day: 0, title: 'Plantio (Lua Minguante)', desc: 'Mudas.', guide: '<h3>🍍 Plantio</h3><p>Enterre a base da muda 10cm. Espaçamento 90x30cm.</p>' },
+        { day: 60, type: 'routine', freq: 'monthly', title: 'Adubação Axilar', desc: 'Foliar.', guide: '<h3>✨ Adubo na Folha</h3><p>O abacaxi come pelas folhas. Aplique mistura de Ureia e Potássio na axila das folhas basais.</p>' },
+        { day: 365, title: 'Indução Floral', desc: 'Carbureto.', guide: '<h3>🌸 Forçar Flor</h3><p>Se a planta estiver grande mas não der flor com 1 ano, aplique solução indutora no olho.</p>' },
+        { day: 500, title: 'Colheita', desc: 'Amarelo.', guide: '<h3>🍍 Doce</h3><p>Colha quando os "olhinhos" da base ficarem amarelos.</p>' }
+    ],
+    maracuja: [
+        { day: -30, title: 'Montagem da Espaldeira', desc: 'Cerca.', guide: '<h3>🏗️ Estrutura</h3><p>Instale moirões com 1 arame liso a 2m de altura. Cova 40x40x40cm adubada.</p>' },
+        { day: 0, title: 'Plantio (Lua Crescente)', desc: 'Mudas.', guide: '<h3>🌱 Plantio</h3><p>Plante a muda e coloque um tutor (vara/barbante) até o arame.</p>' },
+        { day: 30, title: 'Condução e Poda', desc: 'Formação.', guide: '<h3>✂️ Formação</h3><p>Remova todos os brotos laterais até a planta chegar no arame. Lá em cima, corte a ponta para abrir 2 braços.</p>' },
+        { day: 60, title: 'Polinização Manual', desc: 'Mamangava.', guide: '<h3>🐝 Polinização</h3><p>Se não tiver abelhas grandes (mamangavas), faça manual no início da tarde (13h-15h).</p>' },
+        { day: 180, title: 'Colheita', desc: 'Chão.', guide: '<h3>🍋 Colheita</h3><p>O melhor ponto é quando o fruto cai no chão. Recolha diariamente.</p>' }
     ],
 
     // === 3. RAÍZES ===
     cenoura: [
-        { day: -15, title: 'Afofamento do Solo', desc: 'Solo Fofo.', guide: '<h3>🥕 Engenharia de Solo</h3><p>Solo duro = Cenoura torta.</p><h4>🛠️ Preparo (m²):</h4><ul><li>Revire a 30cm prof.</li><li><strong>Adubo:</strong> 3kg de composto orgânico muito bem curtido.</li><li><strong>Químico:</strong> 150g de NPK 04-14-08.</li><li><strong>NÃO USE</strong> esterco fresco (bifurca a raiz).</li></ul>' },
-        { day: 0, title: 'Semeadura (Lua Minguante)', desc: 'Linhas.', guide: '<h3>🌗 Lua de Descer</h3><p>Misture semente com areia ou borra de café seca para espalhar melhor.</p><ul><li>Sulcos com 20cm de distância.</li><li>Cubra com 0,5cm de terra leve (quase nada).</li></ul>' },
-        { day: 25, title: 'Desbaste: O GRANDE SEGREDO', desc: 'Raleio.', guide: '<h3>✂️ Coragem!</h3><p>TEM que ralar.</p><ul><li>Deixe <strong>8cm de distância</strong> entre uma planta e outra.</li><li>Se não fizer isso, você colherá "palitos de dente".</li></ul>' },
-        { day: 35, title: 'Adubação de Potássio', desc: 'K.', guide: '<h3>✨ Doçura e Tamanho</h3><p>Cenoura ama Potássio.</p><h4>🥄 Dose (metro linear):</h4><ul><li><strong>Cloreto de Potássio:</strong> 1 colher de sopa, distribuída ao longo da linha.</li><li>Ou Cinzas de Madeira (1 copo por metro).</li><li>Chegue terra nos pés (amontoa) para não deixar o "ombro" verde.</li></ul>' }
+        { day: -15, title: 'Afofamento Profundo', desc: 'Solo.', guide: '<h3>🥕 Engenharia</h3><p>O solo deve ser fofo a 30cm. Adube com NPK 04-14-08. NÃO use esterco fresco.</p>' },
+        { day: 0, title: 'Semeadura (Lua Minguante)', desc: 'Linhas.', guide: '<h3>🌗 Semeadura</h3><p>Sulcos rasos (1cm). Misture a semente com areia para não cair demais.</p>' },
+        { day: 25, title: 'Desbaste (CRÍTICO)', desc: 'Raleio.', guide: '<h3>✂️ Coragem</h3><p>Deixe 8cm entre plantas. Se não fizer, colherá cenouras finas e tortas.</p>' },
+        { day: 45, title: 'Adubação de Cobertura', desc: 'K.', guide: '<h3>✨ Potássio</h3><p>Aplique Cloreto de Potássio ou Cinzas na entre-linha e cubra com terra (amontoa) para não esverdear o "ombro".</p>' },
+        { day: 90, title: 'Colheita', desc: 'Tamanho.', guide: '<h3>🥕 Ponto</h3><p>Geralmente 90-110 dias. Oculte o ombro da cenoura para verificar o diâmetro.</p>' }
+    ],
+    beterraba: [
+        { day: -10, title: 'Preparo Solo', desc: 'Adubo.', guide: '<h3>✨ Canteiro</h3><p>Gosta de Boro. Se possível, aplique Bórax no solo. Adubação NPK 04-14-08.</p>' },
+        { day: 0, title: 'Semeadura (Lua Minguante)', desc: 'Direta.', guide: '<h3>🌗 Sementes</h3><p>Cada "semente" da beterraba é um glomérulo com várias sementes dentro. Vai precisar ralear.</p>' },
+        { day: 25, title: 'Desbaste', desc: 'Raleio.', guide: '<h3>✂️ Seleção</h3><p>Deixe 10-12cm entre plantas. Use as folhas do desbaste na salada.</p>' },
+        { day: 70, title: 'Colheita', desc: 'Tamanho.', guide: '<h3>✨ Colheita</h3><p>Não deixe crescer demais (tipo coco) senão fica dura. Tamanho de bola de tênis é ideal.</p>' }
     ],
     mandioca: [
-        { day: -30, title: 'Preparo Solo Profundo', desc: 'Calagem.', guide: '<h3>📉 Solo Solto</h3><p>Produção aumenta 50% com calagem.</p><h4>⚖️ Dose:</h4><ul><li><strong>Calcário:</strong> 200g a 300g por m² em área total.</li><li><strong>Plantio:</strong> 40g (1 punhado) de fosfato simples na cova/sulco.</li></ul>' },
-        { day: 0, title: 'Plantio das Manivas (Lua Minguante)', desc: 'Manivas.', guide: '<h3>🥔 Manivas</h3><p>Manivas de 20cm (5-7 gemas). Plante na horizontal a 10cm de profundidade.</p>' },
-        { day: 45, title: 'Adubação de Cobertura', desc: 'N e K.', guide: '<h3>✨ Cobertura</h3><p>Se o solo for fraco.</p><h4>🥄 Dose por planta:</h4><ul><li>1 colher de sopa de NPK 20-00-20 (ou 10-10-10) em volta da planta com solo úmido.</li></ul>' }
+        { day: -30, title: 'Calagem', desc: 'Solo.', guide: '<h3>📉 Acidez</h3><p>Mandioca dobra a produção com calagem. Aplique 200g/m² 30 dias antes.</p>' },
+        { day: 0, title: 'Plantio (Lua Minguante)', desc: 'Manivas.', guide: '<h3>🥔 Manivas</h3><p>Pedados de 20cm do meio da planta (nem a ponta verde, nem o pé lenhoso). Plante horizontal a 10cm prof.</p>' },
+        { day: 45, title: 'Adubação de Cobertura', desc: 'N e K.', guide: '<h3>✨ Força</h3><p>Aplique 40g de NPK 20-00-20 por planta se o solo for fraco.</p>' },
+        { day: 240, title: 'Início da Colheita', desc: 'Raízes.', guide: '<h3>🥔 Mesa/Indústria</h3><p>Mandioca de mesa: 8 a 12 meses. Indústria: até 18 meses. Pode o pé a 10cm do solo antes de arrancar.</p>' }
     ],
     batata_doce: [
-        { day: 0, title: 'Plantio em Camalhões', desc: 'Ramas.', guide: '<h3>🍠 Canteiro Alto</h3><p>Faça camalhões de 40cm de altura.</p><h4>⚖️ Adubação (metro linear):</h4><ul><li>100g de NPK 04-14-08.</li><li>Plante a rama (30cm), enterrando o meio e deixando as pontas pra fora.</li></ul>' },
-        { day: 40, title: 'Amontoa', desc: 'Chegar terra.', guide: '<h3>⛰️ Proteção</h3><p>Jogue terra para cobrir as batatas que começam a aparecer. Evita a broca.</p>' }
+        { day: 0, title: 'Plantio das Ramas', desc: 'Camalhão.', guide: '<h3>🍠 Camalhão</h3><p>Faça leiras altas (30-40cm). Plante ramas de 30cm (ponta) enterrando o meio (U) ou inclinada.</p>' },
+        { day: 45, title: 'Amontoa', desc: 'Terra.', guide: '<h3>⛰️ Proteção</h3><p>Chegue terra no pé para cobrir as batatas e evitar a Broca.</p>' },
+        { day: 120, title: 'Colheita', desc: 'Seca.', guide: '<h3>🍠 Ponto</h3><p>Quando a folhagem começar a amarelar e secar. Corte a rama dias antes de arrancar.</p>' }
     ],
 
     // === 4. GRÃOS ===
     milho: [
-        { day: -60, title: 'Calagem (V70%)', desc: 'Frequente.', guide: '<h3>📉 Correção Total</h3><p>Milho exige solo corrigido (V% 70).</p><h4>⚖️ Dose (Hectare / m²):</h4><ul><li><strong>Calcário:</strong> 2 a 4 Ton/ha (200-400g/m²).</li><li>Incorpore 60 dias antes.</li></ul>' },
-        { day: 0, title: 'Semeadura Turbo (Lua Crescente)', desc: 'Direto.', guide: '<h3>🌽 Arranque Explosivo</h3><p>Adubação pesada no sulco.</p><h4>⚖️ Dose (metro linear):</h4><ul><li><strong>NPK 08-28-16:</strong> 40g (um punhado generoso) por metro.</li><li>Plante 5 sementes por metro linear. Profundidade 5cm.</li></ul>' },
-        { day: 25, title: 'Cobertura V4 (Ureia) - OBRIGATÓRIO', desc: 'Nitrogênio.', guide: '<h3>✨ O Momento da Verdade</h3><p>Quando o milho tiver 4 a 6 folhas (altura joelho).</p><h4>🥄 Dose Crítica:</h4><ul><li><strong>Ureia:</strong> 200kg/ha (ou 20g por metro linear).</li><li>Aplique na lateral, cubra com terra e regue. Se não fizer isso, a espiga fica pequena.</li></ul>' }
+        { day: -30, title: 'Calagem e Adubação', desc: 'Preparo.', guide: '<h3>🌽 Fome</h3><p>Milho exige muito. Calagem V70%. Adubação de base forte com NPK 08-28-16.</p>' },
+        { day: 0, title: 'Semeadura (Lua Crescente)', desc: 'Direta.', guide: '<h3>🌱 Plantio Turbo</h3><p>3 sementes por metro linear (se for alta tecnologia) ou 5 sementes (baixa tec).</p>' },
+        { day: 25, title: 'Adubação de Cobertura (V4)', desc: 'Nitrogênio.', guide: '<h3>✨ Ureia</h3><p>Quando estiver com 4 a 6 folhas (altura do joelho). Aplique Ureia e cubra. Indispensável!</p>' },
+        { day: 80, title: 'Milho Verde', desc: 'Colheita 1.', guide: '<h3>🌽 Pamonha</h3><p>Quando o cabelo da espiga secar e ficar marrom. Aperte o grão: deve sair um leite.</p>' },
+        { day: 130, title: 'Milho Seco', desc: 'Colheita 2.', guide: '<h3>🌽 Grão</h3><p>Quando a planta inteira secar e a espiga virar para baixo.</p>' }
     ],
     feijao: [
-        { day: 0, title: 'Plantio Raso', desc: 'Semeadura.', guide: '<h3>🫘 Plantio</h3><p>Não enterre muito (2-3cm).</p><h4>⚖️ Adubo (metro linear):</h4><ul><li><strong>NPK 04-14-08:</strong> 30g por metro.</li><li><strong>Inoculante:</strong> Misture Rhizobium na semente (economiza nitrogênio).</li></ul>' },
-        { day: 20, title: 'Adubação de Cobertura', desc: 'Nitrogênio.', guide: '<h3>✨ Arrank</h3><p>Feijão precisa de pouco N.</p><h4>🥄 Dose:</h4><ul><li>10g de Ureia por metro linear. Aplique longe do caule para não queimar.</li></ul>' }
+        { day: 0, title: 'Semeadura', desc: 'Raso.', guide: '<h3>🫘 Plantio</h3><p>2 a 3cm de profundidade. 10 a 15 sementes por metro. Use inoculante se possível.</p>' },
+        { day: 25, title: 'Adubação Leve', desc: 'N.', guide: '<h3>✨ Cobertura</h3><p>Feijão precisa de pouco nitrogênio (metade do milho). Aplique 10g de ureia por metro linear.</p>' },
+        { day: 85, title: 'Colheita', desc: 'Seco.', guide: '<h3>🫘 Vagem Seca</h3><p>Quando as vagens secarem ("baterem cascavel"). Colha e deixe secar mais ao sol antes de debulhar.</p>' }
+    ],
+    vagem: [
+        { day: 0, title: 'Semeadura com Tutor', desc: 'Vara.', guide: '<h3>🫘 Suporte</h3><p>Coloque as varas (tutor) ANTES de plantar. 2 sementes por cova ao lado da vara.</p>' },
+        { day: 20, title: 'Condução', desc: 'Amarrio.', guide: '<h3>🪵 Subida</h3><p>Ajude a planta a "pegar" na vara. Adube com 1 colher de NPK 10-10-10.</p>' },
+        { day: 60, type: 'routine', freq: 'daily', title: 'Colheita', desc: 'Terna.', guide: '<h3>🫘 Todo dia</h3><p>Colha a vagem ainda terna, antes de marcar o feijão dentro. Se granar, a planta para de produzir.</p>' }
     ],
 
-    // === 5. FRUTÍFERAS ===
+    // === 5. CULTURAS PERENES ===
     pomar: [
-        { day: -60, title: 'Preparo da Cova (Berço)', desc: 'Abertura.', guide: '<h3>🕳️ O Berço da Vida</h3><p>Cova 60x60x60cm.</p><h4>⚖️ A Mistura Sagrada:</h4><ul><li>20 Litros de Esterco de Curral (gordo).</li><li>300g de Calcário Dolomítico.</li><li>300g de Fosfato Reativo ou Super Simples.</li><li>60g de Frits (Micronutrientes).</li></ul><ul><li>Misture tudo na terra de cima e jogue no fundo. Deixe curtir 30 dias.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Adubação de Formação', desc: 'Sólida/Foliar.', guide: '<h3>🌳 Crescimento</h3><p>Adube mensalmente no primeiro ano.</p><h4>🥄 Dose por planta:</h4><ul><li>50g de NPK 20-00-20 ou Sulfato de Amônio.</li><li>Aumente a dose conforme a copa cresce.</li></ul>' }
+        { day: -60, title: 'Cova Farta', desc: 'Abertura.', guide: '<h3>🕳️ Berço</h3><p>60x60x60cm. Misture cal, fosfato e muito esterco (20L). Deixe curtir 2 meses.</p>' },
+        { day: 0, title: 'Plantio', desc: 'Muda.', guide: '<h3>🌳 Plantio</h3><p>Não enterre o enxerto. Faça uma "bacia" em volta para segurar água de rega.</p>' },
+        { day: 60, type: 'routine', freq: 'monthly', title: 'Adubação de Formação', desc: 'N.', guide: '<h3>✨ Crescer</h3><p>Adube todo mês com NPK 20-00-20 (50g) nas chuvas para a copa crescer rápido.</p>' }
     ],
     banana: [
-        { day: 0, title: 'Plantio (Lua Minguante)', desc: 'Rizoma.', guide: '<h3>🍌 Cova Rica</h3><p>Cova 50x50x50cm.</p><h4>⚖️ Adubo:</h4><ul><li>20L de Esterco.</li><li>500g de Calcário.</li><li>500g de Fosfato.</li></ul>' },
-        { day: 60, type: 'routine', freq: 'monthly', title: 'Adubação K', desc: 'Potássio.', guide: '<h3>✨ Fome de K</h3><p>Banana devora Potássio.</p><h4>🥄 Dose (Família):</h4><ul><li>100g de Cloreto de Potássio (KCi) + 50g de Ureia TODO MÊS nas chuvas.</li><li>Espalhe em meia-lua na frente da planta mãe e filha.</li></ul>' }
+        { day: 0, title: 'Plantio (Lua Minguante)', desc: 'Rizoma.', guide: '<h3>🍌 Cova</h3><p>50x50cm. Use 2kg de cinzas se tiver, ou 500g de calcário e 500g de Fosfato.</p>' },
+        { day: 30, title: 'Desbaste de Filhos', desc: 'Família.', guide: '<h3>👨‍👩‍👧 Mãe, Filha, Neta</h3><p>Mantenha apenas 1 Família por touceira: Planta mãe (com cacho), Filha (média) e Neta (broto).</p>' },
+        { day: 60, type: 'routine', freq: 'monthly', title: 'Adubação de Potássio', desc: 'K.', guide: '<h3>✨ Muito K</h3><p>Banana exige muito Potássio. 100g de KCl por touceira todo mês.</p>' },
+        { day: 300, title: 'Corte do Coração', desc: 'Umbigo.', guide: '<h3>🍌 Mangará</h3><p>15 dias após sair a última penca, corte o "umbigo" (mangará) para o cacho engordar mais.</p>' },
+        { day: 400, title: 'Colheita', desc: 'Cacho.', guide: '<h3>🍌 Ponto</h3><p>Quando as quinas das bananas arredondarem. Corte a planta mãe (pseudocaule) após a colheita, ela não produz mais.</p>' }
+    ],
+    coqueiro: [
+        { day: 0, title: 'Plantio', desc: 'Muda.', guide: '<h3>🥥 Espaço</h3><p>Triângulo de 7x7m. Cova 80cm³. Muito material orgânico no fundo.</p>' },
+        { day: 180, type: 'routine', freq: 'quarterly', title: 'Adubação Salgada', desc: 'Cloreto.', guide: '<h3>🌊 Sal</h3><p>Coqueiro gosta de Cloro. Adube com Cloreto de Potássio (KCl) ou Sal Grosso (sem iodo, se achar) a cada 3 meses.</p>' }
+    ],
+    cafe: [
+        { day: 0, title: 'Plantio (Lua Crescente)', desc: 'Mudas.', guide: '<h3>☕ Cova</h3><p>Profunda (40cm). Use Fosfato de liberação lenta. Plantio no início das chuvas.</p>' },
+        { day: 60, type: 'routine', freq: 'monthly', title: 'Adubação Nitrogenada', desc: 'N.', guide: '<h3>✨ Nitrogênio</h3><p>Café em formação precisa de N a cada 30-45 dias. (30g de ureia/pé).</p>' },
+        { day: 730, title: 'Colheita Seletiva', desc: 'Cereja.', guide: '<h3>☕ Cereja</h3><p>Colha apenas os grãos vermelhos (cereja) para qualidade máxima.</p>' }
+    ],
+    cana: [
+        { day: 0, title: 'Plantio dos Toletes', desc: 'Sulcos.', guide: '<h3>🎋 Sulcos</h3><p>Sulcos profundos (20cm). Coloque os toletes "pé com ponta" e cubra com 5cm de terra.</p>' },
+        { day: 90, title: 'Adubação e Amontoa', desc: 'N e K.', guide: '<h3>✨ Terra</h3><p>Jogue terra na base das canas e adube com NPK 20-05-20.</p>' },
+        { day: 365, title: 'Colheita', desc: 'Corte.', guide: '<h3>🎋 Corte Basal</h3><p>Corte rente ao chão. A cana rebrota (soca) para o próximo ano.</p>' }
     ],
 
-    // === GERAL / CRIAÇÕES ===
+    // === 6. ERVAS e OUTROS ===
+    manjericao: [
+        { day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🌿 Sol</h3><p>Gosta de Sol pleno e solo úmido mas drenado.</p>' },
+        { day: 30, type: 'routine', freq: 'monthly', title: 'Poda de Flores', desc: 'Renovar.', guide: '<h3>✂️ Segredo</h3><p>Corte SEMPRE as flores assim que surgirem. Se ele florir, as folhas perdem o aroma e a planta morre logo.</p>' }
+    ],
+    alecrim: [
+        { day: 0, title: 'Plantio', desc: 'Drenagem.', guide: '<h3>🌿 Rústico</h3><p>Alecrim odeia raiz encharcada. Misture areia na cova. Pouco adubo.</p>' },
+        { day: 60, title: 'Poda de Pontas', desc: 'Formação.', guide: '<h3>✂️ Formato</h3><p>Pode as pontas para ele encher (ficar redondo) e não caneludo.</p>' }
+    ],
+    hortela: [
+        { day: 0, title: 'Plantio Controlado', desc: 'Vaso/Canteiro.', guide: '<h3>🌿 Invasora</h3><p>A raiz da hortelã invade tudo. Melhor plantar em vaso ou ter canteiro isolado. Gosta de muita água.</p>' }
+    ],
+
+    // === 7. ANIMAIS ===
     galinhas_poedeiras: [
-        { day: -2, title: 'Limpeza e Caiação', desc: 'Desinfecção.', guide: '<h3>🧼 Higiene</h3><p>Use Cal Hidratada: 1kg para 5 litros de água. Pinte paredes e poleiros.</p>' },
-        { day: 0, title: 'Recepção (Círculo)', desc: '32°C.', guide: '<h3>🐤 Conforto</h3><p>Ração Inicial: Forneça à vontade. Consumo esperado: 10-15g/pintinho/dia na 1ª semana.</p>' },
-        { day: 0, type: 'routine', freq: 'daily', title: 'Tratos Leves', desc: 'Água/Ração.', guide: '<h3>🔄 Consumo</h3><p>Galinha adulta come ~110-120g de ração/dia. Água: 250ml/cabeça/dia (dobre se fizer calor).</p>' }
+        { day: -7, title: 'Vazio Sanitário', desc: 'Limpeza.', guide: '<h3>🧼 Desinfecção</h3><p>Retire toda a cama velha, lave e use cal. Deixe o galinheiro descansar 7 dias.</p>' },
+        { day: 0, title: 'Alojamento das Aves', desc: 'Entrada.', guide: '<h3>🐔 Recepção</h3><p>Água fresca e ração à vontade. Ninhos limpos (1 para cada 5 galinhas).</p>' },
+        { day: 0, type: 'routine', freq: 'daily', title: 'Coleta de Ovos', desc: 'Ovos.', guide: '<h3>🥚 Coleta</h3><p>Colete 2 a 3 vezes ao dia para evitar quebra e ovos sujos.</p>' },
+        { day: 0, type: 'routine', freq: 'daily', title: 'Completar Ração', desc: '110g/ave.', guide: '<h3>🌽 Comida</h3><p>Poedeira come ~110g/dia. Não deixe faltar Cálcio (conchas) para a casca do ovo.</p>' }
     ],
-    frangos_corte: [{ day: 0, title: 'Alojamento Inicial', desc: 'Pintinhos.', guide: '<h3>🐥 Conversão</h3><p>Pré-inicial (0-10 dias): Proteína 22%. Consumo acumulado 1ª semana: 160g/ave.</p>' }],
-    gado_leite: [{ day: 0, title: 'Rotina de Ordenha', desc: 'Higiene.', guide: '<h3>🥛 Solução Pré-Dipping</h3><p>Use solução de Iodo ou Clorexidina a 2%. Deixe agir por 30 segundos antes de secar.</p>' }],
-
-    // Outros
-    manjericao: [{ day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🌿 Adubo</h3><p>1 copo de húmus de minhoca na cova. Corte as flores sempre.</p>' }],
-    alecrim: [{ day: 0, title: 'Plantio', desc: 'Seco.', guide: '<h3>🌿 Solo Pobre</h3><p>Alecrim não gosta de excesso de adubo. Misture areia na cova (50% terra, 50% areia).</p>' }],
-    hortela: [{ day: 0, title: 'Plantio', desc: 'Rizoma.', guide: '<h3>🌿 Água</h3><p>Gosta de matéria orgânica. Jogue esterco curtido por cima da terra a cada 3 meses.</p>' }],
-    beterraba: [{ day: 0, title: 'Semeadura', desc: 'Direta.', guide: '<h3>✨ Canteiro</h3><p>Igual cenoura. Adubo NPK 04-14-08 (150g/m²). Raleio para 10cm.</p>' }],
-    vagem: [{ day: 0, title: 'Plantio', desc: 'Tutor.', guide: '<h3>🫘 Adubo</h3><p>NPK 04-14-08: 1 colher de sopa por cova. Coloque o tutor (vara) ANTES de plantar para não furar a raiz depois.</p>' }],
-    abacaxi: [{ day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🍍 Adubação Axilar</h3><p>5g de Ureia + 5g de KCl dissolvidos em água e aplicados na axila da folha a cada 2 meses.</p>' }],
-    melancia: [{ day: 0, title: 'Plantio', desc: 'Espaço.', guide: '<h3>🍉 Cova Rica</h3><p>20L de Esterco + 300g de NPK 04-14-08. Espaçamento 3x3m.</p>' }],
-    morango: [{ day: 0, title: 'Plantio', desc: 'Coroa.', guide: '<h3>🍓 Adubo</h3><p>Exigente. Use NPK 12-06-12 se tiver, ou orgânico Bokashi (1 punhado por pé mensal).</p>' }],
-    coqueiro: [{ day: 0, title: 'Plantio', desc: 'Muda.', guide: '<h3>🥥 Cova Gigante</h3><p>80x80x80cm. 50L de matéria orgânica + 1kg de calcário + 1kg de fosfato. Sal grosso (KCl): 200g a partir do 6º mês.</p>' }],
-    caprinos: [{ day: 0, title: 'Manejo', desc: 'Vermifugação.', guide: '<h3>🐐 Famacha</h3><p>Vermifugue apenas animais com grau 3, 4 ou 5 (pálidos).</p>' }],
-    codornas: [{ day: 0, title: 'Alojamento', desc: 'Inicial.', guide: '<h3>🐦 Ração</h3><p>Ração Postura Codornas (24% Proteína). Consumo: 25g/ave/dia.</p>' }],
-    patos: [{ day: 0, title: 'Alojamento', desc: 'Inicial.', guide: '<h3>🦆 Rústicos</h3><p>Comem de tudo, mas para crescer rápido use ração inicial de frango.</p>' }],
-    cafe: [{ day: 0, title: 'Plantio (Lua Crescente)', desc: 'Mudas.', guide: '<h3>☕ Cova</h3><p>200g de Calcário + 10L de Esterco + 150g de Fosfato na cova. Adubação de cobertura (N) a cada 45 dias nas chuvas (30g/pé).</p>' }]
+    frangos_corte: [
+        { day: 0, title: 'Alojamento Pintinhos', desc: 'Aquecimento.', guide: '<h3>🐥 Círculo</h3><p>Círculo de proteção, campânula acesa (32°C) e ração pré-inicial.</p>' },
+        { day: 21, title: 'Troca de Ração', desc: 'Crescimento.', guide: '<h3>🐓 Engorda</h3><p>Mudar para ração de crescimento/engorda. Abrir espaço no galpão.</p>' },
+        { day: 45, title: 'Abate', desc: 'Ponto.', guide: '<h3>🍗 Final</h3><p>Com 45 dias o frango atinge 2.5kg a 3kg. Jejum de 8h antes do abate.</p>' }
+    ],
+    gado_leite: [
+        { day: 0, type: 'routine', freq: 'daily', title: 'Ordenha (Higiene)', desc: 'Tetos.', guide: '<h3>🥛 Mastite Não</h3><p>1. Teste da caneca (fundo preto). <br> 2. Pré-dipping (iodo). <br> 3. Secar papel toalha. <br> 4. Ordenhar. <br> 5. Pós-dipping (selar teto).</p>' },
+        { day: 0, type: 'routine', freq: 'monthly', title: 'Controle Carrapato', desc: 'Banho.', guide: '<h3>🐂 Parasitas</h3><p>Monitore carrapatos e mosca-do-chifre. Banhe se necessário (rodízio de princípios ativos).</p>' }
+    ],
+    gado_corte: [
+        { day: 0, type: 'routine', freq: 'quarterly', title: 'Vermifugação', desc: 'Sanidade.', guide: '<h3>💉 Calendário</h3><p>Vermifugação estratégica (Entrada da seca, meio da seca, entrada das águas).</p>' },
+        { day: 0, type: 'routine', freq: 'monthly', title: 'Pesagem e Sal', desc: 'GMD.', guide: '<h3>⚖️ Ganho</h3><p>Monitore o peso. Sal mineral no cocho SEMPRE à vontade (boca cheia).</p>' }
+    ],
+    suinos: [
+        { day: 0, title: 'Limpeza Diária', desc: 'Baia.', guide: '<h3>🧹 Seco</h3><p>Mantenha a baia limpa e seca. Suíno limpo cresce mais e adoece menos.</p>' },
+        { day: 0, type: 'routine', freq: 'daily', title: 'Alimentação', desc: 'Ração.', guide: '<h3>🐖 Dieta</h3><p>Ração balanceada de acordo com a fase (leitão, crescimento, terminação). Água fresca à vontade.</p>' }
+    ],
+    ovinos: [
+        { day: 0, type: 'routine', freq: 'monthly', title: 'Casqueamento', desc: 'Cascos.', guide: '<h3>✂️ Pés</h3><p>Corte o excesso de casco para evitar podridão. Ovinos sofrem muito com problemas de pata.</p>' },
+        { day: 0, type: 'routine', freq: 'monthly', title: 'Vermifugação (Famacha)', desc: 'Olho.', guide: '<h3>🐐 Famacha</h3><p>Examine a mucosa do olho. Vermelha (ok). Pálida/Branca (verme = vermifugar). Não vermifugue todo mundo sem precisar.</p>' }
+    ],
+    tilapias: [
+        { day: 0, title: 'Povoamento', desc: 'Alevinos.', guide: '<h3>🐟 Aclimatação</h3><p>Deixe o saco flutuar 20min na água do tanque para igualar temperatura. Misture água aos poucos.</p>' },
+        { day: 0, type: 'routine', freq: 'daily', title: 'Alimentação', desc: 'Ração.', guide: '<h3>🐟 Arraçoamento</h3><p>Alimente 3 a 4 vezes ao dia. Observe: sobrou ração? Diminua amanhã. Peixe comeu tudo em 5 min? Dê mais um pouco.</p>' }
+    ],
+    abelhas: [
+        { day: 0, type: 'routine', freq: 'biweekly', title: 'Revisão', desc: 'Ninho.', guide: '<h3>🐝 Rainha</h3><p>Tem ovos frescos (larva em C)? Rainha está ok. Tem espaço? Coloque melgueira.</p>' },
+        { day: 0, title: 'Colheita Mel', desc: 'Operculado.', guide: '<h3>🍯 Mel Maduro</h3><p>Só colha quadros com mais de 80% dos favos fechados (operculados). Mel verde fermenta.</p>' }
+    ]
 };
 
 export function getEmojiForType(type) {
@@ -126,7 +228,7 @@ export function getEmojiForType(type) {
         caprinos: '🐐', codornas: '🐦', patos: '🦆', couve: '🥬', rucula: '🌿',
         cheiro_verde: '🌿', manjericao: '🌿', alecrim: '🌿', hortela: '🌿',
         pimentao: '🫑', pepino: '🥒', quiabo: '☀️', abobora: '🎃', melancia: '🍉',
-        morango: '🍓'
+        morango: '🍓', maracuja: '🍋', cana: '🎋', tilapias: '🐟', abelhas: '🐝', ovinos: '🐑'
     };
     return map[type] || '🌱';
 }
@@ -293,14 +395,36 @@ export function deleteProject(id) {
     });
 }
 
-function generateProjectTasks(projectId, culture, startDate) {
+export function generateProjectTasks(projectId, culture, startDate) {
     const template = cropTemplates[culture];
     if (!template) return;
 
     template.forEach(item => {
+        // Helper to check if task exists (prevent duplicates during repair)
+        // Note: For repair logic, we might need a more sophisticated check,
+        // but for fresh generation this is standard.
+        // We will add a 'dedupe' parameter optionally?
+        // Actually, let's keep it simple. The repair logic in app.js checks if *any* automated tasks exist.
+        // If we want to UPSERT, we need to handle it there or here.
+        // Let's modify this function to support "upsert" (add only if missing).
+
         const itemDate = new Date(startDate + 'T12:00:00');
         itemDate.setDate(itemDate.getDate() + item.day);
         const dateStr = getLocalISODate(itemDate);
+
+        // Check duplicates
+        const taskExists = state.tasks.some(t =>
+            parseInt(t.projectId) === parseInt(projectId) &&
+            t.title === item.title &&
+            t.isAutomated
+        );
+
+        const routineExists = state.routines.some(r =>
+            parseInt(r.projectId) === parseInt(projectId) &&
+            r.title === item.title
+        );
+
+        if (taskExists || routineExists) return; // Skip if exists
 
         if (item.type === 'routine') {
             state.routines.push({
