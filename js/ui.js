@@ -15,32 +15,32 @@ export function getMoonPhase(date) {
     if (b >= 8) b = 0;
 
     const detailsNova = {
-        planting: 'A seiva desce para as raízes. ideal para plantas de raiz (cenoura, mandioca) e bulbos. Ótimo para adubação.',
-        pruning: 'Melhor fase para podas de limpeza e renovação.',
-        harvest: 'Colheita de raízes, madeira e bambu.'
+        planting: 'A força da planta desce para as raízes. É o melhor tempo para plantar coisas que dão "embaixo da terra" (cenoura, mandioca, rabanete). Ótimo para adubar a terra.',
+        pruning: 'Bom momento para fazer limpeza e tirar galhos velhos.',
+        harvest: 'Bom para colher raízes, madeira para construção e bambu (dura mais).'
     };
     const detailsCrescente = {
-        planting: 'A seiva sobe. Plante tomate, pimentão, feijão, milho e frutíferas.',
-        pruning: 'Poda de formação (estimula brotos). Evite podas drásticas.',
-        harvest: 'Ervas medicinais e folhas.'
+        planting: 'A seiva começa a subir. Plante tudo o que dá fruto ou grão (tomate, feijão, milho) e frutíferas.',
+        pruning: 'Poda para estimular brotos novos (cuidado, não corte demais).',
+        harvest: 'Ervas medicinais e folhas para chá.'
     };
     const detailsCheia = {
-        planting: 'Seiva na copa. Plante folhas (alface) e flores. Regue bem.',
-        pruning: 'NÃO indicada (risco de hemorragia). Apenas colheita de flores.',
-        harvest: 'Frutas suculentas e grãos.'
+        planting: 'A força está toda nas folhas e flores. Plante verduras de folha (alface, couve) e flores. Regue bastante!',
+        pruning: 'EVITE PODAR. A planta perde muita seiva e pode adoecer. Só colha flores.',
+        harvest: 'Colha frutas suculentas (ficam mais doces) e grãos.'
     };
     const detailsMinguante = {
-        planting: 'Força volta para raízes. Batata, mandioca e replantio de mudas.',
-        pruning: 'Poda principal (frutificação). Cicatrização rápida.',
-        harvest: 'Sementes (milho, feijão) para guardar e palha.'
+        planting: 'A força está voltando para baixo. Bom para raízes (batata, mandioca) e para replantar mudas (pegam mais fácil).',
+        pruning: 'Melhor época para podar galhos grossos. A planta sente menos e cicatriza rápido.',
+        harvest: 'Sementes (milho, feijão) para guardar, pois secam melhor. Bom para cortar palha.'
     };
 
     const phases = [
-        { name: 'Lua Nova', icon: '🌑', tip: 'Energia nas raízes. Tempo de planejar.', details: detailsNova },
+        { name: 'Lua Nova', icon: '🌑', tip: 'Força nas raízes. Tempo de planejar.', details: detailsNova },
         { name: 'Lua Crescente', icon: '🌒', tip: 'A seiva sobe. Tempo de plantar.', details: detailsCrescente },
         { name: 'Quarto Crescente', icon: '🌓', tip: 'A seiva sobe. Tempo de plantar.', details: detailsCrescente },
-        { name: 'Crescente Gibosa', icon: '🌔', tip: 'Aceleração máxima.', details: detailsCrescente },
-        { name: 'Lua Cheia', icon: '🌕', tip: 'Energia nas folhas/frutos.', details: detailsCheia },
+        { name: 'Crescente Gibosa', icon: '🌔', tip: 'As plantas crescem rápido.', details: detailsCrescente },
+        { name: 'Lua Cheia', icon: '🌕', tip: 'Força nas folhas e frutos.', details: detailsCheia },
         { name: 'Minguante Gibosa', icon: '🌖', tip: 'Diminuindo a força.', details: detailsMinguante },
         { name: 'Quarto Minguante', icon: '🌗', tip: 'Seiva descendo. Poda e raízes.', details: detailsMinguante },
         { name: 'Lua Minguante', icon: '🌘', tip: 'Repouso da terra.', details: detailsMinguante }

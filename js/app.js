@@ -84,11 +84,11 @@ function handleSoilAnalysis(e) {
 
             if (ph >= 5.5 && ph <= 6.5) {
                 score += 3;
-                diagnosis.push({ type: 'good', text: 'pH Ideal' });
+                diagnosis.push({ type: 'good', text: '✅ O pH da terra está ótimo!' });
             } else {
                 score -= 1;
-                diagnosis.push({ type: 'warn', text: 'pH precisa corrigir' });
-                if (ph < 5.5) actions.push('Fazer calagem.');
+                diagnosis.push({ type: 'warn', text: '⚠️ O pH precisa de atenção.' });
+                if (ph < 5.5) actions.push('A terra está ácida demais. Precisa jogar Calcário (Calagem).');
             }
 
             // Mock Data for simplicity in refactor (logic preserved roughly)
@@ -105,9 +105,17 @@ function handleSoilAnalysis(e) {
 
             // Render Result (Inline or function)
             elements.soilResultContent.innerHTML = `
-                <div style="text-align:center;"><h3>${score * 10}% Saúde</h3></div>
-                <p>${diagnosis.map(d => d.text).join('<br>')}</p>
-                <p><strong>Recomendação:</strong> ${actions.join('<br>') || 'Manter adubação.'}</p>
+                <div style="text-align:center; margin-bottom:15px;">
+                    <h3 style="color:#2E7D32;">${score * 10}% de Saúde do Solo</h3>
+                    <p style="color:#666;">Nota baseada no que você informou.</p>
+                </div>
+                <div style="background:#f9f9f9; padding:10px; border-radius:8px; margin-bottom:10px;">
+                    ${diagnosis.map(d => `<div style="margin-bottom:5px;">${d.text}</div>`).join('')}
+                </div>
+                <div style="background:#e8f5e9; padding:15px; border-radius:8px; border:1px solid #c8e6c9;">
+                    <strong style="color:#1b5e20;">O que fazer agora:</strong><br>
+                    ${actions.join('<br>') || 'Continue cuidando assim! Adubação de manutenção.'}
+                </div>
             `;
 
             elements.soilModal.classList.remove('visible');

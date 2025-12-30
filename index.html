@@ -29,7 +29,7 @@
                 </div>
                 <div class="moon-tip" id="moonTipDisplay">
                     <span id="moonTipText"></span>
-                    <button id="learnMoreBtn" class="learn-more-link">(saber mais)</button>
+                    <button id="learnMoreBtn" class="learn-more-link">(entenda)</button>
                 </div>
             </div>
         </header>
@@ -37,9 +37,9 @@
         <main>
             <section class="dashboard">
                 <div id="analysisWarning" class="warning-banner" style="display: none;">
-                    ⚠️ <strong>Atenção:</strong> Você ainda não tem uma Análise de Solo salva.
-                    <br><small>Os guias de cultivo usarão valores genéricos. Faça uma análise para precisão
-                        máxima!</small>
+                    👋 <strong>Olá!</strong> Você ainda não fez sua Análise de Solo.
+                    <br><small>Para que eu possa te dar conselhos exatos sobre adubação, eu preciso saber como está sua
+                        terra. Clique em "Análise de Solo" para começar!</small>
                 </div>
 
                 <!-- Quick Actions Grid -->
@@ -49,16 +49,22 @@
                         style="background: linear-gradient(135deg, #795548 0%, #5D4037 100%); color: white; border:none; cursor: pointer;">
                         <span style="font-size: 1.5rem; display:block; margin-bottom: 5px;">🧬</span>
                         <span style="font-weight: 500;">Análise de Solo</span>
+                        <span style="display:block; font-size: 0.7rem; opacity: 0.8; margin-top:4px;">Inserir dados do
+                            laboratório</span>
                     </div>
                     <div class="card action-card" id="btnWeather"
                         style="background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%); color: white; border:none; cursor: pointer;">
                         <span style="font-size: 1.5rem; display:block; margin-bottom: 5px;">🌦️</span>
                         <span style="font-weight: 500;" id="weatherBtnText">Clima</span>
+                        <span style="display:block; font-size: 0.7rem; opacity: 0.8; margin-top:4px;">Ver previsão do
+                            tempo</span>
                     </div>
                 </div>
 
                 <div class="card summary-card">
-                    <h3>Hoje</h3>
+                    <h3>Minhas Tarefas de Hoje</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">Aqui está o que precisamos fazer
+                        hoje:</p>
                     <div class="progress-ring">
                         <span id="taskCount">0 tarefas</span>
                     </div>
@@ -100,16 +106,16 @@
                 </div>
                 <form id="taskForm">
                     <div class="form-group">
-                        <label for="taskTitle">O que precisa ser feito?</label>
+                        <label for="taskTitle">O que você vai fazer?</label>
                         <input type="text" id="taskTitle" placeholder="Ex: Consertar a cerca" required>
                     </div>
                     <div class="form-group">
-                        <label for="taskDesc">Detalhes (opcional)</label>
-                        <textarea id="taskDesc" rows="3"></textarea>
+                        <label for="taskDesc">Explique melhor (se quiser)</label>
+                        <textarea id="taskDesc" rows="3" placeholder="Ex: Usar arame farpado novo..."></textarea>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="taskFreq">Repetição</label>
+                            <label for="taskFreq">Repetir?</label>
                             <select id="taskFreq">
                                 <option value="daily">Todo dia</option>
                                 <option value="weekly">Toda semana</option>
@@ -118,16 +124,16 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="taskPriority">Importância</label>
+                            <label for="taskPriority">Urgência</label>
                             <select id="taskPriority">
-                                <option value="normal">Normal</option>
-                                <option value="alta">Alta</option>
+                                <option value="normal">Não é urgente</option>
+                                <option value="alta">É urgente!</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group hidden" id="weekDaysGroup">
-                        <label>Dias da Semana</label>
+                        <label>Quais dias da semana?</label>
                         <div class="week-days-selector">
                             <input type="checkbox" id="wd0" value="0"><label for="wd0">D</label>
                             <input type="checkbox" id="wd1" value="1"><label for="wd1">S</label>
@@ -139,12 +145,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="taskProject">Projeto</label>
+                        <label for="taskProject">Faz parte de qual projeto?</label>
                         <select id="taskProject" required>
                             <!-- Populated dynamically -->
                         </select>
                     </div>
-                    <button type="submit" class="btn-primary">Salvar</button>
+                    <button type="submit" class="btn-primary">Salvar Tarefa</button>
                 </form>
             </div>
         </div>
@@ -162,20 +168,20 @@
                         <div class="form-group" style="flex:2;">
                             <label for="projCulture">O que vamos produzir?</label>
                             <select id="projCulture" required>
-                                <option value="" disabled selected>Selecione a Atividade...</option>
+                                <option value="" disabled selected>Escolha na lista...</option>
 
                                 <optgroup label="📝 Personalizado">
-                                    <option value="manual">Projeto Manual (Criar tarefas manualmente)</option>
+                                    <option value="manual">Projeto Manual (Eu mesmo crio as tarefas)</option>
                                 </optgroup>
 
-                                <optgroup label="🍃 Folhosas (Nitrogênio)">
+                                <optgroup label="🍃 Verduras (Couve, Alface...)">
                                     <option value="alface">Alface</option>
                                     <option value="couve">Couve</option>
                                     <option value="rucula">Rúcula</option>
                                     <option value="cheiro_verde">Cheiro-Verde</option>
                                 </optgroup>
 
-                                <optgroup label="🌿 Ervas e Temperos">
+                                <optgroup label="🌿 Temperos">
                                     <option value="manjericao">Manjericão</option>
                                     <option value="alecrim">Alecrim</option>
                                     <option value="hortela">Hortelã</option>
@@ -191,24 +197,24 @@
                                     <option value="melancia">Melancia</option>
                                 </optgroup>
 
-                                <optgroup label="🥕 Raízes e Tubérculos">
+                                <optgroup label="🥕 Raízes (Mandioca, Cenoura...)">
                                     <option value="cenoura">Cenoura</option>
                                     <option value="beterraba">Beterraba</option>
                                     <option value="mandioca">Mandioca</option>
                                     <option value="batata_doce">Batata Doce</option>
                                 </optgroup>
 
-                                <optgroup label="🌽 Grãos e Cereais">
+                                <optgroup label="🌽 Grãos">
                                     <option value="milho">Milho</option>
                                 </optgroup>
 
-                                <optgroup label="🫘 Leguminosas">
+                                <optgroup label="🫘 Feijão e Vagem">
                                     <option value="feijao">Feijão</option>
                                     <option value="vagem">Vagem</option>
                                 </optgroup>
 
-                                <optgroup label="🌳 Fruticultura (Perenes)">
-                                    <option value="pomar">Pomar Misto (Citros/Outras)</option>
+                                <optgroup label="🌳 Frutas (Pomar)">
+                                    <option value="pomar">Pomar Misto</option>
                                     <option value="banana">Banana</option>
                                     <option value="coqueiro">Coqueiro</option>
                                     <option value="maracuja">Maracujá</option>
@@ -218,30 +224,30 @@
                                 </optgroup>
 
                                 <optgroup label="🐔 Aves">
-                                    <option value="galinhas_poedeiras">Galinhas Poedeiras</option>
+                                    <option value="galinhas_poedeiras">Galinhas Poedeiras (Ovos)</option>
                                     <option value="frangos_corte">Frangos de Corte</option>
                                     <option value="codornas">Codornas</option>
                                     <option value="patos">Patos/Marrecos</option>
                                 </optgroup>
 
-                                <optgroup label="🐂 Pecuária / Criações">
+                                <optgroup label="🐂 Criações Grandes">
                                     <option value="gado_leite">Gado de Leite</option>
                                     <option value="gado_corte">Gado de Corte</option>
-                                    <option value="suinos">Suínos (Porcos)</option>
-                                    <option value="ovinos">Ovinos (Carneiros/Ovelhas)</option>
-                                    <option value="caprinos">Caprinos (Cabras)</option>
+                                    <option value="suinos">Porcos</option>
+                                    <option value="ovinos">Ovelhas/Carneiros</option>
+                                    <option value="caprinos">Cabras</option>
                                 </optgroup>
 
-                                <optgroup label="🐟 Outras Criações">
-                                    <option value="tilapias">Piscicultura (Tilápias)</option>
-                                    <option value="abelhas">Apicultura (Abelhas)</option>
+                                <optgroup label="🐟 Outros">
+                                    <option value="tilapias">Peixes (Tilápias)</option>
+                                    <option value="abelhas">Abelhas (Mel)</option>
                                 </optgroup>
                             </select>
                         </div>
                         <div class="form-group" style="flex:1;">
-                            <label for="projStartDate">Data de Início do Manejo do Solo</label>
+                            <label for="projStartDate">Quando começamos?</label>
                             <input type="date" id="projStartDate" required>
-
+                            <small>Data do início do trabalho</small>
                         </div>
                     </div>
                     <!-- Emoji Selection Removed (Auto) -->
@@ -286,36 +292,37 @@
                 <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Insira os dados da sua análise de
                     laboratório e nossa Inteligência (simulada) dará recomendações.</p>
                 <form id="soilForm">
+                    <p>Olhe no papel da análise e procure estes nomes:</p>
                     <div class="form-group">
-                        <label for="soilPh">pH (H₂O)</label>
+                        <label for="soilPh">pH (H₂O) <small>- Acidez</small></label>
                         <input type="number" step="0.1" id="soilPh" placeholder="Ex: 5.5" required>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="soilV">Sat. Bases (V%)</label>
+                            <label for="soilV">V% <small>(Saturação de Bases)</small></label>
                             <input type="number" id="soilV" placeholder="Ex: 40">
                         </div>
                         <div class="form-group">
-                            <label for="soilCTC">CTC (T)</label>
+                            <label for="soilCTC">CTC ou T <small>(Capacidade)</small></label>
                             <input type="number" step="0.1" id="soilCTC" placeholder="cmolc/dm³">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="soilP">Fósforo (mg/dm³)</label>
+                            <label for="soilP">Fósforo (P) <small>- mg/dm³</small></label>
                             <input type="number" step="0.1" id="soilP" placeholder="Ex: 8">
                         </div>
                         <div class="form-group">
-                            <label for="soilK">Potássio (cmolc)</label>
+                            <label for="soilK">Potássio (K) <small>- cmolc</small></label>
                             <input type="number" step="0.01" id="soilK" placeholder="Ex: 0.2">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="soilClay">Argila (%)</label>
+                        <label for="soilClay">Argila (%) <small>- Textura</small></label>
                         <input type="number" id="soilClay" placeholder="Ex: 20">
                     </div>
                     <div class="form-group">
-                        <label for="soilCulture">Cultura Desejada</label>
+                        <label for="soilCulture">O que você quer plantar nessa terra?</label>
                         <select id="soilCulture">
                             <option value="milho">Milho</option>
                             <option value="feijao">Feijão</option>
@@ -325,7 +332,7 @@
                         </select>
                     </div>
                     <button type="submit" class="btn-primary" id="btnAnalyze">
-                        <span id="analyzeBtnText">✨ Analisar com IA</span>
+                        <span id="analyzeBtnText">✨ Ver Recomendação</span>
                     </button>
                 </form>
             </div>

@@ -376,7 +376,7 @@ export function addProject(e) {
 }
 
 export function deleteProject(id) {
-    showConfirm('Excluir Projeto', 'Tem certeza que deseja apagar este projeto e todas as suas tarefas?', () => {
+    showConfirm('Apagar Projeto', 'Tem certeza que quer apagar esse projeto? Isso vai apagar TODAS as tarefas dele. Não tem volta!', () => {
         // Remove Project
         state.projects = state.projects.filter(p => p.id !== id);
 

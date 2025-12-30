@@ -30,7 +30,14 @@ export function renderTasks() {
     }
 
     if (visibleTasks.length === 0) {
-        elements.todoList.innerHTML = `<div class="empty-state"><p style="text-align:center; color:#888;">Nada por aqui.</p></div>`;
+        elements.todoList.innerHTML = `<div class="empty-state">
+            <p style="text-align:center; color:#555; font-size: 1.1rem; margin-top:20px;">
+                😴 <strong>Tudo tranquilo por aqui!</strong>
+            </p>
+            <p style="text-align:center; color:#888;">
+                Nenhuma tarefa pendente. Aproveite para descansar ou planejar o amanhã.
+            </p>
+        </div>`;
         return;
     }
 
@@ -116,7 +123,11 @@ function openAutoGuide(title, content) {
         finalContent = finalContent.replace(/{{CALC_TON}}/g, '2.0');
         finalContent = finalContent.replace(/{{NPK_FORMULA}}/g, '10-10-10');
         finalContent = finalContent.replace(/{{NPK_GM2}}/g, '50');
-        finalContent = `<div style="background:#fff3cd; color:#856404; padding:10px; border-radius:5px; margin-bottom:15px; font-size:0.9rem;">⚠️ <strong>Atenção:</strong> Valores genéricos (sem análise de solo).</div>` + finalContent;
+        finalContent = `<div style="background:#e3f2fd; color:#0d47a1; padding:15px; border-radius:8px; margin-bottom:15px; font-size:0.95rem; border-left: 5px solid #1976D2;">
+            👋 <strong>Dica do Amigo:</strong><br>
+            Essas quantidades de adubo são uma média geral (receita de bolo).<br>
+            Para não gastar dinheiro à toa e produzir mais, recomendo fazer a <strong>Análise de Solo</strong> assim que puder!
+        </div>` + finalContent;
     }
 
     elements.guideModalTitle.textContent = title;
@@ -188,7 +199,7 @@ export function editTask(id) {
 }
 
 export function deleteTask(id) {
-    showConfirm('Excluir Tarefa', 'Deseja realmente excluir esta tarefa?', () => {
+    showConfirm('Apagar Tarefa', 'Tem certeza que quer apagar? Se apagar, ela some pra sempre.', () => {
         state.tasks = state.tasks.filter(t => t.id !== id);
         saveData();
         renderTasks();
