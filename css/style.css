@@ -610,3 +610,80 @@ textarea {
     border-radius: 8px;
     text-align: center;
 }
+
+/* Delete Project Button */
+.delete-project-btn {
+    font-weight: bold;
+    color: #666;
+    margin-left: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.delete-project-btn:hover {
+    background-color: rgba(211, 47, 47, 0.1);
+    color: #d32f2f;
+}
+
+/* Ensure pill-btn layout works with new button structure */
+.pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding-right: 8px;
+}
+
+/* Global Actions Styles */
+.task-actions {
+    display: flex;
+    align-items: center;
+}
+
+.delete-btn {
+    font-weight: bold;
+    color: #666;
+    margin-left: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: none;
+}
+
+.delete-btn:hover {
+    background-color: rgba(211, 47, 47, 0.1);
+    color: #d32f2f;
+}
+
+.edit-btn {
+    color: #2E7D32;
+    margin-right: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: none;
+}
+
+.edit-btn:hover {
+    background-color: rgba(46, 125, 50, 0.1);
+}
