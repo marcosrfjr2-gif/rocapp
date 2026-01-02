@@ -520,15 +520,10 @@ function editTask(id) {
 // Helper for Emoji
 function getEmojiForType(type) {
     const map = {
-        galinhas_poedeiras: '🐔',
-        frangos_corte: '🍗',
-        gado_leite: '🥛',
-        gado_corte: '🥩',
-        suinos: '🐖',
-        pomar: '🍊',
-        milho: '🌽',
-        feijao: '🫘',
-        mandioca: '🥔'
+        pomar: 'Pomar',
+        milho: 'Milho',
+        feijao: 'Feijão',
+        mandioca: 'Mandioca'
     };
     return map[type] || '🌱';
 }
@@ -594,284 +589,15 @@ function addProject(e) {
 // EXPANDED TEMPLATES
 // ----------------------
 const cropTemplates = {
-    // 1. Galinhas Poedeiras
-    galinhas_poedeiras: [
-        {
-            day: -2,
-            title: 'Limpeza do Galinheiro',
-            desc: 'Desinfecção profunda e preparo da cama.',
-            guide: `
-                <h3>🧼 Higiene e Biosseguridade (Detalhado)</h3>
-                <p>A preparação do ambiente é 50% do sucesso.</p>
-                <h4>1. Limpeza Seca e Úmida</h4>
-                <ul>
-                    <li>Retire toda a matéria orgânica (fezes, penas, pó) varrendo bem.</li>
-                    <li>Lave teto, paredes e chão com detergente neutro para remover a gordura/biofilme.</li>
-                </ul>
-                <h4>2. Desinfecção</h4>
-                <ul>
-                    <li><strong>Cal:</strong> Faça a caiação das paredes (pintura com cal virgem). O cal mata bactérias e piolhos pelo pH alto. Receita: 1kg de cal para 4L de água + garrafa de cola branca (para fixar).</li>
-                    <li><strong>Química:</strong> Use amônia quaternária ou iodo (diluição conforme rótulo) no chão e equipamentos.</li>
-                </ul>
-                <h4>3. A Cama (Piso)</h4>
-                <ul>
-                    <li>Use <strong>Maravalha</strong> (serragem grossa) ou casca de arroz.</li>
-                    <li><strong>Altura:</strong> Mínimo de 8 a 10cm. Se for muito fina, fica úmida rápido e gera calos nos pés das aves (pododermatite).</li>
-                </ul>
-            `
-        },
-        {
-            day: 0,
-            title: 'Chegada das Pintainhas',
-            desc: 'Aclimatação Crítica.',
-            guide: `
-                <h3>🐤 Recepção de Pintainhas de 1 Dia</h3>
-                <p>Este é o momento mais frágil da vida da ave.</p>
-                
-                <h4>1. Hidratação (Primeiras 4h)</h4>
-                <p>pintinhos viajam e chegam desidratados. <strong>Não dê ração nas primeiras 2-4 horas, só água!</strong></p>
-                <ul>
-                    <li><strong>Soro Caseiro:</strong> 1 litro de água + 2 colheres rasas de açúcar (energia). Evite água gelada! Temperatura ambiente (24°C).</li>
-                </ul>
 
-                <h4>2. Aquecimento (Círculo de Proteção)</h4>
-                <p>Elas não regulam a própria temperatura.</p>
-                <ul>
-                    <li><strong>Temperatura Alvo:</strong> 32°C a 34°C na altura do pintinho.</li>
-                    <li><strong>Comportamento:</strong>
-                        <br>✅ Espalhados e piando pouco: Conforto.
-                        <br>❄️ Amontoados no centro/lâmpada: Frio (Abaixe a lâmpada!).
-                        <br>🔥 Afastados nas bordas e ofegantes: Calor (Erga a lâmpada!).
-                    </li>
-                </ul>
-            `
-        },
-        {
-            day: 0,
-            type: 'routine',
-            freq: 'daily',
-            title: 'Tratos (Galinhas)',
-            desc: 'Manejo Diário Essencial.',
-            guide: `
-                <h3>🔄 Rotina de Ouro (Diária)</h3>
-                <h4>1. Água: O Nutriente Esquecido</h4>
-                <p>Galinha bebe o dobro do que come. Água suja = Coccidiose e Salmonela.</p>
-                <ul>
-                    <li>Lave os bebedouros com bucha/escova todo dia de manhã.</li>
-                    <li>Água fresca estimula o consumo de ração no calor.</li>
-                </ul>
-                <h4>2. Ração</h4>
-                <ul>
-                    <li>Nunca deixe faltar, mas não deixe sobrar e fermentar (azedar).</li>
-                    <li>mexa na ração nos comedouros 2x ao dia para estimular a curiosidade delas.</li>
-                </ul>
-                <h4>3. Observação Tácita</h4>
-                <p>Qualquer ave encolhida, com penas arrepiadas ou olhos fechados deve ser separada (hospital) imediatamente.</p>
-            `
-        },
-        {
-            day: 120,
-            title: 'Estimulação de Luz',
-            desc: 'Programa de Luz para Postura.',
-            guide: `
-                <h3>💡 A Ciência da Luz e dos Ovos</h3>
-                <p>A galinha precisa de "dia longo" para ovular. É a luz entrando no olho que ativa a hipófise para produzir ovos.</p>
-                <ul>
-                    <li><strong>Meta:</strong> Chegar a 16 ou 17 horas de luz totais (Sol + Artificial) no pico de postura.</li>
-                    <li><strong>Como fazer:</strong> Aumente 30 minutos por semana a partir da 18ª semana de vida.</li>
-                    <li><strong>Regra Mortal:</strong> NUNCA diminua a luz durante a fase de produção (ex: lâmpada queimada por dias). Isso faz elas entrarem em muda (pararem de pôr).</li>
-                </ul>
-            `
-        },
-        {
-            day: 140,
-            type: 'routine',
-            freq: 'daily',
-            title: 'Coleta de Ovos',
-            desc: 'Procedimento de Coleta.',
-            guide: `
-                <h3>🥚 Coleta Profissional</h3>
-                <h4>Frequência</h4>
-                <p>Pelo menos 2 ou 3 vezes ao dia (10h, 13h, 16h). Ovos deixados no ninho podem ser bicados, sujos ou "chocados" pelo calor.</p>
-                
-                <h4>Limpeza</h4>
-                <ul>
-                    <li><strong>Ovos Limpos:</strong> Guarde direto. Não lave! A casca tem uma película ("cutícula") que impede bactérias.</li>
-                    <li><strong>Ovos Sujos:</strong> Limpe com uma lixa fina ou pano seco. Se precisar lavar, use água morna (mais quente que o ovo) e sanitizante próprio, e seque imediatamente.</li>
-                </ul>
-            `
-        }
-    ],
-
-    // 2. Frangos de Corte
-    frangos_corte: [
-        {
-            day: -3,
-            title: 'Vazio Sanitário',
-            desc: 'Protocolo de Limpeza.',
-            guide: `
-                <h3>🚫 O Poder do Vazio Sanitário</h3>
-                <p>O vazio sanitário é o tempo entre a retirada de um lote e a entrada do outro. É a única forma de quebrar ciclos de vírus.</p>
-                <ul>
-                    <li><strong>Tempo Mínimo:</strong> 10 dias com o galpão limpo e vazio.</li>
-                    <li><strong>Procedimento:</strong> Retirar toda a cama antiga (venda para adubo, longe do galpão). Varrer, lavar com detergente, desinfetar com glutaraldeído ou iodo, e caiar.</li>
-                    <li><strong>Controle de Roedores:</strong> É no vazio que os ratos procuram comida. Use iscas nas áreas externas.</li>
-                </ul>
-            `
-        },
-        {
-            day: 0,
-            title: 'Alojamento',
-            desc: 'Recepção.',
-            guide: `
-                <h3>🐤 Start Perfeito</h3>
-                <p>O peso do frango aos 7 dias define o peso de abate. Um erro hoje custa caro no dia 45.</p>
-                <ul>
-                    <li><strong>Papel no Chão:</strong> Cubra 30% da área (sob os bebedouros e comedouros) com papel pardo/jornal e jogue ração em cima. Eles aprendem a comer pelo barulho do bico no papel.</li>
-                    <li><strong>Temperatura de Chão:</strong> A cama deve estar quente (30°C+). Se a perna do pinto esfriar, ele não anda, não come e morre. Ligue aquecedores 4h antes de eles chegarem.</li>
-                </ul>
-            `
-        },
-        {
-            day: 0,
-            type: 'routine',
-            freq: 'daily',
-            title: 'Tratos (Corte)',
-            desc: 'Manejo de Cama e Ar.',
-            guide: `
-                <h3>🔄 Manejo de Ambiência</h3>
-                <h4>Cama (Piso)</h4>
-                <p>Cama úmida ("cascão") libera amônia, que queima o pulmão do frango e causa ascite (barriga d'água).</p>
-                <ul>
-                    <li><strong>Ação:</strong> Revire a cama todo dia, especiamente perto dos bebedouros. Retire partes molhadas e reponha maravalha seca.</li>
-                </ul>
-                <h4>Ventilação</h4>
-                <p>Frango de corte gera muito calor. Abra cortinas durante o dia (com cuidado com vento direto em pintinhos) para renovar o ar.</p>
-            `
-        },
-        {
-            day: 7,
-            type: 'routine',
-            freq: 'weekly',
-            title: 'Pesagem',
-            desc: 'Controle de Conversão.',
-            guide: `
-                <h3>⚖️ Metas de Peso (Referência Cobb/Ross)</h3>
-                <p>Pese 5% das aves (escolha aleatória, pegue aves de vários pontos, não só os bonitos).</p>
-                <ul>
-                    <li><strong>Dia 7:</strong> Meta ~180-200g (4x o peso inicial).</li>
-                    <li><strong>Dia 14:</strong> Meta ~450-500g.</li>
-                    <li><strong>Dia 21:</strong> Meta ~900-1000g.</li>
-                </ul>
-                <p>Se estiver abaixo, revise: Temperatura noturna, qualidade da ração ou acesso à água (bebedouros suficientes?).</p>
-            `
-        },
-        { day: 45, title: 'Abate', desc: 'Retirada.', guide: '<h3>🍗 Jejum Pré-Abate</h3><p>Para evitar contaminação da carne com fezes no abate:</p><ul><li>Retire a ração 6 a 8 horas antes de pegar as aves.</li><li>MANTENHA A ÁGUA! Se tirar a água, eles desidratam e a carne fica ruim, além de ser dificil depenar.</li><li>Capture com calma, segurando pelas duas pernas, nunca pelas asas (gera hematomas).</li></ul>' }
-    ],
-
-    // 3. Gado de Leite
-    gado_leite: [
-        {
-            day: 0,
-            title: 'Início do Controle',
-            desc: 'Identificação e Histórico.',
-            guide: `
-                <h3>🥛 Gestão do Rebanho</h3>
-                <p>Vaca sem nome/número não se gerencia.</p>
-                <ul>
-                    <li><strong>Brincos:</strong> Identifique todas. Anote data de parto provável.</li>
-                    <li><strong>Escore Corporal (ECC):</strong> Avalie se estão magras ou gordas. Vaca muito magra não emprenha e não dá leite. (Meta ECC 3.0 a 3.5).</li>
-                </ul>
-            `
-        },
-        {
-            day: 0,
-            type: 'routine',
-            freq: 'daily',
-            title: 'Ordenha',
-            desc: 'Procedimento Padrão.',
-            guide: `
-                <h3>🥛 O Ritual da Ordenha (Higiene Absoluta)</h3>
-                <p>Mastite se pega na ordenha errada.</p>
-                <ol>
-                    <li><strong>Teste da Caneca:</strong> Jatos iniciais no fundo preto para ver grumos (mastite clínica).</li>
-                    <li><strong>Pré-Dipping:</strong> Mergulhar tetos em solução de iodo/clorexidina. Esperar 30s (tempo de matar bactéria).</li>
-                    <li><strong>Secagem:</strong> Papel toalha descartável (1 folha por teto!). Pano sujo espalha doença.</li>
-                    <li><strong>Ordenha:</strong> Colocar ordenhadeira ou ordenhar manual. Não deixar a ordenhadeira "chupando" teto vazio (sobreordenha machuca).</li>
-                    <li><strong>Pós-Dipping:</strong> Iodo glicerinado para selar o canal do teto.</li>
-                    <li><strong>Em pé:</strong> Dê comida logo após a ordenha para a vaca ficar em pé por 30min até o teto fechar.</li>
-                </ol>
-            `
-        },
-        {
-            day: 15,
-            type: 'routine',
-            freq: 'monthly',
-            title: 'Controle de Carrapatos',
-            desc: 'Estratégia.',
-            guide: `
-                <h3>🪰 Guerra aos Carrapatos</h3>
-                <p>Carrapato transmite Tristeza Parasitária Bovina (Babesia/Anaplasma), que mata.</p>
-                <ul>
-                    <li><strong>Quando tratar:</strong> Quando ver muitos carrapatos pequenos ("uvas passas" já caíram e botaram ovos).</li>
-                    <li><strong>Rodízio de Princípios:</strong> Não use o mesmo veneno para sempre. Alterne (Amitraz, Piretróides, Fipronil) a cada ano ou quando falhar.</li>
-                    <li><strong>Cuidado com o Leite:</strong> Verifique a CARENÇA do remédio. Maioria dos "Pour-on" proíbe consumo do leite por dias.</li>
-                </ul>
-            `
-        },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Teste de Mastite (CMT)', desc: 'Diagnóstico.', guide: '<h3>🦠 California Mastitis Test (CMT)</h3><p>Detecta mastite sub-clínica (onde o leite parece normal mas a vaca produz menos).</p><ul><li>Misture o leite com reagente na raquete.</li><li>Se formar gel/gosma: Positivo.</li><li>Trate vacas positivas ou seque o quarto afetado se crônico.</li></ul>' }
-    ],
-
-    // 4. Gado de Corte
-    gado_corte: [
-        { day: 0, title: 'Entrada no Pasto', desc: 'Manejo de Entrada.', guide: '<h3>🐂 Recepção de Gado</h3><p>Gado estressado não engorda.</p><ul><li>Hidratação e Sal Mineral à vontade na chegada.</li><li>Deixe descansarem 1 dia antes de vacinar ou marcar.</li><li><strong>Lotação:</strong> Ajuste o número de bois para o tamanho do pasto. Pasto rapado = prejuízo ("boi sanfona").</li></ul>' },
-        {
-            day: 1,
-            type: 'routine',
-            freq: 'daily',
-            title: 'Ronda do Pasto',
-            desc: 'Inspeção Detalhada.',
-            guide: `
-                <h3>👀 O Olho do Dono (Ronda)</h3>
-                <p>Não é só olhar se o boi tá vivo.</p>
-                <ul>
-                    <li><strong>Cocho de Sal:</strong> Nunca pode estar vazio. Boi sem mineral não converte capim em carne. Limpe se tiver água de chuva ou folhas.</li>
-                    <li><strong>Bebedouro:</strong> Lave periodicamente. Boi bebe 40-70 litros/dia. Água suja diminui consumo.</li>
-                    <li><strong>Fezes:</strong> Fezes muito duras e secas = Capim muito seco/pouca proteína. (Precisa de Sal Proteinado? Urea?).</li>
-                </ul>
-            `
-        },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Pesagem de Controle', desc: 'GND.', guide: '<h3>⚖️ Ganho Médio Diário (GMD)</h3><p>Pese sempre no mesmo horário (de preferência de manhã, em jejum).</p><ul><li><strong>Meta Águas:</strong> 700g a 1kg/dia.</li><li><strong>Meta Seca:</strong> Manter peso ou ganho leve (na recria).</li><li>Se não bater a meta: Avalie altura do pasto e parasitas.</li></ul>' },
-        { day: 60, title: 'Vermifugação', desc: 'Sanidade.', guide: '<h3>💉 Calendário Sanitário Básico</h3><ul><li><strong>Aftosa:</strong> Obrigatória (maio/nov).</li><li><strong>Brucelose:</strong> Fêmeas (3-8 meses).</li><li><strong>Clostridioses (Carbúnculo):</strong> Matam subitamente o maior bezerro. Vacine todo ano.</li><li><strong>Vermífugo:</strong> Estratégico na entrada da seca (maio) para limpar o gado quando o pasto piora.</li></ul>' }
-    ],
-
-    // 5. Suínos
-    suinos: [
-        {
-            day: 0,
-            title: 'Nascimento/Entrada',
-            desc: 'Cuidados Neonatais.',
-            guide: `
-                <h3>🐖 Manejo do Leitão (Dia 0)</h3>
-                <p>Leitão nasce sem imunidade e com pouca energia.</p>
-                <ol>
-                    <li><strong>Secagem:</strong> Seque com papel toalha ou pó secante (evita hipotermia).</li>
-                    <li><strong>Colostro:</strong> Garanta que mamem na primeira hora. O colostro é o único remédio deles.</li>
-                    <li><strong>Umbigo:</strong> Corte a 3cm e mergulhe em iodo 10%. Porta de entrada de bactérias.</li>
-                    <li><strong>Aquecimento:</strong> Leitão precisa de 32°C. A porca precisa de 20°C. Use o "escamoteador" (caixa aquecida onde só o leitão entra).</li>
-                </ol>
-            `
-        },
-        { day: 3, title: 'Aplicação de Ferro', desc: 'Prevenção de Anemia.', guide: '<h3>💉 Ferro Dextrano</h3><p>O leite da porca é pobre em ferro e o leitão cresce muito rápido.</p><ul><li><strong>Sintoma de falta:</strong> Leitão pálido ("papel"), pelo áspero, crescimento lento (refugo).</li><li><strong>Dose:</strong> 1ml ou 2ml (confira bula) intramuscular profundo no pescoço (atrás da orelha).</li></ul>' },
-        { day: 0, type: 'routine', freq: 'daily', title: 'Limpeza das Baias', desc: 'Higiene.', guide: '<h3>🧹 Lavagem Estratégica</h3><p>Suíno defeca em local úmido e dorme em local seco.</p><ul><li>Aproveite esse instinto: mantenha a área de dormir sempre seca.</li><li>Remova fezes diariamente para evitar gases tóxicos e moscas.</li></ul>' }
-    ],
 
     // 6. Pomar (Citros/Frutas em Geral)
     pomar: [
         { day: -60, title: 'Análise e Calagem', desc: 'Preparo Antecipado.', guide: '<h3>🧪 A Base de Tudo</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>📉 Correção de Acidez (Recomendada):</strong><br>Aplicar <b>{{CALC_GM2}}g/m²</b> (ou {{CALC_TON}} ton/ha) de Calcário.</div><p>O calcário demora 60 a 90 dias para reagir e tirar a acidez. Se deixar para aplicar no plantio, a planta não aproveita direito no começo.</p><ul><li>Espalhe o calcário em área total e incorpore (misture com a terra) se possível.</li></ul>' },
         { day: -30, title: 'Abertura de Covas', desc: 'Curas do Solo.', guide: '<h3>🕳️ Prepare a Casa da Árvore</h3><p>Frutífera vive anos no mesmo lugar. Capriche na cova.</p><ul><li><strong>Tamanho:</strong> 60x60x60cm.</li><li><strong>Adubação Antecipada:</strong> Misture o esterco, fosfato e calcário com a terra e encha a cova. Deixe "curtir" por 30 dias. Se plantar logo após adubar, o adubo quente pode queimar a raiz da muda nova.</li></ul>' },
         { day: 0, title: 'Plantio das Mudas', desc: 'Implantação.', guide: '<h3>🍊 Hora de Plantar</h3><div style="background:#fff3cd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação de Plantio:</strong><br>Use NPK <b>{{NPK_FORMULA}}</b>: <b>{{NPK_GM2}}g</b> por cova (misturado na terra).</div><p>Se já fez a cova há 30 dias, só abra um buraco pequeno para o torrão.</p><ul><li><strong>Enxerto:</strong> 5cm acima do solo (Sagrado!).</li><li><strong>Água:</strong> 20 litros por cova logo após o plantio para tirar bolsas de ar das raízes.</li></ul>' },
-        { day: 15, type: 'routine', freq: 'monthly', title: 'Adubação e Coroamento', desc: 'Nutrição.', guide: '<h3>🌳 Coroamento e Nutrição</h3><p>Mantenha um círculo de 1m em volta do tronco "na terra nua".</p><ul><li>Isso evita que a roçadeira machuque o tronco (porta de entrada para fungos).</li><li>Adube na projeção da copa (onde acaba a sombra), não no tronco. É lá que estão as raízes finas que comem.</li></ul>' },
+        { day: 15, type: 'routine', freq: 'monthly', title: 'Adubação de Manutenção', desc: 'Nutrição Mensal.', guide: '<h3>🔄 Manutenção Nutricional</h3><p>Frutíferas jovens precisam de "comida" todo mês para formar a copa.</p><ul><li><strong>O que usar:</strong> NPK 10-10-10 ou 20-05-20 (se já tiver fosfato na cova).</li><li><strong>Como aplicar:</strong> Em círculo, na projeção da copa (onde cai a gota de chuva da folha mais externa), nunca encostado no tronco.</li><li><strong>Dose:</strong> Aumente a dose conforme a planta cresce (comece com um copo de iogurte pequeno por planta).</li></ul>' },
+        { day: 30, type: 'routine', freq: 'monthly', title: 'Coroamento', desc: 'Limpeza.', guide: '<h3>🌳 Coroamento</h3><p>Mantenha um círculo de 1m em volta do tronco "na terra nua".</p><ul><li>Isso evita que a roçadeira machuque o tronco (porta de entrada para fungos).</li><li>Ajuda a visualizar se tem formigas ou brocas atacando o colo da planta.</li></ul>' },
         { day: 7, type: 'routine', freq: 'weekly', title: 'Monitorar Formiga Cortadeira', desc: 'Sauvas.', guide: '<h3>🐜 O Inimigo nº 1</h3><p>Uma saúva adulta consome mais que um boi (proporcionalmente).</p><ul><li>Siga as trilhas até o olheiro.</li><li>Aplique isca granulada <strong>ao lado</strong> do caminho, nunca dentro do buraco (elas precisam carregar pra dentro).</li><li>Não aplique em dias de chuva ou chão molhado.</li></ul>' }
     ],
 
@@ -881,7 +607,7 @@ const cropTemplates = {
         { day: -20, title: 'Dessecação (Mato)', desc: 'Limpeza da Área.', guide: '<h3>🍂 O "Vazio" antes do Plantio</h3><p>Não plante no meio do mato verde!</p><ul><li>As ervas daninhas competem por água e alelopatia (veneno químico) contra o milho bebê.</li><li>Aplique herbicida ou roce baixo 15-20 dias antes. O milho deve nascer em "terra limpa" ou palhada morta.</li></ul>' },
         { day: 0, title: 'Plantio do Milho', desc: 'Técnica de Semeadura.', guide: '<h3>🌽 Dia de Plantar</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação na Linha:</strong><br>Use NPK <b>{{NPK_FORMULA}}</b>.<br>Dose: <b>{{NPK_GM2}}g</b> por metro linear.</div><p>A calagem já deve ter sido feita. Agora é garantir o fósforo.</p><ul><li><strong>Velocidade:</strong> 4-5km/h. Calma!</li><li><strong>Profundidade:</strong> 3 a 5cm.</li><li><strong>Adubo:</strong> Ao lado e abaixo da semente para não "salgar" (queimar) a semente.</li></ul>' },
         { day: 15, type: 'routine', freq: 'weekly', title: 'Monitorar Lagarta', desc: 'Praga Chave.', guide: '<h3>🐛 Lagarta-do-Cartucho (Spodoptera)</h3><p>Praga mais destrutiva.</p><ul><li><strong>Dano:</strong> Come as folhas novas ainda enroladas no cartucho. Quando a folha abre, está toda furada. Também mata o ponto de crescimento.</li><li><strong>Monitoramento:</strong> Entre na roça e faça um "W". Olhe 20 plantas por ponto. Se achar 2 com lagarta ou cocô fresco, TEM que aplicar.</li><li><strong>Controle:</strong> Inseticidas fisiológicos (inibidores de quitina) ou Biológicos (Baculovírus/BT) funcionam melhor com lagartas pequenas (<1cm).</li></ul>' },
-        { day: 30, title: 'Adubo de Cobertura', desc: 'A Força do Nitrogênio.', guide: '<h3>✨ Ureia: O Motor do Milho</h3><p>Milho precisa de muito Nitrogênio para encher espiga.</p><ul><li><strong>Fase V4-V6:</strong> (4 a 6 folhas verdadeiras). É quando a planta define o tamanho da espiga.</li><li><strong>Aplicação:</strong> Jogue a ureia no cordão, a uns 10cm do pé.</li><li><strong>Perda:</strong> A ureia vira gás (amônia) se ficar no sol. Aplique antes da chuva ou enterre/cubra com terra.</li></ul>' }
+        { day: 30, title: 'Adubação de Cobertura (Manutenção)', desc: 'A Força do Nitrogênio.', guide: '<h3>✨ Ureia: O Motor do Milho</h3><p>Milho precisa de muito Nitrogênio para encher espiga.</p><ul><li><strong>Fase V4-V6:</strong> (4 a 6 folhas verdadeiras). É quando a planta define o tamanho da espiga.</li><li><strong>Aplicação:</strong> Jogue a ureia no cordão, a uns 10cm do pé.</li><li><strong>Perda:</strong> A ureia vira gás (amônia) se ficar no sol. Aplique antes da chuva ou enterre/cubra com terra.</li></ul>' }
     ],
 
     // 8. Feijão
@@ -890,7 +616,7 @@ const cropTemplates = {
         { day: -15, title: 'Dessecação', desc: 'Eliminar Concorrência.', guide: '<h3>🧹 Área Limpa</h3><p>Feijão "nasce fraco". Se tiver mato competindo nos primeiros 20 dias, você perde a lavoura.</p><ul><li>Faça a limpeza total da área 2 semanas antes.</li><li>Evite herbicidas residuais fortes que possam matar o feijão quando nascer.</li></ul>' },
         { day: 0, title: 'Plantio Feijão', desc: 'Sensibilidade.', guide: '<h3>🫘 Plantio Suave</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação NPK:</strong><br>Use <b>{{NPK_FORMULA}}</b>: <b>{{NPK_GM2}}g</b> por metro.</div><p>Solo destorroado é lei.</p><ul><li><strong>Profundidade:</strong> Rasa (3cm). Se enterrar muito, ele não tem força para sair.</li><li><strong>Inoculante:</strong> Misture Rhizobium na sombra (o sol mata a bactéria) e plante logo em seguida.</li></ul>' },
         { day: 10, type: 'routine', freq: 'weekly', title: 'Monitorar Pragas', desc: 'Vetores de Vírus.', guide: '<h3>🐞 Mosca Branca e Vaquinha</h3><ul><li><strong>Mosca Branca:</strong> Transmite o Mosaico Dourado (vírus que atrofia e amarela o feijoeiro). Se ver nuvens de mosquinhas brancas ao balançar a folha, controle imediatamente.</li><li><strong>Vaquinha:</strong> Come a folha, mas o pior é a larva dela que come a raiz.</li></ul>' },
-        { day: 25, title: 'Cobertura Nitrogenada', desc: 'Boost.', guide: '<h3>✨ Nitrogênio no Feijão</h3><p>Apesar de ser leguminosa, o feijão moderno precisa de um empurrão.</p><ul><li>Aplique uma dose leve de ureia (30-50kg/ha) aos 20-25 dias (terceira folha trifoliada).</li><li>Cuidado para não jogar dentro da folha ("copinho"), pois a ureia queima a planta.</li></ul>' }
+        { day: 25, title: 'Adubação de Cobertura (Manutenção)', desc: 'Boost.', guide: '<h3>✨ Nitrogênio no Feijão</h3><p>Apesar de ser leguminosa, o feijão moderno precisa de um empurrão.</p><ul><li>Aplique uma dose leve de ureia (30-50kg/ha) aos 20-25 dias (terceira folha trifoliada).</li><li>Cuidado para não jogar dentro da folha ("copinho"), pois a ureia queima a planta.</li></ul>' }
     ],
 
     // 9. Mandioca
@@ -899,6 +625,7 @@ const cropTemplates = {
         { day: -30, title: 'Aração/Gradagem', desc: 'Solo Fofo.', guide: '<h3>🚜 Solo Solto = Raiz Grossa</h3><p>Para a mandioca engrossar, a terra não pode estar compactada.</p><ul><li><strong>Aração:</strong> Profunda (20-30cm).</li><li><strong>Curvas de Nível:</strong> Mandioca sofre muito com erosão. Plante cortando as águas.</li></ul>' },
         { day: 0, title: 'Plantio (Manivas)', desc: 'Seleção da Muda.', guide: '<h3>🥔 Plantio da Mandioca</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Fósforo no Sulco:</strong><br>Se recomendado, use Super Simples no fundo do sulco.</div><ul><li><strong>Origem:</strong> Use o terço médio da planta mãe.</li><li><strong>Posição:</strong> Horizontal (a 5-10cm) facilita colheita.</li></ul>' },
         { day: 30, type: 'routine', freq: 'monthly', title: 'Capina (Crítico)', desc: 'Período Crítico.', guide: '<h3>🌿 Período Crítico de Competição (PCII)</h3><p>Dos 0 aos 100 dias, a mandioca <strong>não tolera sombra</strong>.</p><ul><li>Se o mato crescer mais que a mandioca nesse tempo, a produção cai 50% ou mais.</li><li>Mantenha a roça "no limpo" até a mandioca fechar a rua e fazer sombra no mato.</li></ul>' },
+        { day: 60, type: 'routine', freq: 'quarterly', title: 'Adubação de Manutenção', desc: 'Nutrição.', guide: '<h3>💪 Força Pré-Amido</h3><p>Para garantir raízes cheias:</p><ul><li><strong>Potássio:</strong> Se o solo for fraco, aplique cloreto de potássio (60 dias após plantio) para ajudar a carregar o amido.</li><li><strong>Manutenção:</strong> Mantenha a área limpa e observe deficiências (folhas amarelas, crescimento lento).</li></ul>' },
         { day: 365, title: 'Ponto de Colheita', desc: 'Amido.', guide: '<h3>🥘 Ponto de Colheita</h3><p>Não tem data certa, depende do mercado e da chuva.</p><ul><li><strong>Teor de Amido:</strong> Se choveu muito e a planta brotou folha nova, ela "gastou" o amido da raiz. A mandioca fica "aguada" e não cozinha.</li><li><strong>Melhor hora:</strong> Na "dormência" da planta (época seca/inverno), quando ela está com pouca folha. A raiz está cheia de energia acumulada.</li></ul>' }
     ],
 
@@ -908,8 +635,8 @@ const cropTemplates = {
     alface: [
         { day: -10, title: 'Preparo do Canteiro', desc: 'Base.', guide: '<h3>🥬 Canteiro de Ouro</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação Rica em N:</strong><br>Misture muito esterco curtido (3 a 5kg/m²). Use <b>{{NPK_FORMULA}}</b> (<b>{{NPK_GM2}}g/m²</b>) espalhado.</div><p>Folha precisa de nitrogênio e matéria orgânica.</p><ul><li><strong>Canteiro:</strong> 20cm de altura para não empossar água (alface apodrece fácil).</li></ul>' },
         { day: 0, title: 'Transplantio', desc: 'Mudas.', guide: '<h3>🌱 Mudança de Casa</h3><p>Nunca plante a semente direto (é muito frágil).</p><ul><li><strong>Ponto ideal:</strong> Muda com 4 folhas definitivas.</li><li><strong>Espaçamento:</strong> 25x25cm ou 30x30cm. Se fechar muito, dá fungo (Míldio).</li><li><strong>Horário:</strong> Fins de tarde para o sol não murchar a muda na largada.</li></ul>' },
-        { day: 20, title: 'Cobertura', desc: 'Nitrogênio.', guide: '<h3>✨ Explosão Verde</h3><p>A alface cresce muito rápido.</p><ul><li>Aplique adubo nitrogenado (Ureia ou Sulfato de Amônio) entre as plantas.</li><li>Cuidado para não "algodão doce" (queimar as folhas com o adubo).</li></ul>' },
-        { day: 45, title: 'Colheita', desc: 'Antes do Pendão.', guide: '<h3>🥗 Ponto de Colheita</h3><p>Colha antes do centro começar a subir (pendoar), senão fica amarga.</p>' }
+        { day: 20, type: 'routine', freq: 'weekly', title: 'Adubação de Cobertura (Manutenção)', desc: 'Nitrogênio (Boost).', guide: '<h3>✨ Explosão Verde</h3><p>A alface cresce muito rápido e precisa de manutenção constante.</p><ul><li><strong>Semanalmente:</strong> Aplique adubo nitrogenado (Ureia ou Sulfato de Amônio) diluído em água se possível, ou entre as plantas com cuidado.</li><li><strong>Cuidado:</strong> Não deixe cair nas folhas ("queima").</li><li>Alterne com adubos orgânicos líquidos (biofertilizantes) para dar brilho e sabor.</li></ul>' },
+        { day: 45, title: 'Colheita', desc: 'Antes do Pendão.', guide: '<h3>🥗 Ponto de Colheita</h3><p>Colha antes do centro começar a subir (pendoar), senão fica amarga.</p><ul><li><strong>Horário:</strong> Colha bem cedo (antes do sol forte) para ela durar mais na geladeira ou na banca do mercado.</li></ul>' }
     ],
 
     // 11. Tomate (Frutos)
@@ -917,64 +644,48 @@ const cropTemplates = {
         { day: -15, title: 'Calagem e Canteiro', desc: 'Preparo.', guide: '<h3>🍅 Tomate Exige Cálcio</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Fundo Preto (Podridão Apical):</strong><br>A falta de Cálcio (Calagem: {{CALC_GM2}}g/m²) faz o fundo do tomate ficar preto.<br>Aplique o calcário com antecedência!</div>' },
         { day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🌱 Transplantio</h3><ul><li>Use mudas sadias. Enterre até a primeira folha para enraizar melhor.</li><li><strong>Adubo NPK:</strong> Rico em Potássio (K) e Fósforo (P). Use <b>{{NPK_GM2}}g</b> por cova.</li></ul>' },
         { day: 15, title: 'Estaqueamento (Tutor)', desc: 'Suporte.', guide: '<h3>🪵 Amarrio</h3><p>O tomateiro indeterminado cresce como trepadeira. Precisa de estaca ou fitilho.</p><ul><li>Amarre com folga ("em oito") para não enforcar o caule quando engrossar.</li></ul>' },
-        { day: 20, type: 'routine', freq: 'weekly', title: 'Desbrota', desc: 'Tira-Chupão.', guide: '<h3>✂️ Cirurgia Semanal</h3><p>Remova os brotos laterais que nascem na axila das folhas ("chupões").</p><ul><li>Deixe apenas a haste principal subir.</li><li>Isso concentra força nos frutos e melhora a ventilação.</li></ul>' }
+        { day: 20, type: 'routine', freq: 'weekly', title: 'Desbrota', desc: 'Tira-Chupão.', guide: '<h3>✂️ Cirurgia Semanal</h3><p>Remova os brotos laterais que nascem na axila das folhas ("chupões").</p><ul><li>Deixe apenas a haste principal subir.</li><li>Isso concentra força nos frutos e melhora a ventilação.</li></ul>' },
+        { day: 30, type: 'routine', freq: 'weekly', title: 'Adubação de Manutenção (Fertirrigação)', desc: 'Produção Contínua.', guide: '<h3>🍅 Comida toda semana</h3><p>Tomate produz e cresce ao mesmo tempo.</p><ul><li><strong>Alternância:</strong> Uma semana NK (Nitrogênio e Potássio) para encher fruto, na outra Cálcio e Magnésio para evitar podridão.</li><li><strong>Boro:</strong> Aplique Calda Bordalesa ou adubo foliar com Boro a cada 15 dias para melhorar a florada.</li></ul>' }
     ],
 
     // 12. Cenoura (Raízes)
     cenoura: [
         { day: -5, title: 'Canteiro Profundo', desc: 'Solo Fofo.', guide: '<h3>🥕 O Segredo da Cenoura Reta</h3><p>Se a raiz achar terra dura ou pedra, ela entorta ou bifurca ("cenoura de pernas abertas").</p><ul><li>Revire a terra a 30cm de profundidade. Deixe muito fofo.</li><li><strong>Adubo P:</strong> O Fósforo é essencial. Use NPK <b>{{NPK_GM2}}g/m²</b>.</li></ul>' },
         { day: 0, title: 'Semeadura Direta', desc: 'Plantio.', guide: '<h3>🌱 Semeando</h3><p>Não se faz muda de cenoura (a raiz torta no transplante).</p><ul><li>Riscos de 1 a 2cm de profundidade.</li><li>Misture a semente com areia ou fubá para espalhar melhor (semente muito miúda).</li></ul>' },
-        { day: 25, title: 'Desbaste (Raleio)', desc: 'Espaço.', guide: '<h3>✂️ A Escolha de Sofia</h3><p>Você vai ter que arrancar as plantinhas extras.</p><ul><li>Deixe uma cenoura a cada 5-8cm. Se ficarem grudadas, não engrossam.</li><li>Faça isso com o solo úmido para não abalar as vizinhas.</li></ul>' }
+        { day: 25, title: 'Desbaste (Raleio)', desc: 'Espaço.', guide: '<h3>✂️ A Escolha de Sofia</h3><p>Você vai ter que arrancar as plantinhas extras.</p><ul><li>Deixe uma cenoura a cada 5-8cm. Se ficarem grudadas, não engrossam.</li><li>Faça isso com o solo úmido para não abalar as vizinhas.</li></ul>' },
+        { day: 40, type: 'routine', freq: 'monthly', title: 'Adubação de Cobertura (Potássio)', desc: 'Encher Raiz.', guide: '<h3>🥕 Doçura e Tamanho</h3><p>Cenoura precisa de Potássio para crescer a raiz.</p><ul><li>Evite excesso de Nitrogênio (Ureia) agora, senão ela dá muita folha e pouca cenoura.</li><li>Prefira cinzas de madeira ou Cloreto de Potássio entre as linhas.</li></ul>' }
     ],
 
     // 13. Café (Perene)
     cafe: [
         { day: -60, title: 'Análise e Correção', desc: 'Investimento.', guide: '<h3>☕ Café é Cultura de Precisão</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Calcário:</strong><br>Dose: <b>{{CALC_GM2}}g/m²</b>. Café não tolera alumínio tóxico.</div><p>Faça a correção em área total e no fundo do sulco.</p>' },
         { day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🌱 Plantio do Café</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Fosfatagem:</strong><br>Use fonte rica em P (Super Simples ou NPK de plantio) misturado n terra da cova. <b>{{NPK_GM2}}g</b>.</div><ul><li><strong>Colo:</strong> Não enterre o colo da muda (região entre raiz e caule). Afogamento do colo mata a muda.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Adubação Nitrogenada', desc: 'Crescimento.', guide: '<h3>✨ Nitrogênio Parcelado</h3><p>No primeiro ano, aplique N a cada 30-45 dias (nas chuvas) para formar a saia do cafeeiro.</p>' }
+        { day: 30, type: 'routine', freq: 'monthly', title: 'Adubação Nitrogenada', desc: 'Crescimento.', guide: '<h3>✨ Nitrogênio Parcelado</h3><p>No primeiro ano, aplique N a cada 30-45 dias (nas chuvas) para formar a saia do cafeeiro.</p><p>Use sulfato de amônio ou ureia, sempre em solo úmido.</p>' },
+        { day: 120, type: 'routine', freq: 'quarterly', title: 'Adubação de Manutenção (NPK)', desc: 'Estrutura.', guide: '<h3>☕ Adubo de Produção</h3><p>A partir do segundo ano, o café precisa de muito Potássio para encher o grão.</p><ul><li>Use NPK 20-05-20 ou similar fórmula cafeeira.</li><li>Em lavouras adultas, faça 3 ou 4 parcelas anuais (Setembro, Novembro, Janeiro, Março).</li></ul>' }
     ],
 
-    // --- NOVAS CRIAÇÕES DE PEQUENO PORTE ---
 
-    // 14. Piscicultura (Tilápias)
-    tilapias: [
-        { day: -15, title: 'Preparo do Tanque', desc: 'Calagem e Adubação.', guide: '<h3>🐟 A Água é a Casa</h3><p>Antes de colocar peixe, a água precisa ter "comida natural" (fitoplâncton).</p><ul><li><strong>Calagem:</strong> Jogue calcário no fundo seco ou na água para manter alcalinidade > 30.</li><li><strong>Adubação:</strong> Ureia e Super Simples (em sacos perfurados) para a água ficar verde (rica em algas). Transparência ideal: 30-40cm.</li></ul>' },
-        { day: 0, title: 'Povoamento (Alevinos)', desc: 'Aclimatação.', guide: '<h3>🌡️ Choque Térmico Mata</h3><p>Nunca solte os peixes direto!</p><ol><li>Deixe o saco boiando na água por 20 minutos (igualar temperatura).</li><li>Vá misturando a água do tanque no saco devagar.</li><li>Solte os peixes sem jogar o saco.</li></ol><ul><li><strong>Horário:</strong> Manhã cedo ou fim de tarde.</li></ul>' },
-        { day: 1, type: 'routine', freq: 'daily', title: 'Alimentação', desc: 'Arraçoamento.', guide: '<h3>🍽️ O Olho do Dono</h3><p>Peixe não tem estômago, come várias vezes ao dia.</p><ul><li><strong>Fase Inicial:</strong> Ração farelada/poeira (4-6x ao dia).</li><li><strong>Sobra:</strong> Se sobrar ração boiando depois de 15min, você jogou demais. Ração sobrando apodrece a água e mata o peixe.</li></ul>' },
-        { day: 15, type: 'routine', freq: 'weekly', title: 'Medir Qualidade da Água', desc: 'Ouro Azul.', guide: '<h3>🧪 Parâmetros Vitais</h3><ul><li><strong>Oxigênio:</strong> Peixe boquejando na superfície de manhã cedo = Falta de oxigênio. Ligue aeradores à noite.</li><li><strong>Amônia:</strong> Tóxica. Causada por excesso de comida ou fezes. Se subir, troque parte da água.</li><li><strong>pH:</strong> Ideal entre 6.8 e 7.8.</li></ul>' }
-    ],
-
-    // 15. Apicultura (Abelhas)
-    abelhas: [
-        { day: 0, title: 'Captura ou Instalação', desc: 'Enxame.', guide: '<h3>🐝 Começando o Apiário</h3><p>Você pode capturar enxames voadores ou comprar caixas povoadas.</p><ul><li><strong>Isca:</strong> Caixas de papelão com cheiro de atrativo (capim limão/cera velha) em árvores.</li><li><strong>Local:</strong> Longe de casas (segurança), com sol da manhã e sombra à tarde. Perto de água.</li></ul>' },
-        { day: 15, type: 'routine', freq: 'monthly', title: 'Revisão da Colmeia', desc: 'Inspeção.', guide: '<h3>🧐 Abrindo a Caixa</h3><p>Use fumaça (fria) para acalmar. Nunca em dias de vento ou chuva.</p><ul><li><strong>Rainha:</strong> Verifique se tem ovos (larvas pequenas no fundo dos alvéolos). Se tem ovo, tem rainha.</li><li><strong>Espaço:</strong> Se os quadros estiverem cheios de mel/cria, coloque uma melgueira em cima para elas não enxamearem (fugirem por falta de espaço).</li></ul>' },
-        { day: 30, title: 'Alimentação de Subsistência', desc: 'Entressafra.', guide: '<h3>🍬 Época da Seca</h3><p>Se não tem flor, a colmeia morre de fome.</p><ul><li>Forneça xarope (água + açúcar 1:1) ou bife proteico.</li><li>Cuidado com pilhagem (abelhas de fora roubando o xarope). Reduza o alvado (porta).</li></ul>' }
-    ],
-
-    // 16. Ovinos/Caprinos
-    ovinos: [
-        { day: 0, title: 'Chegada', desc: 'Quarentena.', guide: '<h3>🐑 Pequenos Ruminantes</h3><p>São mais sensíveis que o gado.</p><ul><li>Deixe isolados por 15 dias antes de misturar com o rebanho.</li><li>Verifique os cascos e vermifugue na chegada.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Controle Verminose (Famacha)', desc: 'Anemia.', guide: '<h3>👁️ Método FAMACHA</h3><p>Ovelha morre de verme (Haemonchus) que chupa sangue.</p><ul><li>Olhe a mucosa do olho:</li><li><strong>Vermelho:</strong> Saudável.</li><li><strong>Pálido/Branco:</strong> Anemia grave (Vermifugue urgente!).</li><li>Não vermifugue todo mundo sempre (cria resistência). Só quem precisa.</li></ul>' },
-        { day: 60, type: 'routine', freq: 'monthly', title: 'Casqueamento', desc: 'Cascos.', guide: '<h3>✂️ Manicure de Ovelha</h3><p>Casco cresce e dobra, acumulando sujeira (podridão dos cascos).</p><ul><li>Corte as sobras de casco com tesoura própria.</li><li>Em locais úmidos, passe formol ou sulfato de cobre no casco para endurecer.</li></ul>' }
-    ],
 
     // 17. Maracujá
     maracuja: [
         { day: -30, title: 'Preparo das Espaldeiras', desc: 'Cerca.', guide: '<h3>🏗️ A Sustentação</h3><p>Maracujá precisa de uma "cerca" (espaldeira) para subir.</p><ul><li>Mourões a cada 4-6 metros. Um fio de arame liso grosso a 1.80m de altura.</li><li>Se usar madeira verde, ela apodrece antes do maracujá morrer. Use madeira tratada.</li></ul>' },
         { day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🌱 Plantio no Morro</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação:</strong><br>Use NPK <b>{{NPK_FORMULA}}</b>: <b>{{NPK_GM2}}g</b>/cova. Misture bem.</div>' },
         { day: 60, title: 'Tutoramento', desc: 'Subida.', guide: '<h3>🧗 Ensinando a Subir</h3><p>Conduza a planta com um barbante até o arame.</p><ul><li>Vá tirando todos os brotos laterais até ela chegar no arame lá em cima.</li><li>Quando chegar no arame, corte a ponta para ela soltar os braços laterais (cortina).</li></ul>' },
-        { day: 100, title: 'Polinização Manual', desc: 'Mamangava.', guide: '<h3>🌼 O Segredo da Produção</h3><p>Se não tem abelha grande (Mamangava), não dá fruto.</p><ul><li><strong>Manual:</strong> Pegue o pólen de uma flor e passe na outra (com o dedo mesmo).</li><li>Faça isso à tarde (depois das 13h) quando a flor abre.</li></ul>' }
+        { day: 100, title: 'Polinização Manual', desc: 'Mamangava.', guide: '<h3>🌼 O Segredo da Produção</h3><p>Se não tem abelha grande (Mamangava), não dá fruto.</p><ul><li><strong>Manual:</strong> Pegue o pólen de uma flor e passe na outra (com o dedo mesmo).</li><li>Faça isso à tarde (depois das 13h) quando a flor abre.</li></ul>' },
+        { day: 30, type: 'routine', freq: 'monthly', title: 'Adubação de Manutenção', desc: 'Nutrição Mensal.', guide: '<h3>🔄 Manutenção do Maracujazeiro</h3><p>Planta de crescimento explosivo = Muita fome.</p><ul><li>Aplique NK (Nitrogênio e Potássio) todo mês na época de chuva.</li><li>Se faltar água ou comida, a folha amarela e o fruto murcha ("maracujá de gaveta").</li></ul>' }
     ],
 
     // 18. Ervas e Temperos (Genérico)
     ervas: [
         { day: 0, title: 'Plantio', desc: 'Vasos ou Canteiros.', guide: '<h3>🌿 Horta Medicinal/Temperos</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação Orgânica:</strong><br>Ervas preferem muito composto orgânico/húmus à adubação química forte.</div><ul><li><strong>Drenagem:</strong> Essencial. Alecrim e Hortelã odeiam raiz encharcada.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Poda de Colheita', desc: 'Manutenção.', guide: '<h3>✂️ Pode sem dó</h3><p>Ervas precisam ser podadas para encher.</p><ul><li>Hortelã: Se não podar, invade tudo.</li><li>Manjericão: Corte as flores! Se deixar florir, a folha perde o cheiro e a planta morre (ciclo encerra).</li></ul>' }
+        { day: 30, type: 'routine', freq: 'monthly', title: 'Poda de Colheita', desc: 'Manutenção.', guide: '<h3>✂️ Pode sem dó</h3><p>Ervas precisam ser podadas para encher.</p><ul><li>Hortelã: Se não podar, invade tudo.</li><li>Manjericão: Corte as flores! Se deixar florir, a folha perde o cheiro e a planta morre (ciclo encerra).</li></ul>' },
+        { day: 45, type: 'routine', freq: 'monthly', title: 'Adubação de Manutenção (Orgânica)', desc: 'Revitalização.', guide: '<h3>🍂 Terra Nova</h3><p>Em vasos, a terra "gasta" rápido.</p><ul><li>Todo mês coloque uma mãozada de húmus de minhoca ou esterco curtido no pé da planta.</li><li>Afofe a terra com um garfo velho para a raiz respirar.</li></ul>' }
     ],
 
     // 19. Cana
     cana: [
         { day: 0, title: 'Plantio (Toletes)', desc: 'Sulcos.', guide: '<h3>🎋 Cana Caiana/Forrageira</h3><ul><li>Sulcos profundos (20-30cm).</li><li>Coloque os toletes deitados, ponta com ponta.</li><li>Cubra com pouca terra (5cm) se for época seca, ou mais se for chuva.</li></ul>' },
+        { day: 90, type: 'routine', freq: 'quarterly', title: 'Adubação de Manutenção', desc: 'Sacarose.', guide: '<h3>🎋 Doçura e Peso</h3><p>Cana é gramínea (igual milho) e gosta de Nitrogênio e Potássio.</p><ul><li>Jogue o adubo na linha (junto com a amontoa de terra).</li><li>Mantenha o canavial limpo até fechar a sombra.</li></ul>' },
         { day: 365, title: 'Corte', desc: 'Colheita.', guide: '<h3>🔪 Corte Rente</h3><p>Na hora de colher, corte rente ao chão.</p><ul><li>Se deixar toco alto, brota fraco e dá doença.</li><li>A cana rebate (brota de novo) por 3 a 5 anos.</li></ul>' }
     ],
 
@@ -1002,10 +713,7 @@ const cropTemplates = {
     banana: [],
     abacaxi: [],
 
-    caprinos: [],
 
-    codornas: [],
-    patos: []
 };
 
 // --- CLONING LOGIC ---
@@ -1047,9 +755,7 @@ cropTemplates.vagem = clone('feijao', 'Vagem');
 
 cropTemplates.banana = clone('pomar', 'Banana');
 
-cropTemplates.caprinos = clone('ovinos', 'Cabras'); // Same hoof/worm issues
-cropTemplates.codornas = clone('frangos_corte', 'Codornas'); // Similar timeline but faster
-cropTemplates.patos = clone('frangos_corte', 'Patos'); // Meat birds
+
 
 // Final check to prevent errors
 Object.keys(cropTemplates).forEach(k => {
@@ -1139,49 +845,7 @@ function deleteProject(id) {
 
 
 
-function generateProjectTasks(projectId, culture, startDate) {
-    const template = cropTemplates[culture];
-    if (!template) return;
 
-    template.forEach(item => {
-        // Calculate Date
-        const itemDate = new Date(startDate);
-        itemDate.setDate(itemDate.getDate() + item.day);
-        const dateStr = getLocalISODate(itemDate);
-
-        // ROUTINE
-        if (item.type === 'routine') {
-            state.routines.push({
-                id: Date.now() + Math.random(),
-                title: item.title,
-                description: item.desc,
-                frequency: item.freq,
-                projectId: projectId,
-                nextRun: dateStr,
-                guideContent: item.guide // Store guide for routine tasks
-            });
-        }
-        // ONE-OFF TASK
-        else {
-            state.tasks.push({
-                id: Date.now() + Math.random(),
-                title: item.title,
-                description: item.desc,
-                date: dateStr,
-                priority: 'normal',
-                completed: false,
-                fromRoutine: false,
-                projectId: projectId,
-                frequency: 'none',
-                isAutomated: true,
-                guideContent: item.guide
-            });
-        }
-    });
-
-    // Trigger routine processing to generate first instances of routines immediately if applicable
-    processRoutines();
-}
 
 function toggleTask(id) {
     const task = state.tasks.find(t => t.id === id);
