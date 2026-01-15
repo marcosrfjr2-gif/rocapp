@@ -721,7 +721,10 @@ function getEmojiForType(type) {
         feijao: '🫘',
         mandioca: '🥔',
         banana: '🍌',
-        coqueiro: '🥥'
+        coqueiro: '🥥',
+        consorcio_milpa: '🌽',
+        consorcio_aromatico: '🍅',
+        consorcio_canteiro: '🥗'
     };
     return map[type] || '🌱';
 }
@@ -767,7 +770,10 @@ function getProjectNameForType(type) {
         ovinos: 'Ovelhas',
         caprinos: 'Cabras',
         tilapias: 'Tilápias',
-        abelhas: 'Abelhas'
+        abelhas: 'Abelhas',
+        consorcio_milpa: 'Milpa (Milho/Feijão/Abóbora)',
+        consorcio_aromatico: 'Tomate + Manjericão',
+        consorcio_canteiro: 'Alface + Cenoura'
     };
     return map[type] || 'Projeto';
 }
@@ -853,108 +859,37 @@ const cropTemplates = {
     galinhas_poedeiras: [
         {
             day: -2,
-            title: 'Limpeza do Galinheiro',
-            desc: 'Desinfecção profunda e preparo da cama.',
-            guide: `
-                <h3>🧼 Higiene e Biosseguridade (Detalhado)</h3>
-                <p>A preparação do ambiente é 50% do sucesso.</p>
-                <h4>1. Limpeza Seca e Úmida</h4>
-                <ul>
-                    <li>Retire toda a matéria orgânica (fezes, penas, pó) varrendo bem.</li>
-                    <li>Lave teto, paredes e chão com detergente neutro para remover a gordura/biofilme.</li>
-                </ul>
-                <h4>2. Desinfecção</h4>
-                <ul>
-                    <li><strong>Cal:</strong> Faça a caiação das paredes (pintura com cal virgem). O cal mata bactérias e piolhos pelo pH alto. Receita: 1kg de cal para 4L de água + garrafa de cola branca (para fixar).</li>
-                    <li><strong>Química:</strong> Use amônia quaternária ou iodo (diluição conforme rótulo) no chão e equipamentos.</li>
-                </ul>
-                <h4>3. A Cama (Piso)</h4>
-                <ul>
-                    <li>Use <strong>Maravalha</strong> (serragem grossa) ou casca de arroz.</li>
-                    <li><strong>Altura:</strong> Mínimo de 8 a 10cm. Se for muito fina, fica úmida rápido e gera calos nos pés das aves (pododermatite).</li>
-                </ul>
-            `
+            title: 'Limpeza e Desinfecção do Galinheiro',
+            desc: 'Preparação profunda para saúde das aves.',
+            guide: `<h3>🧼 Higiene e Biosseguridade Total</h3><p>A preparação rigorosa do ambiente antes da chegada das aves é o pilar central para o sucesso da sua criação, representando 50% do sucesso sanitário. Comece com uma limpeza seca, retirando toda a matéria orgânica como fezes, penas e poeira acumulada. Em seguida, realize a lavagem de teto, paredes e chão com detergente neutro para remover a gordura/biofilme gorduroso onde as bactérias se escondem. Após secar, faça a <b>caiação das paredes</b> usando uma mistura de 1kg de cal virgem para 4L de água, adicionando cola branca para fixar melhor; o pH alto do cal elimina ácaros e piolhos. Por fim, instale uma cama de <b>maravalha ou casca de arroz</b> com no mínimo 10cm de altura. Uma cama muito fina torna-se úmida rapidamente, causando calos nos pés das aves (pododermatite) e liberando amônia prejudicial ao sistema respiratório.</p>`
         },
         {
             day: 0,
-            title: 'Chegada das Pintainhas',
-            desc: 'Aclimatação Crítica.',
-            guide: `
-                <h3>🐤 Recepção de Pintainhas de 1 Dia</h3>
-                <p>Este é o momento mais frágil da vida da ave.</p>
-                
-                <h4>1. Hidratação (Primeiras 4h)</h4>
-                <p>pintinhos viajam e chegam desidratados. <strong>Não dê ração nas primeiras 2-4 horas, só água!</strong></p>
-                <ul>
-                    <li><strong>Soro Caseiro:</strong> 1 litro de água + 2 colheres rasas de açúcar (energia). Evite água gelada! Temperatura ambiente (24°C).</li>
-                </ul>
-
-                <h4>2. Aquecimento (Círculo de Proteção)</h4>
-                <p>Elas não regulam a própria temperatura.</p>
-                <ul>
-                    <li><strong>Temperatura Alvo:</strong> 32°C a 34°C na altura do pintinho.</li>
-                    <li><strong>Comportamento:</strong>
-                        <br>✅ Espalhados e piando pouco: Conforto.
-                        <br>❄️ Amontoados no centro/lâmpada: Frio (Abaixe a lâmpada!).
-                        <br>🔥 Afastados nas bordas e ofegantes: Calor (Erga a lâmpada!).
-                    </li>
-                </ul>
-            `
+            title: 'Chegada das Pintainhas: Primeiros Cuidados',
+            desc: 'Aclimatação crucial para evitar mortalidade.',
+            guide: `<h3>🐤 Recepção Técnica de Pintainhas</h3><p>O primeiro dia de vida é o momento mais crítico e frágil. Pintinhos de um dia viajam longas distâncias e chegam desidratados, portanto, foque na hidratação imediata. <b>Não forneça ração nas primeiras 2 a 4 horas</b>; ofereça apenas água fresca (24°C) com soro caseiro (1L de água para 2 colheres rasas de açúcar) para repor energia rapidamente. O aquecimento é vital, pois elas não regulam a própria temperatura corporal. Mantenha o círculo de proteção entre 32°C e 34°C na altura dos animais. Observe o comportamento: se estiverem amontoados sob a lâmpada, estão com frio; se estiverem longe e ofegantes, estão com calor. O conforto térmico garante que elas comecem a comer logo e desenvolvam o sistema imunológico de forma robusta e equilibrada.</p>`
         },
         {
             day: 0,
             type: 'routine',
             freq: 'daily',
-            title: 'Tratos (Galinhas)',
-            desc: 'Manejo Diário Essencial.',
-            guide: `
-                <h3>🔄 Rotina de Ouro (Diária)</h3>
-                <h4>1. Água: O Nutriente Esquecido</h4>
-                <p>Galinha bebe o dobro do que come. Água suja = Coccidiose e Salmonela.</p>
-                <ul>
-                    <li>Lave os bebedouros com bucha/escova todo dia de manhã.</li>
-                    <li>Água fresca estimula o consumo de ração no calor.</li>
-                </ul>
-                <h4>2. Ração</h4>
-                <ul>
-                    <li>Nunca deixe faltar, mas não deixe sobrar e fermentar (azedar).</li>
-                    <li>mexa na ração nos comedouros 2x ao dia para estimular a curiosidade delas.</li>
-                </ul>
-                <h4>3. Observação Tácita</h4>
-                <p>Qualquer ave encolhida, com penas arrepiadas ou olhos fechados deve ser separada (hospital) imediatamente.</p>
-            `
+            title: 'Manejo Diário: Água e Ração',
+            desc: 'Nutrição e limpeza constante.',
+            guide: `<h3>🔄 Rotina de Ouro do Criador</h3><p>O manejo diário é o que separa o amador do profissional. Uma galinha consome o dobro de água em relação à ração, e a água suja é a principal via de transmissão para doenças como Coccidiose e Salmonela. Lave os bebedouros com escova e água limpa todas as manhãs, sem exceção; água fresca no calor estimula o consumo de ração e mantém a postura estável. Quanto à ração, ela deve ser balanceada conforme a idade; mexa o alimento nos comedouros pelo menos duas vezes ao dia para despertar a curiosidade das aves. Fique atento à observação tácita: qualquer ave que se mostre encolhida, com penas arrepiadas ou olhos fechados deve ser isolada imediatamente em um "hospital" para evitar o contágio do lote inteiro.</p>`
         },
         {
             day: 120,
-            title: 'Estimulação de Luz',
-            desc: 'Programa de Luz para Postura.',
-            guide: `
-                <h3>💡 A Ciência da Luz e dos Ovos</h3>
-                <p>A galinha precisa de "dia longo" para ovular. É a luz entrando no olho que ativa a hipófise para produzir ovos.</p>
-                <ul>
-                    <li><strong>Meta:</strong> Chegar a 16 ou 17 horas de luz totais (Sol + Artificial) no pico de postura.</li>
-                    <li><strong>Como fazer:</strong> Aumente 30 minutos por semana a partir da 18ª semana de vida.</li>
-                    <li><strong>Regra Mortal:</strong> NUNCA diminua a luz durante a fase de produção (ex: lâmpada queimada por dias). Isso faz elas entrarem em muda (pararem de pôr).</li>
-                </ul>
-            `
+            title: 'Início do Programa de Luz',
+            desc: 'Estimulação hormonal para postura.',
+            guide: `<h3>💡 A Ciência da Luz na Produção de Ovos</h3><p>A galinha é um animal fotoperiódico, o que significa que seu sistema reprodutivo é ativado pela duração do dia. A luz captada pelos olhos estimula a hipófise para liberar os hormônios necessários para a ovulação. Para garantir uma produção alta e constante, você deve fornecer um total de 16 a 17 horas de luz por dia (combinando luz natural do sol e luz artificial). Comece a aumentar 30 minutos de luz artificial por semana a partir da 18ª semana de vida das aves até atingir a meta. **Regra de Ouro:** Nunca diminua a quantidade de horas de luz durante a fase de postura, pois isso sinaliza para a ave que o "inverno" chegou, induzindo-a a entrar em muda (troca de penas) e paralisar totalmente a produção de ovos.</p>`
         },
         {
             day: 140,
             type: 'routine',
             freq: 'daily',
-            title: 'Coleta de Ovos',
-            desc: 'Procedimento de Coleta.',
-            guide: `
-                <h3>🥚 Coleta Profissional</h3>
-                <h4>Frequência</h4>
-                <p>Pelo menos 2 ou 3 vezes ao dia (10h, 13h, 16h). Ovos deixados no ninho podem ser bicados, sujos ou "chocados" pelo calor.</p>
-                
-                <h4>Limpeza</h4>
-                <ul>
-                    <li><strong>Ovos Limpos:</strong> Guarde direto. Não lave! A casca tem uma película ("cutícula") que impede bactérias.</li>
-                    <li><strong>Ovos Sujos:</strong> Limpe com uma lixa fina ou pano seco. Se precisar lavar, use água morna (mais quente que o ovo) e sanitizante próprio, e seque imediatamente.</li>
-                </ul>
-            `
+            title: 'Coleta e Manejo de Ovos',
+            desc: 'Garantindo qualidade e limpeza.',
+            guide: `<h3>🥚 Coleta e Higienização Profissional</h3><p>A coleta eficiente minimiza perdas por quebra e sujeira. Realize a coleta pelo menos 3 vezes ao dia (preferencialmente às 10h, 13h e 16h) para evitar que os ovos sejam bicados ou fiquem excessivamente sujos no ninho. Ovos deixados no calor podem sofrer deterioração da qualidade interna rapidamente. **Atenção:** Nunca lave ovos com água fria; a casca possui uma película protetora chamada "cutícula" que impede a entrada de bactérias. Se o ovo estiver sujo, use uma lixa fina para limpeza a seco ou um pano levemente umedecido com sanitizante específico. Ovos limpos devem ser armazenados com a ponta fina para baixo em local fresco. A higiene do ninho, com troca frequente da maravalha seca, é o segredo para ovos de primeira linha e alta durabilidade.</p>`
         }
     ],
 
@@ -962,259 +897,542 @@ const cropTemplates = {
     frangos_corte: [
         {
             day: -3,
-            title: 'Vazio Sanitário',
-            desc: 'Protocolo de Limpeza.',
-            guide: `
-                <h3>🚫 O Poder do Vazio Sanitário</h3>
-                <p>O vazio sanitário é o tempo entre a retirada de um lote e a entrada do outro. É a única forma de quebrar ciclos de vírus.</p>
-                <ul>
-                    <li><strong>Tempo Mínimo:</strong> 10 dias com o galpão limpo e vazio.</li>
-                    <li><strong>Procedimento:</strong> Retirar toda a cama antiga (venda para adubo, longe do galpão). Varrer, lavar com detergente, desinfetar com glutaraldeído ou iodo, e caiar.</li>
-                    <li><strong>Controle de Roedores:</strong> É no vazio que os ratos procuram comida. Use iscas nas áreas externas.</li>
-                </ul>
-            `
+            title: 'Protocolo de Vazio Sanitário',
+            desc: 'Quebra de ciclo de doenças.',
+            guide: `<h3>🚫 O Poder do Vazio Sanitário Eficaz</h3><p>O vazio sanitário é a técnica mais barata e eficiente para prevenir doenças em frangos de corte. Consiste no período em que o galpão deve permanecer totalmente limpo e vazio entre a retirada de um lote e a entrada do próximo. O tempo mínimo recomendado é de 10 a 14 dias. Durante este intervalo, remova toda a cama antiga (que deve ser levada para longe para servir de adubo) e realize a lavagem completa com detergente industrial para remover biofilmes. A desinfecção com iodo ou amônia quaternária, seguida pela caiação de todas as superfícies com cal virgem, elimina vírus e bactérias remanescentes. Lembre-se: negligenciar o vazio sanitário causa uma queda progressiva no desempenho dos lotes futuros, aumentando os custos com medicamentos e diminuindo a rentabilidade.</p>`
         },
         {
             day: 0,
-            title: 'Alojamento',
-            desc: 'Recepção.',
-            guide: `
-                <h3>🐤 Start Perfeito</h3>
-                <p>O peso do frango aos 7 dias define o peso de abate. Um erro hoje custa caro no dia 45.</p>
-                <ul>
-                    <li><strong>Papel no Chão:</strong> Cubra 30% da área (sob os bebedouros e comedouros) com papel pardo/jornal e jogue ração em cima. Eles aprendem a comer pelo barulho do bico no papel.</li>
-                    <li><strong>Temperatura de Chão:</strong> A cama deve estar quente (30°C+). Se a perna do pinto esfriar, ele não anda, não come e morre. Ligue aquecedores 4h antes de eles chegarem.</li>
-                </ul>
-            `
+            title: 'Alojamento e Start Perfeito',
+            desc: 'Foco no peso da primeira semana.',
+            guide: `<h3>🐤 Recepção Técnica dos Pintinhos</h3><p>O desempenho final do frango de corte (dia 45) é definido pela sua performance na primeira semana de vida. O pintinho deve quadruplicar de peso nos primeiros 7 dias. Para isso, prepare papel pardo no chão cobrindo 30% da área sob os bebedouros e distribua ração pré-inicial sobre ele para estimular o consumo pelo barulho do biqueio. A temperatura da cama é fundamental: deve estar entre 30°C e 32°C quando os animais chegarem. Ligue os aquecedores 4 horas antes do alojamento. Se a perninha do pinto esfriar devido ao chão gelado, ele ficará letárgico, não comerá o suficiente e o lote ficará desuniforme (refugo). Verifique sempre o "papo": após 24h, 100% dos pintinhos devem estar com o papo cheio e macio.</p>`
         },
         {
             day: 0,
             type: 'routine',
             freq: 'daily',
-            title: 'Tratos (Corte)',
-            desc: 'Manejo de Cama e Ar.',
-            guide: `
-                <h3>🔄 Manejo de Ambiência</h3>
-                <h4>Cama (Piso)</h4>
-                <p>Cama úmida ("cascão") libera amônia, que queima o pulmão do frango e causa ascite (barriga d'água).</p>
-                <ul>
-                    <li><strong>Ação:</strong> Revire a cama todo dia, especiamente perto dos bebedouros. Retire partes molhadas e reponha maravalha seca.</li>
-                </ul>
-                <h4>Ventilação</h4>
-                <p>Frango de corte gera muito calor. Abra cortinas durante o dia (com cuidado com vento direto em pintinhos) para renovar o ar.</p>
-            `
+            title: 'Manejo de Ambiência e Cama',
+            desc: 'Ar limpo e piso seco.',
+            guide: `<h3>🔄 Manejo de Ambiência e Saúde Respiratória</h3><p>O frango de corte moderno tem um crescimento acelerado que exige oxigenação perfeita. Uma cama úmida e compactada (o famoso "cascão") libera amônia, um gás tóxico que queima os tecidos do pulmão e dos olhos, abrindo porta para doenças respiratórias irreversíveis e ascite (barriga d’água). Revire a cama diariamente com um ancinho, retirando áreas mofadas e repondo maravalha seca nos pontos críticos (perto dos bebedouros). Controle a ventilação através das cortinas: abra-as para renovar o ar, mas evite ventos diretos frios sobre os animais jovens. O ar dentro do galpão deve ser "respirável" para você; se seus olhos arderem, as aves já estão sofrendo danos graves. Um ambiente seco e bem ventilado é o segredo de uma conversão alimentar superior.</p>`
         },
         {
             day: 7,
             type: 'routine',
             freq: 'weekly',
-            title: 'Pesagem',
-            desc: 'Controle de Conversão.',
-            guide: `
-                <h3>⚖️ Metas de Peso (Referência Cobb/Ross)</h3>
-                <p>Pese 5% das aves (escolha aleatória, pegue aves de vários pontos, não só os bonitos).</p>
-                <ul>
-                    <li><strong>Dia 7:</strong> Meta ~180-200g (4x o peso inicial).</li>
-                    <li><strong>Dia 14:</strong> Meta ~450-500g.</li>
-                    <li><strong>Dia 21:</strong> Meta ~900-1000g.</li>
-                </ul>
-                <p>Se estiver abaixo, revise: Temperatura noturna, qualidade da ração ou acesso à água (bebedouros suficientes?).</p>
-            `
+            title: 'Controle de Pesagem e Conversão',
+            desc: 'Monitorando o lucro semanal.',
+            guide: `<h3>⚖️ Metas de Peso e Eficiência Alimentar</h3><p>Pese regularmente uma amostra de pelo menos 5% do seu lote para garantir que os animais estão seguindo a curva de crescimento das linhagens modernas (como Cobb ou Ross). A primeira pesagem ocorre aos 7 dias, onde a meta é atingir cerca de 200g. Se o peso estiver abaixo do esperado, revise imediatamente a qualidade da ração (proteína bruta), a temperatura ambiente durante a noite e a disponibilidade de bebedouros. Galpões superlotados ou com poucos comedouros geram competição excessiva e desuniformidade no lote. Use os dados de pesagem para calcular a Conversão Alimentar (quantidade de ração consumida dividida pelo peso ganho). Cada grama de ração economizada por meio de uma boa gestão de ambiência representa mais dinheiro no seu bolso ao final do ciclo de 45 dias.</p>`
         },
-        { day: 45, title: 'Abate', desc: 'Retirada.', guide: '<h3>🍗 Jejum Pré-Abate</h3><p>Para evitar contaminação da carne com fezes no abate:</p><ul><li>Retire a ração 6 a 8 horas antes de pegar as aves.</li><li>MANTENHA A ÁGUA! Se tirar a água, eles desidratam e a carne fica ruim, além de ser dificil depenar.</li><li>Capture com calma, segurando pelas duas pernas, nunca pelas asas (gera hematomas).</li></ul>' }
+        {
+            day: 45,
+            title: 'Abate e Procedimentos Pré-Abate',
+            desc: 'Garantindo carne de qualidade.',
+            guide: `<h3>🍗 Jejum e Captura para Abate</h3><p>O preparo correto para o abate evita contaminações e hematomas na carcaça. Realize o jejum hídrico e alimentar de 6 a 8 horas antes da captura; isso garante que o trato digestivo esteja vazio, o que é fundamental para evitar o rompimento de intestinos e vesícula biliar durante o processamento, contaminando a carne com fezes ou bile amarga. **Atenção:** Mantenha sempre a oferta de água fresca até o momento da carga, pois a desidratação torna a retirada das penas difícil e prejudica a textura da carne. Capture as aves com extrema paciência e silêncio, segurando-as sempre pelas pernas e nunca pelas asas ou pescoço, para evitar hematomas e fraturas que deprecia o valor do produto final. Transporte em caixas limpas e ventiladas no horário mais fresco do dia.</p>`
+        }
     ],
 
     // 3. Gado de Leite
     gado_leite: [
         {
             day: 0,
-            title: 'Início do Controle',
-            desc: 'Identificação e Histórico.',
-            guide: `
-                <h3>🥛 Gestão do Rebanho</h3>
-                <p>Vaca sem nome/número não se gerencia.</p>
-                <ul>
-                    <li><strong>Brincos:</strong> Identifique todas. Anote data de parto provável.</li>
-                    <li><strong>Escore Corporal (ECC):</strong> Avalie se estão magras ou gordas. Vaca muito magra não emprenha e não dá leite. (Meta ECC 3.0 a 3.5).</li>
-                </ul>
-            `
+            title: 'Início do Controle e Gestão',
+            desc: 'Identificação e escore corporal.',
+            guide: `<h3>🥛 Gestão Profissional do Rebanho Leiteiro</h3><p>Vaca sem identificação é apenas um custo invisível; você não pode gerenciar o que não mede. Comece numerando ou nomeando cada animal com brincos ou marcas legíveis. Registre rigorosamente as datas de parto, pois o ciclo do leite depende inteiramente de uma gestação bem-sucedida por ano. Avalie o <b>Escore de Condição Corporal (ECC)</b> regularmente: vacas muito magras (ECC abaixo de 2.5) dificilmente entrarão no cio e terão baixa persistência de lactação, enquanto vacas gordas demais (ECC acima de 4.0) terão partos difíceis e doenças metabólicas como cetose. A meta para um rebanho saudável e rentável é manter o ECC entre 3.0 e 3.5. O acompanhamento individualizado permite ajustar a dieta de cada vaca, garantindo que as altas produtoras recebam o suporte nutricional necessário sem desperdício de ração nas demais.</p>`
         },
         {
             day: 0,
             type: 'routine',
             freq: 'daily',
-            title: 'Ordenha',
-            desc: 'Procedimento Padrão.',
-            guide: `
-                <h3>🥛 O Ritual da Ordenha (Higiene Absoluta)</h3>
-                <p>Mastite se pega na ordenha errada.</p>
-                <ol>
-                    <li><strong>Teste da Caneca:</strong> Jatos iniciais no fundo preto para ver grumos (mastite clínica).</li>
-                    <li><strong>Pré-Dipping:</strong> Mergulhar tetos em solução de iodo/clorexidina. Esperar 30s (tempo de matar bactéria).</li>
-                    <li><strong>Secagem:</strong> Papel toalha descartável (1 folha por teto!). Pano sujo espalha doença.</li>
-                    <li><strong>Ordenha:</strong> Colocar ordenhadeira ou ordenhar manual. Não deixar a ordenhadeira "chupando" teto vazio (sobreordenha machuca).</li>
-                    <li><strong>Pós-Dipping:</strong> Iodo glicerinado para selar o canal do teto.</li>
-                    <li><strong>Em pé:</strong> Dê comida logo após a ordenha para a vaca ficar em pé por 30min até o teto fechar.</li>
-                </ol>
-            `
+            title: 'Rotina de Ordenha Higiênica',
+            desc: 'Prevenção de mastite e qualidade.',
+            guide: `<h3>🥛 O Ritual da Ordenha: Saúde e Rendimento</h3><p>A ordenha é o momento de colher o fruto do seu trabalho, mas também é o maior risco para a saúde do úbere. A mastite é a doença mais cara na pecuária de leite e 90% dos casos ocorrem por falhas na ordenha. Siga este protocolo severo: 1. <b>Teste da Caneca de Fundo Preto</b> para identificar mastite clínica (grumos). 2. <b>Pré-Dipping</b>: use solução sanitizante em todos os tetos e aguarde 30 segundos (tempo de ação). 3. <b>Secagem</b>: use papel toalha descartável, uma folha por teto; pano de tecido espalha bactérias de uma teta para outra. 4. Coloque a ordenhadeira ou ordenhe manualmente com suavidade. 5. <b>Pós-Dipping</b>: essencial para fechar o canal do teto que permanece aberto por 30 minutos pós-ordenha. Ofereça comida fresca logo após para que a vaca permaneça em pé até o esfíncter fechar, evitando que bactérias do chão entrem no úbere.</p>`
         },
         {
             day: 15,
             type: 'routine',
             freq: 'monthly',
-            title: 'Controle de Carrapatos',
-            desc: 'Estratégia.',
-            guide: `
-                <h3>🪰 Guerra aos Carrapatos</h3>
-                <p>Carrapato transmite Tristeza Parasitária Bovina (Babesia/Anaplasma), que mata.</p>
-                <ul>
-                    <li><strong>Quando tratar:</strong> Quando ver muitos carrapatos pequenos ("uvas passas" já caíram e botaram ovos).</li>
-                    <li><strong>Rodízio de Princípios:</strong> Não use o mesmo veneno para sempre. Alterne (Amitraz, Piretróides, Fipronil) a cada ano ou quando falhar.</li>
-                    <li><strong>Cuidado com o Leite:</strong> Verifique a CARENÇA do remédio. Maioria dos "Pour-on" proíbe consumo do leite por dias.</li>
-                </ul>
-            `
+            title: 'Controle Estratégico de Parasitas',
+            desc: 'Combate a carrapatos e moscas.',
+            guide: `<h3>🪰 Guerra Inteligente Contra Carrapatos</h3><p>O carrapato africano e a mosca-dos-chifres sugam o lucro do produtor na forma de sangue, estresse e doenças. O carrapato transmite o "Complexo Tristeza Parasitária Bovina", que causa febre alta e pode matar uma vaca de alta produção em poucos dias. Não aplique veneno por impulso; trate quando visualizar os primeiros focos para quebrar o ciclo reprodutivo no pasto. Faça o rodízio de princípios ativos (Piretróides, Amitraz, etc.) para evitar que os parasitas criem resistência genética aos produtos. **Atenção Vital:** Verifique sempre o período de carência do medicamento no rótulo. Muitos produtos "Pour-on" ou injetáveis proíbem o consumo do leite por até 15 dias após a aplicação; entregar leite com resíduo de defensivo químico é crime e pode resultar no descarte automático de toda a carga de um caminhão tanque.</p>`
         },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Teste de Mastite (CMT)', desc: 'Diagnóstico.', guide: '<h3>🦠 California Mastitis Test (CMT)</h3><p>Detecta mastite sub-clínica (onde o leite parece normal mas a vaca produz menos).</p><ul><li>Misture o leite com reagente na raquete.</li><li>Se formar gel/gosma: Positivo.</li><li>Trate vacas positivas ou seque o quarto afetado se crônico.</li></ul>' }
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Diagnóstico de Mastite Subclínica',
+            desc: 'Teste CMT na linha de leite.',
+            guide: `<h3>🦠 CMT: Enxergando a Doença Invisível</h3><p>A mastite subclínica é perversa porque o leite parece normal a olho nu, mas a contagem de células somáticas (CCS) está alta e a produção caiu até 20%. O teste <b>California Mastitis Test (CMT)</b> é sua ferramenta diária de diagnóstico no campo. Misture uma pequena quantidade do leite de cada quarto com o reagente específico na raquete; a formação de um gel ou gosma indica inflamação. Se o teste der positivo, separe o leite desse animal (uso doméstico ou descarte) e consulte um veterinário para tratamento com antibióticos intramamários específicos. Manter vacas com mastite subclínica no rebanho principal contamina as demais vacas sadias através das mãos do ordenador ou do conjunto de ordenheiras, transformando um caso isolado em um surto generalizado que destruirá a qualidade do seu leite e sua bonificação no laticínio.</p>`
+        },
+        {
+            day: 60,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Nutrição: Cochos e Bebedouros',
+            desc: 'Higiene e suplementação.',
+            guide: `<h3>🧼 Água Limpa: O Nutriente do Leite</h3><p>Muitos produtores investem em ração cara e esquecem que o leite é 87% água. Uma vaca de alta produção pode beber até 120 litros de água por dia. Se o bebedouro estiver sujo, com lodo ou com cheiro de urina, o animal beberá muito menos e, consequentemente, a produção de leite cairá imediatamente. Lave os bebedouros semanalmente com escova e hipoclorito se necessário. Da mesma forma, limpe os cochos de ração, removendo restos de silagem ou concentrado que fermentaram ou pegaram chuva; o alimento azedo causa distúrbios digestivos e rejeição do animal. Para a adubação da pastagem do gado de leite, considere a aplicação de nitrogenados após a saída dos animais do piquete, aproveitando a umidade para que o capim rebrote com força e alta proteína, reduzindo seus custos com ração no cocho.</p>`
+        }
     ],
 
     // 4. Gado de Corte
     gado_corte: [
-        { day: 0, title: 'Entrada no Pasto', desc: 'Manejo de Entrada.', guide: '<h3>🐂 Recepção de Gado</h3><p>Gado estressado não engorda.</p><ul><li>Hidratação e Sal Mineral à vontade na chegada.</li><li>Deixe descansarem 1 dia antes de vacinar ou marcar.</li><li><strong>Lotação:</strong> Ajuste o número de bois para o tamanho do pasto. Pasto rapado = prejuízo ("boi sanfona").</li></ul>' },
+        {
+            day: 0,
+            title: 'Recepção e Adaptação do Lote',
+            desc: 'Manejo de entrada e estresse.',
+            guide: `<h3>🐂 Recepção Estratégica de Gado de Corte</h3><p>A chegada do gado ao novo pasto é o momento de maior estresse, o que pode causar perda de peso e queda na imunidade. Garanta hidratação abundante e acesso imediato a sal mineral de qualidade. Deixe os animais descansarem por pelo menos 24 horas antes de qualquer manejo invasivo como vacinação ou marcação. Avalie a lotação do pasto: um erro comum é colocar animais demais em áreas pequenas, o que resulta no "pasto rapado"; o gado comerá a ponta do capim onde está a energia e, se for forçado a comer o talo, perderá peso (efeito boi sanfona). A regra é manter a altura do capim ideal para cada espécie (ex: Brachiaria deve ter saída com 15-20cm) para garantir o rebrote vigoroso e a nutrição constante do rebanho.</p>`
+        },
         {
             day: 1,
             type: 'routine',
             freq: 'daily',
-            title: 'Ronda do Pasto',
-            desc: 'Inspeção Detalhada.',
-            guide: `
-                <h3>👀 O Olho do Dono (Ronda)</h3>
-                <p>Não é só olhar se o boi tá vivo.</p>
-                <ul>
-                    <li><strong>Cocho de Sal:</strong> Nunca pode estar vazio. Boi sem mineral não converte capim em carne. Limpe se tiver água de chuva ou folhas.</li>
-                    <li><strong>Bebedouro:</strong> Lave periodicamente. Boi bebe 40-70 litros/dia. Água suja diminui consumo.</li>
-                    <li><strong>Fezes:</strong> Fezes muito duras e secas = Capim muito seco/pouca proteína. (Precisa de Sal Proteinado? Urea?).</li>
-                </ul>
-            `
+            title: 'Ronda Sanitária e Nutricional',
+            desc: 'Olho do dono e limpeza de cochos.',
+            guide: `<h3>👀 O Olho do Dono: Ronda Diária Detalhada</h3><p>Fazer a ronda não é apenas verificar se os animais estão vivos; é observar o comportamento alimentar e a saúde geral. Verifique os cochos de sal mineral: eles nunca devem ficar vazios, pois o boi sem mineralização não consegue converter o capim em carne eficientemente. Limpe os cochos se houver acúmulo de água da chuva ou folhas secas que podem azedar o suplemento. Observe as fezes: se estiverem muito duras e secas, o capim está com fibra demais e pouca proteína, indicando a necessidade de um sal proteinado ou ureia para ajudar na digestão. Água limpa é fundamental; lave os bebedouros periodicamente para evitar o lodo e odores que reduzem o consumo hídrico, essencial para o metabolismo de ganho de peso.</p>`
         },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Pesagem de Controle', desc: 'GND.', guide: '<h3>⚖️ Ganho Médio Diário (GMD)</h3><p>Pese sempre no mesmo horário (de preferência de manhã, em jejum).</p><ul><li><strong>Meta Águas:</strong> 700g a 1kg/dia.</li><li><strong>Meta Seca:</strong> Manter peso ou ganho leve (na recria).</li><li>Se não bater a meta: Avalie altura do pasto e parasitas.</li></ul>' },
-        { day: 60, title: 'Vermifugação', desc: 'Sanidade.', guide: '<h3>💉 Calendário Sanitário Básico</h3><ul><li><strong>Aftosa:</strong> Obrigatória (maio/nov).</li><li><strong>Brucelose:</strong> Fêmeas (3-8 meses).</li><li><strong>Clostridioses (Carbúnculo):</strong> Matam subitamente o maior bezerro. Vacine todo ano.</li><li><strong>Vermífugo:</strong> Estratégico na entrada da seca (maio) para limpar o gado quando o pasto piora.</li></ul>' }
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Pesagem de Controle e GMD',
+            desc: 'Monitorando o ganho de peso diário.',
+            guide: `<h3>⚖️ Gestão do Ganho Médio Diário (GMD)</h3><p>O lucro na pecuária de corte está no tempo de permanência do boi no pasto. Pese uma amostra do lote mensalmente, sempre no mesmo horário (de preferência pela manhã, em jejum) para evitar variações de "enchimento" do estômago. A meta nas águas deve ser entre 700g e 1kg por dia, enquanto na seca o objetivo é manter o peso ou ter um ganho leve. Se o lote não atingir a meta, avalie imediatamente a altura do pasto (falta de massa) ou a carga de verminoses. Animais que não ganham peso estão "comendo o seu lucro". Use esses dados de pesagem para decidir o momento exato da nutrição suplementar ou do descarte de animais que não performam bem dentro da genética do seu plantel.</p>`
+        },
+        {
+            day: 60,
+            title: 'Manejo Sanitário: Vacinas e Vermífugos',
+            desc: 'Proteção contra doenças fatais.',
+            guide: `<h3>💉 Calendário Sanitário e Proteção Total</h3><p>A sanidade é o seguro do seu investimento. Siga rigorosamente o calendário oficial para febre aftosa (geralmente maio e novembro) e brucelose para fêmeas jovens. As clostridioses (como o carbúnculo) são assassinas silenciosas que matam os animais mais saudáveis e pesados subitamente; vacine anualmente todo o rebanho. A vermifugação estratégica deve ser feita na entrada da seca (maio) para "limpar" o organismo do animal quando a qualidade do pasto cai, permitindo que ele aproveite melhor a forragem fibrosa. Utilize vermífugos de amplo espectro mas alterne os princípios ativos a cada ciclo para evitar resistência parasitária. Um gado livre de parasitas internos e externos tem uma conversão alimentar até 15% superior aos animais infestados.</p>`
+        },
+        {
+            day: 90,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Manejo de Pastagem Rotacionada',
+            desc: 'Maximizando a oferta de capim.',
+            guide: `<h3>🌿 A Ciência do Pasto Rotacionado</h3><p>O segredo para engordar boi rápido é manejar o capim como uma cultura agrícola. Não permita que o animal coma a "gema" de crescimento do capim (fundo do talo). Troque o lote de piquete assim que atingirem a altura de saída recomendada; isso preserva o sistema radicular e permite que o capim rebrote com muita força e nutrientes assim que cair a primeira chuva. Para melhorar a produtividade, considere a adubação de cobertura com ureia ou NPK nos canteiros de maior valor, especialmente se o solo estiver deficiente. Lembre-se que aplicar <b>{{CALC_GM2}}g/m²</b> de calcário na reforma do pasto é essencial para que as raízes cresçam profundamente e o gado tenha comida de qualidade por mais tempo durante o ano.</p>`
+        }
     ],
 
     // 5. Suínos
     suinos: [
         {
             day: 0,
-            title: 'Nascimento/Entrada',
-            desc: 'Cuidados Neonatais.',
-            guide: `
-                <h3>🐖 Manejo do Leitão (Dia 0)</h3>
-                <p>Leitão nasce sem imunidade e com pouca energia.</p>
-                <ol>
-                    <li><strong>Secagem:</strong> Seque com papel toalha ou pó secante (evita hipotermia).</li>
-                    <li><strong>Colostro:</strong> Garanta que mamem na primeira hora. O colostro é o único remédio deles.</li>
-                    <li><strong>Umbigo:</strong> Corte a 3cm e mergulhe em iodo 10%. Porta de entrada de bactérias.</li>
-                    <li><strong>Aquecimento:</strong> Leitão precisa de 32°C. A porca precisa de 20°C. Use o "escamoteador" (caixa aquecida onde só o leitão entra).</li>
-                </ol>
-            `
+            title: 'Manejo de Recém-Nascidos (Dia 0)',
+            desc: 'Cuidados neonatais e colostro.',
+            guide: `<h3>🐖 Proteção e Vigor do Leitão</h3><p>O leitão nasce praticamente sem imunidade e com pouquíssima reserva de energia. O momento do parto define a sobrevivência do lote. Seque cada animal imediatamente com papel toalha ou pó secante para evitar a hipotermia, que é a maior causa de mortes nas primeiras horas. Garanta que todos mamem o colostro na primeira hora de vida, pois este é o único meio de transmitir anticorpos da porca para o filhote. Realize o corte e a desinfecção do umbigo mergulhando-o em Iodo a 10% para fechar essa porta de entrada de bactérias. O controle térmico é decisivo: leitões precisam de um ambiente a 32°C (use o escamoteador aquecido), enquanto a porca prefere 20°C. Essa diferença exige atenção constante para o conforto de ambos.</p>`
         },
-        { day: 3, title: 'Aplicação de Ferro', desc: 'Prevenção de Anemia.', guide: '<h3>💉 Ferro Dextrano</h3><p>O leite da porca é pobre em ferro e o leitão cresce muito rápido.</p><ul><li><strong>Sintoma de falta:</strong> Leitão pálido ("papel"), pelo áspero, crescimento lento (refugo).</li><li><strong>Dose:</strong> 1ml ou 2ml (confira bula) intramuscular profundo no pescoço (atrás da orelha).</li></ul>' },
-        { day: 0, type: 'routine', freq: 'daily', title: 'Limpeza das Baias', desc: 'Higiene.', guide: '<h3>🧹 Lavagem Estratégica</h3><p>Suíno defeca em local úmido e dorme em local seco.</p><ul><li>Aproveite esse instinto: mantenha a área de dormir sempre seca.</li><li>Remova fezes diariamente para evitar gases tóxicos e moscas.</li></ul>' }
+        {
+            day: 3,
+            title: 'Prevenção de Anemia Ferropriva',
+            desc: 'Aplicação de ferro dextrano.',
+            guide: `<h3>💉 Vitalidade: A Importância do Ferro</h3><p>O suíno é o animal que cresce mais rápido entre as criações domésticas, dobrando de peso em poucos dias. Infelizmente, o leite da porca é naturalmente pobre em ferro e o leitão nasce com reservas mínimas. Se você não aplicar o <b>Ferro Dextrano</b> até o 3º dia de vida, o animal desenvolverá anemia ferropriva, ficando pálido, com pelos ásperos e crescimento muito lento (o famoso "refugo"). Aplique a dose recomendada (geralmente 1ml ou 2ml) via intramuscular profunda no pescoço, logo atrás da orelha. Leitões anêmicos são porta aberta para diarreias e infecções pulmonares que dizimam a leitegada. Este manejo simples é o que garante que os animais entrem na fase de creche com vigor e peso comercial competitivo.</p>`
+        },
+        {
+            day: 0,
+            type: 'routine',
+            freq: 'daily',
+            title: 'Higiene e Limpeza das Baias',
+            desc: 'Controle de gases e moscas.',
+            guide: `<h3>🧹 Lavagem Estratégica e Manejo de Dejetos</h3><p>A higiene na suinocultura é questão de sobrevivência econômica. Os suínos possuem um instinto natural de separar a área de dormir da área de defecar; aproveite esse comportamento mantendo a área de repouso sempre seca e limpa. Remova as fezes diariamente conforme a rotina do plantel para evitar o acúmulo de amônia e gases tóxicos que irritam as vias respiratórias e diminuem o apetite. A lavagem das baias deve ser feita com critério para não gerar umidade excessiva, que favorece a proliferação de moscas e fungos. Se possível, utilize o sistema de "lâmina d'água" ou canaletas de escoamento rápido. Um ambiente limpo reduz drasticamente a necessidade de antibióticos e melhora significativamente a conversão alimentar dos animais.</p>`
+        },
+        {
+            day: 21,
+            title: 'Desmame e Adaptação na Creche',
+            desc: 'Transição do leite para sólido.',
+            guide: `<h3>🐖 O Desafio Crítico do Desmame</h3><p>O desmame é a fase de maior estresse emocional e físico na vida do suíno. A dieta muda radicalmente do leite materno altamente digestível para o alimento sólido. Forneça uma ração "pré-inicial" de altíssima qualidade, com grânulos pequenos e palatáveis para estimular o consumo. Mantenha os lotes uniformes e evite misturar leitões de ninhadas diferentes neste momento para reduzir as brigas por hierarquia, que podem causar ferimentos e travar o desenvolvimento. O acesso a água limpa em bebedouros tipo "chupeta" deve ser verificado várias vezes ao dia; se o leitão não beber água, ele não comerá a ração seca. O controle de temperatura na creche ainda é fundamental, pois qualquer resfriado nesta fase causa diarreias severas.</p>`
+        },
+        {
+            day: 100,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Monitoramento de Peso e Conversão',
+            desc: 'Eficiência final e abate.',
+            guide: `<h3>⚖️ Eficiência Produtiva e Balança</h3><p>Na fase de crescimento e terminação, o objetivo é transformar ração em carne no menor tempo possível. Pese os animais mensalmente para verificar se o ganho de peso está condizente com a genética utilizada (meta de chegar aos 100-110kg entre 150 e 170 dias). Se houver animais muito pequenos (refugos), separe-os imediatamente para verificar a presença de vermes ou doenças intestinais crônicas. Revise o desperdício de ração nos comedouros: até 10% do seu lucro pode estar caindo no chão por causa de regulagem errada. Lembre-se que o suíno é sensível ao calor; garanta ventilação forçada em dias quentes para que não entrem em estresse térmico, o que paralisa o ganho de peso e pode levar à morte súbita por ataque cardíaco.</p>`
+        }
     ],
 
     // 6. Pomar (Citros/Frutas em Geral)
     pomar: [
-        { day: -60, title: 'Análise e Calagem', desc: 'Preparo Antecipado.', guide: '<h3>🧪 A Base de Tudo</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>📉 Correção de Acidez (Recomendada):</strong><br>Aplicar <b>{{CALC_GM2}}g/m²</b> (ou {{CALC_TON}} ton/ha) de Calcário.</div><p>O calcário demora 60 a 90 dias para reagir e tirar a acidez. Se deixar para aplicar no plantio, a planta não aproveita direito no começo.</p><ul><li>Espalhe o calcário em área total e incorpore (misture com a terra) se possível.</li></ul>' },
-        { day: -30, title: 'Abertura de Covas', desc: 'Curas do Solo.', guide: '<h3>🕳️ Prepare a Casa da Árvore</h3><p>Frutífera vive anos no mesmo lugar. Capriche na cova.</p><ul><li><strong>Tamanho:</strong> 60x60x60cm.</li><li><strong>Adubação Antecipada:</strong> Misture o esterco, fosfato e calcário com a terra e encha a cova. Deixe "curtir" por 30 dias. Se plantar logo após adubar, o adubo quente pode queimar a raiz da muda nova.</li></ul>' },
-        { day: 0, title: 'Plantio das Mudas', desc: 'Implantação.', guide: '<h3>🍊 Hora de Plantar</h3><div style="background:#fff3cd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação de Plantio:</strong><br>Use NPK <b>{{NPK_FORMULA}}</b>: <b>{{NPK_GM2}}g</b> por cova (misturado na terra).</div><p>Se já fez a cova há 30 dias, só abra um buraco pequeno para o torrão.</p><ul><li><strong>Enxerto:</strong> 5cm acima do solo (Sagrado!).</li><li><strong>Água:</strong> 20 litros por cova logo após o plantio para tirar bolsas de ar das raízes.</li></ul>' },
-        { day: 15, type: 'routine', freq: 'monthly', title: 'Adubação e Coroamento', desc: 'Nutrição.', guide: '<h3>🌳 Coroamento e Nutrição</h3><p>Mantenha um círculo de 1m em volta do tronco "na terra nua".</p><ul><li>Isso evita que a roçadeira machuque o tronco (porta de entrada para fungos).</li><li>Adube na projeção da copa (onde acaba a sombra), não no tronco. É lá que estão as raízes finas que comem.</li></ul>' },
-        { day: 7, type: 'routine', freq: 'weekly', title: 'Monitorar Formiga Cortadeira', desc: 'Sauvas.', guide: '<h3>🐜 O Inimigo nº 1</h3><p>Uma saúva adulta consome mais que um boi (proporcionalmente).</p><ul><li>Siga as trilhas até o olheiro.</li><li>Aplique isca granulada <strong>ao lado</strong> do caminho, nunca dentro do buraco (elas precisam carregar pra dentro).</li><li>Não aplique em dias de chuva ou chão molhado.</li></ul>' }
+        {
+            day: -60,
+            title: 'Análise de Solo e Calagem Prévia',
+            desc: 'Correção química para longevidade das árvores.',
+            guide: `<h3>🧪 A Base de Tudo: Equilíbrio Químico</h3><p>O sucesso de um pomar (Citros, Manga, Goiaba, etc.) começa 60 dias antes da muda chegar ao solo. As frutíferas são plantas perenes que exigem um pH estável (6.0 a 6.5) para absorver micronutrientes vitais. Aplique <b>{{CALC_GM2}}g/m²</b> de calcário dolomítico em área total e incorpore profundamente. O calcário demora cerca de dois meses para reagir e neutralizar o alumínio tóxico que "queima" as raízes finas das mudas novas. Solo ácido resulta em árvores raquíticas, com folhas amareladas e baixa produção de frutos, que tendem a cair precocemente por falta de Cálcio e Magnésio.</p>`
+        },
+        {
+            day: -30,
+            title: 'Abertura e Adubação de Super Covas',
+            desc: 'Preparo físico e orgânico profundo.',
+            guide: `<h3>🕳️ Preparando a "Casa" da Árvore</h3><p>Frutíferas viverão décadas no mesmo local, por isso a cova deve ser generosa (60x60x60cm). Ao abrir, separe a terra de cima (mais rica) da terra de baixo. Misture a terra de cima com 20 litros de esterco curtido, 500g de Superfosfato Simples e o calcário restante. Encha a cova com essa mistura e deixe "curtir" por 30 dias. Este período é fundamental para que o adubo estabilize e não ocorra fermentação excessiva, que poderia "cozinhar" as raízes delicadas da muda recém-plantada. Uma cova bem preparada garante um sistema radicular profundo e resistente a secas.</p>`
+        },
+        {
+            day: 0,
+            title: 'Plantio Técnico e Gestão do Enxerto',
+            desc: 'Implantação e pegamento definitivo.',
+            guide: `<h3>🍊 O Dia do Plantio: Cuidados Ouro</h3><p>No dia do plantio, abra apenas o espaço para o torrão na cova já preparada. Adicione <b>{{NPK_GM2}}g</b> de NPK <b>{{NPK_FORMULA}}</b> misturado na terra lateral. **Regra de Ouro:** Observe a união do enxerto (aquela "cicatriz" no caule); ela deve ficar pelo menos 5cm acima do nível do solo. Se enterrar o enxerto, a planta pode "apossar" (criar raízes acima do enxerto) e perder as características de resistência do cavalo. Após plantar, regue com 20 litros de água para eliminar bolsas de ar e aplique uma camada de cobertura morta em volta, mas sem encostar no tronco para evitar fungos.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Coroamento e Manejo de Adubação Anelar',
+            desc: 'Nutrição periférica e limpeza.',
+            guide: `<h3>🌳 Alimentando a Copa: O Coroamento</h3><p>Mantenha um círculo de 1 metro de diâmetro limpo (sem grama) ao redor do tronco (coroamento). Isso evita que a roçadeira machuque o tronco, o que seria uma porta de entrada fatal para fungos como a Gomose. Adube sempre na projeção da copa (onde acaba a sombra das folhas), pois é lá que se encontram as raízes mais ativas na busca por comida. Use adubos ricos em Nitrogênio e Potássio para favorecer o crescimento de novos ramos. A limpeza do "pé" da árvore também facilita a visualização de formigas e outros problemas sanitários antes que se tornem incontroláveis.</p>`
+        },
+        {
+            day: 7,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Vigilância Contra Formigas Cortadeiras',
+            desc: 'Proteção contra o inimigo número 1.',
+            guide: `<h3>🐜 Defesa Ativa Contra Saúvas e Quem-Quens</h3><p>As formigas cortadeiras podem desfolhar uma muda jovem em uma única noite, levando-a à morte ou atrasando seu crescimento em meses. Siga as trilhas até encontrar o olheiro (buraco). Aplique iscas granuladas **ao lado** das trilhas, nunca dentro do buraco (elas precisam carregar a isca como se fosse folha). Não aplique iscas em solo úmido ou dias de chuva, pois o fungicida da isca perde a eficácia. Além das iscas, o uso de cones plásticos ou graxa de proteção no tronco da muda pode servir de barreira física eficiente para impedir que as cortadeiras subam na planta nos primeiros meses críticos.</p>`
+        }
     ],
 
     // 7. Milho
     milho: [
-        { day: -60, title: 'Calagem (Correção)', desc: 'Correção de Acidez.', guide: '<h3>📉 Suba o pH do Solo!</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Aplicação de Calcário:</strong><br>Dose: <b>{{CALC_GM2}}g/m²</b> (ou {{CALC_TON}} ton/ha).</div><p>Milho em terra ácida tem "raízes tóxicas" de alumínio e não bebe água.</p><ul><li>Aplique a lanço e gradeie para misturar até 20cm de profundidade.</li><li>Se for Plantio Direto, aplique na superfície (demora mais para descer).</li></ul>' },
-        { day: -20, title: 'Dessecação (Mato)', desc: 'Limpeza da Área.', guide: '<h3>🍂 O "Vazio" antes do Plantio</h3><p>Não plante no meio do mato verde!</p><ul><li>As ervas daninhas competem por água e alelopatia (veneno químico) contra o milho bebê.</li><li>Aplique herbicida ou roce baixo 15-20 dias antes. O milho deve nascer em "terra limpa" ou palhada morta.</li></ul>' },
-        { day: 0, title: 'Plantio do Milho', desc: 'Técnica de Semeadura.', guide: '<h3>🌽 Dia de Plantar</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação na Linha:</strong><br>Use NPK <b>{{NPK_FORMULA}}</b>.<br>Dose: <b>{{NPK_GM2}}g</b> por metro linear.</div><p>A calagem já deve ter sido feita. Agora é garantir o fósforo.</p><ul><li><strong>Velocidade:</strong> 4-5km/h. Calma!</li><li><strong>Profundidade:</strong> 3 a 5cm.</li><li><strong>Adubo:</strong> Ao lado e abaixo da semente para não "salgar" (queimar) a semente.</li></ul>' },
-        { day: 15, type: 'routine', freq: 'weekly', title: 'Monitorar Lagarta', desc: 'Praga Chave.', guide: '<h3>🐛 Lagarta-do-Cartucho (Spodoptera)</h3><p>Praga mais destrutiva.</p><ul><li><strong>Dano:</strong> Come as folhas novas ainda enroladas no cartucho. Quando a folha abre, está toda furada. Também mata o ponto de crescimento.</li><li><strong>Monitoramento:</strong> Entre na roça e faça um "W". Olhe 20 plantas por ponto. Se achar 2 com lagarta ou cocô fresco, TEM que aplicar.</li><li><strong>Controle:</strong> Inseticidas fisiológicos (inibidores de quitina) ou Biológicos (Baculovírus/BT) funcionam melhor com lagartas pequenas (<1cm).</li></ul>' },
-        { day: 30, title: 'Adubo de Cobertura', desc: 'A Força do Nitrogênio.', guide: '<h3>✨ Ureia: O Motor do Milho</h3><p>Milho precisa de muito Nitrogênio para encher espiga.</p><ul><li><strong>Fase V4-V6:</strong> (4 a 6 folhas verdadeiras). É quando a planta define o tamanho da espiga.</li><li><strong>Aplicação:</strong> Jogue a ureia no cordão, a uns 10cm do pé.</li><li><strong>Perda:</strong> A ureia vira gás (amônia) se ficar no sol. Aplique antes da chuva ou enterre/cubra com terra.</li></ul>' }
+        {
+            day: -60,
+            title: 'Estratégia de Calagem e Correção Profunda',
+            desc: 'Neutralizando o alumínio tóxico para raízes.',
+            guide: `<h3>📉 Equilíbrio Químico: O Motor do Milho</h3><p>O milho é uma cultura de crescimento explosivo que não tolera solos ácidos. O alumínio presente em solos com pH baixo trava o crescimento das raízes, impedindo a planta de buscar água e nutrientes em profundidade. Aplique <b>{{CALC_GM2}}g/m²</b> de calcário dolomítico pelo menos 60 dias antes do plantio. O ideal é incorporar o calcário com arado ou grade a 20cm de profundidade. Se estiver em sistema de Plantio Direto, aplique em área total sobre a palhada. Um solo bem corrigido garante que as espigas sejam grandes e que a planta resista muito melhor a curtos períodos de seca (veranicos).</p>`
+        },
+        {
+            day: -20,
+            title: 'Manejo de Cobertura e Dessecação',
+            desc: 'Limpeza e preparação da palhada.',
+            guide: `<h3>🧹 Área Limpa: Eliminando a Competição</h3><p>O milho precisa nascer em um ambiente livre de competição com ervas daninhas, que roubam Nitrogênio e luz. Realize a dessecação ou limpeza mecânica da área 20 dias antes do plantio. Deixar o mato morrer no local cria uma cobertura morta que preserva a umidade do solo e evita a erosão. Nunca plante o milho no meio do mato verde, pois as substâncias químicas liberadas pelas raízes das ervas daninhas (alelopatia) podem atrasar o nascimento e vigor inicial do milho. Mantenha a roça "no limpo" para que cada semente de milho tenha 100% de acesso aos recursos do solo.</p>`
+        },
+        {
+            day: 0,
+            title: 'Semeadura Técnica e Adubação de Sulco',
+            desc: 'Precisão no plantio e nutrição inicial.',
+            guide: `<h3>🌽 O Dia D: Plantando com Precisão</h3><p>O plantio do milho define o potencial de produtividade. Utilize sementes de alta qualidade e adube o sulco com <b>{{NPK_GM2}}g</b> por metro linear de NPK <b>{{NPK_FORMULA}}</b>. O adubo deve ficar cerca de 5cm ao lado e abaixo da semente para evitar a "salga" (queima química da semente). A profundidade ideal de semeadura é de 3 a 5cm; plantar muito raso expõe a semente a pássaros e secamento, enquanto muito fundo atrasa a emergência. Controle a velocidade do plantio (máximo 5km/h) para garantir uma distribuição uniforme, sem falhas que poderiam reduzir drasticamente o número de espigas por hectare.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Monitoramento de Pragas (Lagarta-do-Cartucho)',
+            desc: 'Proteção contra o inimigo mais voraz.',
+            guide: `<h3>🐛 Spodoptera: A Batalha pelo Cartucho</h3><p>A lagarta-do-cartucho (Spodoptera frugiperda) é a praga mais destrutiva do milho. Ela se aloja no interior das folhas novas e pode destruir o ponto de crescimento da planta em poucos dias. Faça inspeções semanais caminhando em "W" pela lavoura e olhando o interior das folhas. Se encontrar mais de 10% de plantas com raspaduras ou fezes frescas, realize o controle. Priorize bioinseticidas (Bacillus thuringiensis) ou defensivos fisiológicos quando as lagartas forem pequenas. Uma planta com o cartucho destruído nunca produzirá uma espiga de qualidade comercial, resultando em perdas financeiras pesadas.</p>`
+        },
+        {
+            day: 30,
+            title: 'Adubação de Cobertura e Boost de Nitrogênio',
+            desc: 'Nitrogênio para definição de produtividade.',
+            guide: `<h3>✨ Ureia: O Combustível do Enchimento</h3><p>Quando o milho atinge a fase de 4 a 6 folhas (V4-V6), ele decide internamente o potencial de grãos por espiga. Este é o momento crítico para a aplicação de Nitrogênio. Aplique a cobertura de Ureia a cerca de 10cm de distância do pé. **Dica Crítica:** A Ureia evapora no sol forte; aplique preferencialmente no final da tarde, antes de uma chuva prevista, ou incorpore levemente à terra. O Nitrogênio é o motor da planta; sem ele, o milho ficará amarelado, baixo e as espigas serão pequenas (pontas vazias). Garanta que o solo esteja úmido para que a raiz consiga "beber" a nutrição rapidamente.</p>`
+        }
     ],
 
     // 8. Feijão
     feijao: [
-        { day: -60, title: 'Calagem', desc: 'Correção de Solo.', guide: '<h3>📉 Feijão Gosta de pH Alto</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Recomendação de Calcário:</strong><br>Aplicar <b>{{CALC_GM2}}g/m²</b>.</div><p>Feijão é planta de ciclo curto. Se a terra estiver ácida, ele não tem tempo de recuperar.</p><ul><li>Aplique 60 dias antes. O cálcio ajuda a fortalecer a parede da planta contra doenças.</li></ul>' },
-        { day: -15, title: 'Dessecação', desc: 'Eliminar Concorrência.', guide: '<h3>🧹 Área Limpa</h3><p>Feijão "nasce fraco". Se tiver mato competindo nos primeiros 20 dias, você perde a lavoura.</p><ul><li>Faça a limpeza total da área 2 semanas antes.</li><li>Evite herbicidas residuais fortes que possam matar o feijão quando nascer.</li></ul>' },
-        { day: 0, title: 'Plantio Feijão', desc: 'Sensibilidade.', guide: '<h3>🫘 Plantio Suave</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação NPK:</strong><br>Use <b>{{NPK_FORMULA}}</b>: <b>{{NPK_GM2}}g</b> por metro.</div><p>Solo destorroado é lei.</p><ul><li><strong>Profundidade:</strong> Rasa (3cm). Se enterrar muito, ele não tem força para sair.</li><li><strong>Inoculante:</strong> Misture Rhizobium na sombra (o sol mata a bactéria) e plante logo em seguida.</li></ul>' },
-        { day: 10, type: 'routine', freq: 'weekly', title: 'Monitorar Pragas', desc: 'Vetores de Vírus.', guide: '<h3>🐞 Mosca Branca e Vaquinha</h3><ul><li><strong>Mosca Branca:</strong> Transmite o Mosaico Dourado (vírus que atrofia e amarela o feijoeiro). Se ver nuvens de mosquinhas brancas ao balançar a folha, controle imediatamente.</li><li><strong>Vaquinha:</strong> Come a folha, mas o pior é a larva dela que come a raiz.</li></ul>' },
-        { day: 25, title: 'Cobertura Nitrogenada', desc: 'Boost.', guide: '<h3>✨ Nitrogênio no Feijão</h3><p>Apesar de ser leguminosa, o feijão moderno precisa de um empurrão.</p><ul><li>Aplique uma dose leve de ureia (30-50kg/ha) aos 20-25 dias (terceira folha trifoliada).</li><li>Cuidado para não jogar dentro da folha ("copinho"), pois a ureia queima a planta.</li></ul>' }
+        {
+            day: -60,
+            title: 'Análise de Solo e Calagem de Ciclo Curto',
+            desc: 'Correção rápida para planta de crescimento veloz.',
+            guide: `<h3>📉 Feijão: O Exigente de Ciclo Curto</h3><p>O feijoeiro é uma planta de ciclo muito curto (75 a 90 dias) e não tem tempo para se recuperar de erros no preparo do solo. Ele é extremamente sensível à acidez e à toxicidade por Alumínio e Manganês. Aplique <b>{{CALC_GM2}}g/m²</b> de calcário dolomítico pelo menos 60 dias antes do plantio para elevar o pH para 6.0. O Cálcio fornecido será vital para a formação das paredes celulares, tornando a planta mais resistente a doenças fúngicas de solo. Solo corrigido garante que as bactérias fixadoras de Nitrogênio (Rhizobium) trabalhem com eficiência máxima, economizando adubo químico no futuro.</p>`
+        },
+        {
+            day: -15,
+            title: 'Limpeza de Área e Manejo de Palhada',
+            desc: 'Eliminando concorrência para o arranque inicial.',
+            guide: `<h3>🧹 Berço Limpo para o Feijão</h3><p>O arranque inicial do feijoeiro é o momento de maior fragilidade. Se houver ervas daninhas competindo por luz e nutrientes nos primeiros 20 dias, a perda de produtividade pode chegar a 40%. Realize a limpeza total da área (dessecação ou roçada) 15 dias antes do plantio. O feijoeiro "nasce fraco" se comparado ao milho, por isso a ausência de mato é lei. A palhada seca deixada no chão ajudará a manter a umidade e a temperatura amena, além de evitar que a terra suje as vagens em formação durante as chuvas fortes, preservando a qualidade sanitária dos grãos.</p>`
+        },
+        {
+            day: 0,
+            title: 'Semeadura e Inoculação Biológica',
+            desc: 'Plantio técnico e adubação de base.',
+            guide: `<h3>🫘 Plantio Suave e Nutrição de Fósforo</h3><p>Na hora de plantar, utilize adubo NPK <b>{{NPK_FORMULA}}</b> rico em Fósforo (P), aplicando <b>{{NPK_GM2}}g</b> por metro linear. O Fósforo é o nutriente do "arranque". Semeie em solo bem destorroado a uma profundidade de 3cm; se enterrar demais, a semente gasta toda a sua energia tentando sair e nasce uma planta raquítica. **Dica de Ouro:** Utilize inoculante líquido no momento do plantio (Rhizobium). Isso permite que a planta "fabrique" seu próprio Nitrogênio do ar, resultando em plantas mais verdes e grãos mais densos. Garanta que o solo esteja úmido para o pegamento imediato da semente.</p>`
+        },
+        {
+            day: 10,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Monitoramento de Vetores (Mosca Branca)',
+            desc: 'Defesa contra o Mosaico Dourado.',
+            guide: `<h3>🐞 Pragas Chave: O Perigo nas Folhas</h3><p>A mosca branca é o maior pesadelo do feijoeiro, pois transmite o vírus do Mosaico Dourado, que amarela e atrofia as plantas irreversivelmente. Faça vistorias semanais balançando as plantas; se notar "nuvens" de mosquinhas brancas, controle imediatamente com óleo de neem ou defensivos específicos. Fique atento também à Vaquinha (Diabrotica), que come as folhas e cujas larvas atacam as raízes. Uma lavoura protegida nesta fase inicial garante que a planta chegue ao florescimento com área foliar máxima para converter luz em grãos abundantes. O controle deve ser rigoroso até o fechamento das entrelinhas.</p>`
+        },
+        {
+            day: 25,
+            title: 'Adubação de Cobertura e Nitrogênio',
+            desc: 'Boost energético para o florescimento.',
+            guide: `<h3>✨ Ureia: O Pulmão do Feijoeiro</h3><p>Aos 20-25 dias de vida (quando surgem as primeiras folhas trifoliadas), o feijão precisa de um "empurrão" de Nitrogênio para garantir um dossel foliar vigoroso antes de começar a florir. Aplique uma dose leve de Ureia em cobertura lateral. **Cuidado Vital:** Nunca jogue o adubo dentro do "olho" ou copinho da planta, pois a ureia queima o tecido tenro do feijão. Aplique entre as linhas e, se possível, logo antes de uma chuva ou irrigação. O Nitrogênio nesta fase garante que a planta tenha energia para segurar todas as flores que virão em seguida, evitando o abortamento de vagens e garantindo uma colheita uniforme.</p>`
+        }
     ],
 
     // 9. Mandioca
     mandioca: [
-        { day: -60, title: 'Calagem', desc: 'Preparação.', guide: '<h3>📉 Mandioca Agradece Calagem</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Dose Recomendada:</strong><br>Aplicar <b>{{CALC_GM2}}g/m²</b>.</div><p>Muitos acham que mandioca dá em qualquer chão, mas ela dobra a produção em solo corrigido.</p>' },
-        { day: -30, title: 'Aração/Gradagem', desc: 'Solo Fofo.', guide: '<h3>🚜 Solo Solto = Raiz Grossa</h3><p>Para a mandioca engrossar, a terra não pode estar compactada.</p><ul><li><strong>Aração:</strong> Profunda (20-30cm).</li><li><strong>Curvas de Nível:</strong> Mandioca sofre muito com erosão. Plante cortando as águas.</li></ul>' },
-        { day: 0, title: 'Plantio (Manivas)', desc: 'Seleção da Muda.', guide: '<h3>🥔 Plantio da Mandioca</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Fósforo no Sulco:</strong><br>Se recomendado, use Super Simples no fundo do sulco.</div><ul><li><strong>Origem:</strong> Use o terço médio da planta mãe.</li><li><strong>Posição:</strong> Horizontal (a 5-10cm) facilita colheita.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Capina (Crítico)', desc: 'Período Crítico.', guide: '<h3>🌿 Período Crítico de Competição (PCII)</h3><p>Dos 0 aos 100 dias, a mandioca <strong>não tolera sombra</strong>.</p><ul><li>Se o mato crescer mais que a mandioca nesse tempo, a produção cai 50% ou mais.</li><li>Mantenha a roça "no limpo" até a mandioca fechar a rua e fazer sombra no mato.</li></ul>' },
-        { day: 60, title: 'Adubação de Cobertura', desc: 'Engrossar Raízes.', guide: '<h3>🥔 Potássio é Vida</h3><p>A mandioca extrai muito potássio do solo.</p><ul><li><strong>Quando:</strong> Aos 45-60 dias (após a primeira capina).</li><li><strong>O que usar:</strong> NPK 20-00-20 ou Cloreto de Potássio + Ureia.</li><li><strong>Aplicação:</strong> Em filete contínuo ou covetas laterais, longe do caule para não queimar.</li></ul>' },
-        { day: 365, title: 'Ponto de Colheita', desc: 'Amido.', guide: '<h3>🥘 Ponto de Colheita</h3><p>Não tem data certa, depende do mercado e da chuva.</p><ul><li><strong>Teor de Amido:</strong> Se choveu muito e a planta brotou folha nova, ela "gastou" o amido da raiz. A mandioca fica "aguada" e não cozinha.</li><li><strong>Melhor hora:</strong> Na "dormência" da planta (época seca/inverno), quando ela está com pouca folha. A raiz está cheia de energia acumulada.</li></ul>' }
+        {
+            day: -60,
+            title: 'Estratégia de Calagem e Correção Química',
+            desc: 'Neutralizando alumínio para expansão radicular.',
+            guide: `<h3>📉 Mandioca: A Força Sob a Terra</h3><p>Embora rústica, a mandioca duplica sua produção em solos corrigidos quimicamente. O alumínio tóxico impede o engrossamento das raízes tuberosas. Aplique <b>{{CALC_GM2}}g/m²</b> de calcário dolomítico pelo menos 60 dias antes do plantio para que o Cálcio e Magnésio penetrem na zona de raízes. A calagem aumenta o vigor da rama e garante que a planta tenha "saúde" para acumular amido. Em solos muito pobres, a mandioca cresce mas não produz raízes comerciais, resultando em um trabalho frustrante na hora da colheita. A correção do solo é o seguro de produtividade da lavoura.</p>`
+        },
+        {
+            day: -30,
+            title: 'Preparo Físico de Solo (Aração e Gradagem)',
+            desc: 'Solo fofo para permitir o engrossamento das raízes.',
+            guide: `<h3>🚜 Solo Solto = Raízes Grossas</h3><p>A mandioca precisa de "espaço físico" para expandir. Se o solo estiver compactado (duro), as mandiocas serão finas, tortas e fibrosas. Realize uma aração profunda (25 a 30cm) seguida de gradagem para quebrar os torrões. Em áreas com declividade, o plantio deve seguir as curvas de nível para evitar a erosão, já que a mandioca demora a cobrir o solo. Um solo bem destorroado facilita imensamente o trabalho de "arrancar" a mandioca no final do ciclo, reduzindo a quebra de raízes preciosas que ficariam perdidas debaixo da terra terra dura.</p>`
+        },
+        {
+            day: 0,
+            title: 'Plantio Técnico de Manivas Selecionadas',
+            desc: 'Qualidade da muda e posição no sulco.',
+            guide: `<h3>🥔 A Arte de Plantar Manivas</h3><p>Utilize manivas do "terço médio" de plantas sadias, com 15 a 20cm de comprimento e 5 a 7 gemas. Plante as manivas horizontalmente em sulcos a 5-10cm de profundidade. **Dica de Especialista:** O plantio horizontal facilita o nascimento e, principalmente, a colheita, pois as raízes se distribuem de forma mais superficial e espalhada. Se recomendado por análise, aplique Fósforo (Fosfato Natural) no fundo do sulco de plantio. O espaçamento ideal é de 1m entre linhas. Garanta que as gemas estejam voltadas para cima se optar pelo plantio inclinado, garantindo o vigor de nascimento.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Gestão de Mato e Capina (Período Crítico)',
+            desc: 'Luz total para o desenvolvimento da rama.',
+            guide: `<h3>🌿 O Inimigo nº 1: A Sombra do Mato</h3><p>A mandioca é extremamente sensível à sombra nos primeiros 100 dias de vida (Período Crítico de Interferência). Se o mato crescer mais que a mandioca nesta fase, as raízes não se formarão e a produtividade cairá mais de 60%. Mantenha a roça "no limpo" através de capinas manuais ou mecânicas. Assim que a mandioca "fechar" (cobrir o chão com suas folhas), ela mesma fará sombra no mato e o controle se tornará muito mais fácil. A limpeza do canteiro também evita o abrigo de pragas como o percevejo-de-renda e o ácaro, que sugam a seiva das folhas jovens.</p>`
+        },
+        {
+            day: 60,
+            title: 'Adubação de Cobertura e Foco em Potássio',
+            desc: 'Potássio para enchimento e acúmulo de amido.',
+            guide: `<h3>🥔 Potássio: O Nutriente da Raiz</h3><p>Aos 60 dias, a mandioca inicia o processo de "tuberização" (começa a transformar a seiva em raízes de amido). O Potássio (K) é o combustível para este processo. Aplique uma cobertura rica em K (como Cloreto de Potássio) em filete lateral, longe do caule para não queimar. O Potássio garante que a mandioca fique "enxuta" e macia no cozimento. Evite excesso de Nitrogênio tardio, pois isso faria a planta gastar energia produzindo apenas folhas e ramas gigantes, esquecendo de engrossar as raízes debaixo da terra. O equilíbrio nutricional nesta fase define o lucro da safra.</p>`
+        },
+        {
+            day: 365,
+            title: 'Cura Fisiológica e Ponto de Colheita',
+            desc: 'Acúmulo máximo de amido e qualidade culinária.',
+            guide: `<h3>🥘 A Hora da Mesa: Colheita e Amido</h3><p>O ponto de colheita da mandioca depende do acúmulo de amido, não apenas do tamanho. O melhor momento é durante o "repouso vegetativo" (inverno ou seca), quando a planta derruba parte das folhas. **Dica Crítica:** Se chover muito e a planta começar a soltar brotos novos lá no topo, ela está "gastando" o amido da raiz para crescer; nesse momento, a mandioca fica "aguada" e não cozinha bem. Espere o solo secar um pouco para colher. Mandioca colhida na hora certa "derrete" na panela e tem o sabor característico e cremoso que todos buscam.</p>`
+        }
     ],
 
     // --- NOVAS CULTURAS (EXPANSÃO) ---
 
     // 10. Alface (Folhosas)
     alface: [
-        { day: -10, title: 'Preparo do Canteiro', desc: 'Base.', guide: '<h3>🥬 Canteiro de Ouro</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Adubação Rica em N:</strong><br>Misture muito esterco curtido (3 a 5kg/m²). Use <b>{{NPK_FORMULA}}</b> (<b>{{NPK_GM2}}g/m²</b>) espalhado.</div><p>Folha precisa de nitrogênio e matéria orgânica.</p><ul><li><strong>Canteiro:</strong> 20cm de altura para não empossar água (alface apodrece fácil).</li></ul>' },
-        { day: 0, title: 'Transplantio', desc: 'Mudas.', guide: '<h3>🌱 Mudança de Casa</h3><p>Nunca plante a semente direto (é muito frágil).</p><ul><li><strong>Ponto ideal:</strong> Muda com 4 folhas definitivas.</li><li><strong>Espaçamento:</strong> 25x25cm ou 30x30cm. Se fechar muito, dá fungo (Míldio).</li><li><strong>Horário:</strong> Fins de tarde para o sol não murchar a muda na largada.</li></ul>' },
-        { day: 20, title: 'Cobertura', desc: 'Nitrogênio.', guide: '<h3>✨ Explosão Verde</h3><p>A alface cresce muito rápido.</p><ul><li>Aplique adubo nitrogenado (Ureia ou Sulfato de Amônio) entre as plantas.</li><li>Cuidado para não "algodão doce" (queimar as folhas com o adubo).</li></ul>' },
-        { day: 45, title: 'Colheita', desc: 'Antes do Pendão.', guide: '<h3>🥗 Ponto de Colheita</h3><p>Colha antes do centro começar a subir (pendoar), senão fica amarga.</p>' }
+        {
+            day: -10,
+            title: 'Preparo do Canteiro e Adubação Orgânica Base',
+            desc: 'Criação de um solo rico e macio para folhosas.',
+            guide: `<h3>🥬 Alface: O Canteiro de Ouro</h3><p>A alface é uma hortaliça que exige solo extremamente rico em matéria orgânica e Nitrogênio para crescer rápido e manter a maciez das folhas. Prepare um canteiro alto (20cm) para evitar o encharcamento das raízes, que causaria podridão precoce. Incorpore 3 a 5kg de esterco curtido por metro quadrado e aplique <b>{{NPK_GM2}}g/m²</b> de NPK <b>{{NPK_FORMULA}}</b>. O solo deve ser revolvido até ficar com textura de "pó", sem torrões. Um solo bem adubado com Nitrogênio garante que as folhas cresçam largas, verdes e sem o amargor típico de plantas sob estresse nutricional ou falta de água.</p>`
+        },
+        {
+            day: 0,
+            title: 'Transplantio Técnico e Aclimatação',
+            desc: 'Muda no local definitivo com cuidado radicular.',
+            guide: `<h3>🌱 Transplantio: O Início da Jornada</h3><p>Nunca plante sementes de alface direto no canteiro; elas são frágeis e a taxa de perda é alta. Utilize mudas sadias com 4 a 5 folhas definitivas. Realize o transplantio preferencialmente no final da tarde para evitar que o sol forte murche a muda na chegada. O espaçamento ideal é de 25x25cm. **Atenção:** Mantenha o torrão nivelado com a superfície; não enterre a coroa da alface, pois isso atrai fungos de solo que matam a planta na primeira semana. Regue imediatamente após o plantio para garantir que as raízes entrem em contato íntimo com a terra nova.</p>`
+        },
+        {
+            day: 10,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Irrigação Diária e Gestão de Temperatura',
+            desc: 'Umidade constante para folhas crocantes.',
+            guide: `<h3>💧 Hidratação para Textura Gourmet</h3><p>A alface é composta por mais de 95% de água. Se o solo secar totalmente por apenas algumas horas sob sol forte, a planta pode entrar em estresse, tornando-se fibrosa e amarga. Irrigue o canteiro diariamente, preferencialmente nas primeiras horas da manhã ou no final da tarde. O objetivo é manter a terra sempre úmida, de aspecto "fresco". Em regiões muito quentes, o uso de telas de sombreamento (sombrite 30%) pode ajudar a baixar a temperatura das folhas, evitando o "queimado de borda" e o pendoamento (floração) precoce que estraga o sabor comercial.</p>`
+        },
+        {
+            day: 20,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Adubação de Cobertura Nitrogenada (Boost)',
+            desc: 'Força extra para a expansão foliar.',
+            guide: `<h3>✨ Explosão Verde: Suplementação de N</h3><p>No meio do ciclo (cerca de 20 dias após o transplante), a alface entra em fase de crescimento acelerado. Para garantir folhas gigantes e suculentas, aplique uma adubação nitrogenada de cobertura. Utilize ureia diluída em água ou adubo líquido orgânico (chorume). Aplique entre as fileiras, tomando extremo cuidado para não molhar as folhas com a solução de adubo sob sol forte, o que causaria queimaduras químicas. O Nitrogênio é o "combustível" do verde; plantas bem nutridas apresentam cor vibrante e brilho natural nas folhas, sendo muito mais resistentes a pequenos ataques de pulgões.</p>`
+        },
+        {
+            day: 45,
+            title: 'Colheita e Ponto de Sabor (Pré-Pendão)',
+            desc: 'O ápice da crocância e doçura.',
+            guide: `<h3>🥗 Colheita no Ponto de Ouro</h3><p>O momento ideal da colheita é quando a cabeça da alface está firme mas sem sinais de alongamento central. Se o centro começar a subir (pendoar), a planta está se transformando para dar flores, e as folhas ficarão amargas e duras instantaneamente. Colha preferencialmente nas horas mais frescas do dia (manhã cedo) para garantir o máximo de "turgidez" (crocância). Corte rente ao solo com uma faca afiada ou arranque com a raiz se for para consumo imediato. Alface colhida fresca e no ponto certo tem um equilíbrio perfeito entre doçura e frescor, sendo a estrela de qualquer salada saudável.</p>`
+        }
     ],
 
     // 11. Tomate (Frutos)
     tomate: [
-        { day: -15, title: 'Calagem e Canteiro', desc: 'Preparo.', guide: '<h3>🍅 Tomate Exige Cálcio</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Fundo Preto (Podridão Apical):</strong><br>A falta de Cálcio (Calagem: {{CALC_GM2}}g/m²) faz o fundo do tomate ficar preto.<br>Aplique o calcário com antecedência!</div>' },
-        { day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🌱 Transplantio</h3><ul><li>Use mudas sadias. Enterre até a primeira folha para enraizar melhor.</li><li><strong>Adubo NPK:</strong> Rico em Potássio (K) e Fósforo (P). Use <b>{{NPK_GM2}}g</b> por cova.</li></ul>' },
-        { day: 15, title: 'Estaqueamento (Tutor)', desc: 'Suporte.', guide: '<h3>🪵 Amarrio</h3><p>O tomateiro indeterminado cresce como trepadeira. Precisa de estaca ou fitilho.</p><ul><li>Amarre com folga ("em oito") para não enforcar o caule quando engrossar.</li></ul>' },
-        { day: 25, title: 'Adubação de Cobertura 1', desc: 'Crescimento.', guide: '<h3>✨ Força no Talo</h3><p>Primeira cobertura rico em Nitrogênio e Potássio.</p><ul><li>Use NPK 20-00-20 (ou Sulfato de Amônio + Cloreto).</li><li>5 a 10g por planta. Longe do caule!</li></ul>' },
-        { day: 50, title: 'Adubação de Cobertura 2', desc: 'Florada.', guide: '<h3>🌼 Doação de Frutos</h3><p>Na florada/início da frutificação, a planta demanda muito Potássio.</p><ul><li>Aumente a dose de Potássio (K). NPK 12-06-12 ou similar.</li></ul>' },
-        { day: 20, type: 'routine', freq: 'weekly', title: 'Desbrota', desc: 'Tira-Chupão.', guide: '<h3>✂️ Cirurgia Semanal</h3><p>Remova os brotos laterais que nascem na axila das folhas ("chupões").</p><ul><li>Deixe apenas a haste principal subir.</li><li>Isso concentra força nos frutos e melhora a ventilação.</li></ul>' }
+        {
+            day: -15,
+            title: 'Análise e Correção de Solo (Calagem)',
+            desc: 'Foco no Cálcio para evitar podridão.',
+            guide: `<h3>🍅 O Solo Ideal para o Tomateiro</h3><p>O tomate é uma das culturas mais exigentes em nutrição e equilíbrio de solo. A principal preocupação deve ser o nível de Cálcio, cuja deficiência causa a famosa "Podridão Apical" ou "Fundo Preto". Aplique <b>{{CALC_GM2}}g/m²</b> de calcário dolomítico pelo menos 15 a 30 dias antes do plantio para que o solo atinja o pH ideal entre 6.0 e 6.5. O calcário não só corrige a acidez, mas fornece o Cálcio e Magnésio necessários para a firmeza do fruto. Em canteiros, revolva a terra a uma profundidade de 25cm, garantindo que o solo esteja solto e bem drenado, pois o tomateiro detesta solos compactados que favorecem doenças radiculares e murchamento súbito.</p>`
+        },
+        {
+            day: 0,
+            title: 'Transplantio e Adubação de Base',
+            desc: 'Mudas sadias e nutrição inicial.',
+            guide: `<h3>🌱 Implantação e Nutrição Estratégica</h3><p>Para o sucesso da lavoura, utilize mudas sadias com 4 a 6 folhas definitivas. No momento do transplantio, enterre a muda até a altura da primeira folha; isso estimula a formação de raízes adventícias ao longo do caule enterrado, tornando a planta muito mais forte e capaz de absorver nutrientes. Na cova ou sulco, aplique <b>{{NPK_GM2}}g</b> de adubo NPK rico em Fósforo (P) e Potássio (K) para o desenvolvimento radicular inicial. Misture bem o adubo com a terra para evitar o contato direto com as raízes sensíveis. O uso de matéria orgânica curtida, como esterco de galinha ou húmus de minhoca, é altamente recomendado para melhorar a CTC do solo e a retenção de umidade.</p>`
+        },
+        {
+            day: 15,
+            title: 'Estaqueamento e Condução da Planta',
+            desc: 'Suporte físico para crescimento vertical.',
+            guide: `<h3>🪵 Sustentação e Manejo de Espaço</h3><p>O tomateiro de crescimento indeterminado atinge grandes alturas e seu caule é frágil demais para suportar o peso dos frutos sem ajuda. O estaqueamento deve ser feito precocemente para evitar que a planta tombe e entre em contato com o solo úmido, o que causaria doenças fúngicas imediatas. Use estacas de bambu, madeira ou fitilhos de ráfia presos a uma estrutura superior. Amarre a planta com o "nó em oito", deixando uma folga generosa entre o caule e a estaca; o caule do tomateiro engrossa rapidamente e um amarrio apertado pode enforcar a planta, interrompendo o fluxo de seiva e comprometendo toda a produção futura do cacho.</p>`
+        },
+        {
+            day: 25,
+            title: 'Adubação de Cobertura e Crescimento',
+            desc: 'Nitrogênio para vigor vegetativo.',
+            guide: `<h3>✨ Impulso Vegetativo e Vigor</h3><p>Nesta fase de crescimento acelerado, o tomateiro demanda um aporte extra de Nitrogênio e Potássio. Aplique a primeira cobertura de adubo em círculo ao redor da planta, mantendo uma distância de 10-15cm do caule para evitar queimaduras químicas. O Nitrogênio é fundamental para a formação de folhas largas e verdes, que são as "panelas" onde a planta cozinha a energia necessária para os frutos. Se o solo estiver úmido, o adubo se dissolverá gradualmente; caso contrário, regue logo após a aplicação. É vital manter o equilíbrio: excesso de Nitrogênio sem Potássio resulta em plantas muito "moles", que atraem pragas como pulgões e mosca branca com facilidade.</p>`
+        },
+        {
+            day: 50,
+            title: 'Adubação de Florada e Frutificação',
+            desc: 'Potássio para qualidade e doçura.',
+            guide: `<h3>🌼 O Segredo dos Frutos Perfeitos</h3><p>Com o início da florada e o surgimento dos primeiros frutos, a planta muda sua prioridade metabólica para a produção de açúcares. O Potássio (K) torna-se o nutriente mais importante agora. Ele regula a entrada e saída de água da planta e garante frutos carnudos, doces e com boa durabilidade pós-colheita. Utilize uma fórmula NPK balanceada, como o 12-06-12 ou similar, focando na reposição do K. Lembre-se que a água deve ser aplicada na base da planta (gotejamento é o ideal), nunca nas folhas, para evitar a requima e o oídio, fungos que devastam plantios de tomate em poucos dias de umidade foliar excessiva.</p>`
+        },
+        {
+            day: 20,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Manejo de Desbrota Semanal',
+            desc: 'Eliminação de brotos laterais.',
+            guide: `<h3>✂️ Poda de Condução e Concentração de Energia</h3><p>A desbrota é a operação mais importante para o manejo do tomateiro indeterminado. Toda semana, remova os brotos laterais, conhecidos como "chupões", que nascem na axila entre a folha e o caule principal. Se deixados crescer, esses brotos roubam a energia que deveria ir para os frutos, além de fechar a ventilação da planta, criando um microclima úmido favorável a doenças. Faça a retirada manual quando os brotos ainda forem pequenos (menos de 5cm) para que o ferimento cicatrize rapidamente sem a necessidade de fungicidas. Uma planta bem conduzida, com haste única, produz tomates maiores, mais uniformes e facilita imensamente o controle de pragas.</p>`
+        }
     ],
 
     // 12. Cenoura (Raízes)
     cenoura: [
-        { day: -5, title: 'Canteiro Profundo', desc: 'Solo Fofo.', guide: '<h3>🥕 O Segredo da Cenoura Reta</h3><p>Se a raiz achar terra dura ou pedra, ela entorta ou bifurca ("cenoura de pernas abertas").</p><ul><li>Revire a terra a 30cm de profundidade. Deixe muito fofo.</li><li><strong>Adubo P:</strong> O Fósforo é essencial. Use NPK <b>{{NPK_GM2}}g/m²</b>.</li></ul>' },
-        { day: 0, title: 'Semeadura Direta', desc: 'Plantio.', guide: '<h3>🌱 Semeando</h3><p>Não se faz muda de cenoura (a raiz torta no transplante).</p><ul><li>Riscos de 1 a 2cm de profundidade.</li><li>Misture a semente com areia ou fubá para espalhar melhor (semente muito miúda).</li></ul>' },
-        { day: 25, title: 'Desbaste (Raleio)', desc: 'Espaço.', guide: '<h3>✂️ A Escolha de Sofia</h3><p>Você vai ter que arrancar as plantinhas extras.</p><ul><li>Deixe uma cenoura a cada 5-8cm. Se ficarem grudadas, não engrossam.</li><li>Faça isso com o solo úmido para não abalar as vizinhas.</li></ul>' }
+        {
+            day: -5,
+            title: 'Preparo de Canteiro e Calagem',
+            desc: 'Criação de solo profundo e fofo.',
+            guide: `<h3>🥕 O Segredo da Cenoura Reta e Doce</h3><p>A cenoura é uma raiz que depende exclusivamente da estrutura física do solo. Qualquer obstáculo, como solo compactado, pedras ou torrões de terra dura, fará com que a raiz bifurque ou entorte, arruinando o valor comercial e estético. Revire a terra a uma profundidade mínima de 30cm, deixando o solo extremamente fofo e aerado. Se o solo for ácido, aplique <b>{{CALC_GM2}}g/m²</b> de calcário e misture bem. A adubação de base deve focar no Fósforo (P), que é vital para o desenvolvimento radicular. Use <b>{{NPK_GM2}}g/m²</b> de NPK balanceado. Evite estercos frescos ou mal curtidos, pois eles causam o aparecimento de "pernas" nas cenouras devido ao excesso de amônia e calor de fermentação.</p>`
+        },
+        {
+            day: 0,
+            title: 'Semeadura Direta: Técnica e Espaçamento',
+            desc: 'Plantio por sementes no local definitivo.',
+            guide: `<h3>🌱 Semeando com Precisão</h3><p>Cenouras não aceitam transplante; a raiz guia é danificada no processo e resulta em frutos deformados. Realize a semeadura direta em pequenos sulcos de 1 a 2cm de profundidade. Como as sementes são minúsculas, misture-as com areia fina ou fubá para garantir uma distribuição mais uniforme ao longo da linha. Cubra com uma camada muito fina de terra peneirada e mantenha a umidade constante para a germinação. O espaçamento ideal entre linhas é de 20cm. Lembre-se que a semente de cenoura demora a germinar (7 a 15 dias), por isso a paciência e a manutenção do solo úmido, mas não encharcado, são os fatores decisivos para um bom início de plantio.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Manejo de Irrigação Regular',
+            desc: 'Umidade constante para evitar rachaduras.',
+            guide: `<h3>💧 O Equilíbrio Hídrico da Raiz</h3><p>A cenoura exige disponibilidade de água constante para crescer de forma uniforme. Flutuações drásticas entre solo seco e muito molhado causam o estiramento e a subsequente rachadura das raízes ("splitting"). Irrigue o canteiro diariamente se não houver chuvas, preferencialmente nas primeiras horas da manhã. O objetivo é manter a umidade nas camadas mais profundas (até 20cm), onde a ponta da raiz está buscando nutrientes. Solo muito encharcado, por outro lado, favorece o apodrecimento da "coroa" e o surgimento de nematoides. O uso de cobertura morta leve (palhada fina) entre as linhas ajuda a preservar a umidade e a temperatura amena do solo, condições ideais para a cultura.</p>`
+        },
+        {
+            day: 25,
+            title: 'Raleio ou Desbaste Estratégico',
+            desc: 'Garantindo espaço para o crescimento.',
+            guide: `<h3>✂️ Gestão de Espaço e Competição Nutricional</h3><p>O desbaste é uma tarefa dolorosa porém necessária. Quando as plantinhas atingirem cerca de 5cm de altura, você deve remover o excesso, deixando apenas as plantas mais vigorosas com um espaçamento de 5 a 8cm entre elas. Se as cenouras crescerem amontoadas, elas competirão por luz e nutrientes, resultando em raízes finas e entrelaçadas que não se desenvolvem. Realize o raleio preferencialmente após uma rega ou chuva, para que o solo esteja úmido e a remoção das plantas excedentes não abale o sistema radicular daquelas que permanecerão no canteiro. Esse manejo garante que cada cenoura tenha volume de terra suficiente para engrossar e atingir o tamanho padrão de mercado.</p>`
+        },
+        {
+            day: 40,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Adubação de Enchimento (Potássio)',
+            desc: 'Doçura, cor e consistência.',
+            guide: `<h3>🥕 Potássio: O Nutriente da Qualidade</h3><p>Nesta fase intermediária, a planta foca no acúmulo de reservas na raiz. O Potássio (K) é o protagonista, responsável por transportar os açúcares das folhas para a raiz, garantindo o sabor adocicado e a cor laranja intensa rica em betacaroteno. Aplique uma cobertura rica em K (como cinzas de madeira ou Cloreto de Potássio) entre as linhas, tomando cuidado para não encostar na planta. Evite o excesso de Nitrogênio nesta fase, pois isso faria a planta gastar energia produzindo folhas gigantes em detrimento da raiz. Uma raiz bem nutrida com Potássio terá uma casca mais firme, o que amplia significativamente o tempo de prateleira após a colheita.</p>`
+        }
     ],
 
     // 13. Café (Perene)
     cafe: [
-        { day: -60, title: 'Análise e Correção', desc: 'Investimento.', guide: '<h3>☕ Café é Cultura de Precisão</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Calcário:</strong><br>Dose: <b>{{CALC_GM2}}g/m²</b>. Café não tolera alumínio tóxico.</div><p>Faça a correção em área total e no fundo do sulco.</p>' },
-        { day: 0, title: 'Plantio', desc: 'Mudas.', guide: '<h3>🌱 Plantio do Café</h3><div style="background:#e3f2fd; padding:10px; border-radius:8px; margin:10px 0;"><strong>🧪 Fosfatagem:</strong><br>Use fonte rica em P (Super Simples ou NPK de plantio) misturado n terra da cova. <b>{{NPK_GM2}}g</b>.</div><ul><li><strong>Colo:</strong> Não enterre o colo da muda (região entre raiz e caule). Afogamento do colo mata a muda.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Adubação Nitrogenada', desc: 'Crescimento.', guide: '<h3>✨ Nitrogênio Parcelado</h3><p>No primeiro ano, aplique N a cada 30-45 dias (nas chuvas) para formar a saia do cafeeiro.</p>' }
+        {
+            day: -60,
+            title: 'Análise de Solo e Calagem Estratégica',
+            desc: 'Correção de acidez e saturação por bases.',
+            guide: `<h3>☕ Café: Cultura de Precisão e Longevidade</h3><p>O cafeeiro é uma cultura perene que permanecerá no mesmo local por decades, portanto o erro no preparo inicial do solo é irremediável. A análise de solo é obrigatória. Aplique <b>{{CALC_GM2}}g/m²</b> de calcário (ou conforme análise) para elevar o pH e, principalmente, neutralizar o alumínio tóxico que impede o crescimento das raízes. O cafeeiro é extremamente sensível à falta de Cálcio e Magnésio. Realize a calagem em área total e, se possível, incorpore no fundo do sulco ou da cova com o uso de gesso agrícola se houver necessidade de correção em profundidade. Um sistema radicular profundo é o seguro da lavoura contra as secas prolongadas e garante a estabilidade da produção nos anos de safra alta.</p>`
+        },
+        {
+            day: 0,
+            title: 'Plantio Técnico das Mudas',
+            desc: 'Alinhamento e adubação de base.',
+            guide: `<h3>🌱 Implantação da Lavoura</h3><p>O momento de levar a muda para o campo exige técnica apurada. Na cova, realize a fosfatagem usando fonte rica em Fósforo (Fosfato Natural ou Super Simples); aplique <b>{{NPK_GM2}}g</b> misturado uniformemente com a terra. O Fósforo é imóvel no solo e deve estar onde a raiz passará. **Atenção Crítica:** Jamais enterre o colo da muda (região de transição entre raiz e caule). O chamado "afogamento do colo" causa a morte da muda por asfixia radicular e podridão. Mantenha o torrão nivelado com a superfície do solo. Monitore o alinhamento e o espaçamento para facilitar a mecanização futura ou as capinas manuais, garantindo que as plantas recebam radiação solar por igual durante todo o dia.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Adubação de Formação (Nitrogênio)',
+            desc: 'Desenvolvimento das saias do cafeeiro.',
+            guide: `<h3>✨ Construindo a Estrutura Produtiva</h3><p>No primeiro e segundo ano de campo, o foco total é no crescimento vegetativo. O cafeeiro precisa formar a sua "saia" (ramos laterais baixos) onde ocorrerá a primeira produção. Aplique Nitrogênio e Potássio de forma parcelada (a cada 30-45 dias) durante todo o período chuvoso. Use fontes como Sulfato de Amônio ou Ureia, garantindo que o solo esteja úmido no momento da aplicação para evitar perdas por volatização. Distribua o adubo em um círculo sob a projeção da copa, mantendo distância do tronco. Esta nutrição constante e equilibrada permite que a planta atinja a maturidade fisiológica mais cedo, antecipando o início da colheita e aumentando o vigor para resistir a eventuais ataques de pragas.</p>`
+        },
+        {
+            day: 120,
+            type: 'routine',
+            freq: 'quarterly',
+            title: 'Adubação de Produção e Enchimento',
+            desc: 'Foco em Potássio para grãos densos.',
+            guide: `<h3>☕ Nutrindo a Colheita de Qualidade</h3><p>A partir do terceiro ano, as exigências nutricionais mudam drasticamente. A produção de frutos consome enormes reservas de Potássio da planta. Utilize fórmulas NPK cafeeiras balanceadas, como o 20-05-20 ou similar, dividindo em pelo menos 3 aplicações anuais (Setembro, Novembro e Janeiro). O Potássio é responsável pelo transporte de fotoassimilados para os grãos, garantindo peso (peneira alta), densidade e melhor qualidade de bebida. A falta de K nesta fase resulta em grãos chochos e "seca de ramos", onde a planta sacrifica as folhas para terminar de encher o fruto. Monitore também o enxofre e os micronutrientes como zinco e boro, essenciais para a retenção floral e o crescimento dos ponteiros.</p>`
+        },
+        {
+            day: 180,
+            type: 'routine',
+            freq: 'quarterly',
+            title: 'Manejo Fitossanitário (Ferrugem)',
+            desc: 'Monitoramento da saúde foliar.',
+            guide: `<h3>🍂 Defendendo a Fábrica de Energia</h3><p>A ferrugem do cafeeiro (Hemileia vastatrix) é a doença que mais causa prejuízos, podendo desfolhar a lavoura inteira se não for controlada. Identifique as manchas alaranjadas na parte inferior das folhas precocemente. O controle deve ser preventivo, especialmente em épocas de alta umidade e temperatura. Utilize fungicidas cúpricos ou sistêmicos conforme a recomendação técnica. Lembre-se que o café realiza a fotossíntese exclusivamente através das folhas; lavoura sem folhas não enche grão e não terá força para a próxima florada. Além da ferrugem, fique atento ao bicho-mineiro e à broca-do-café, pragas que atacam a integridade das folhas e a qualidade final dos grãos no processo de beneficiamento.</p>`
+        }
     ],
 
     // 14. Banana
     banana: [
-        { day: -60, title: 'Preparo da Área', desc: 'Limpeza e Calagem.', guide: '<h3>🍌 Bananeira Gosta de Terra Boa</h3><p>Banana é exigente em nutrientes e não tolera acidez alta.</p><ul><li><strong>Calagem:</strong> Aplicar calcário 60 dias antes para pH 6.0-6.5.</li><li><strong>Drenagem:</strong> Banana não tolera encharcamento. Evite baixadas que acumulam água.</li></ul>' },
-        { day: -30, title: 'Abertura de Covas', desc: 'Preparo.', guide: '<h3>🕳️ Covas Generosas</h3><p>Bananeira tem raízes superficiais mas precisa de espaço.</p><ul><li><strong>Tamanho:</strong> 40x40x40cm.</li><li><strong>Espaçamento:</strong> 3x3m (variedades altas) ou 2x2m (anãs).</li><li><strong>Adubação de Base:</strong> Misture 20L de esterco curtido + 200g de superfosfato na cova.</li></ul>' },
-        { day: 0, title: 'Plantio da Muda', desc: 'Implantação.', guide: '<h3>🌱 Plantio</h3><p>Use mudas tipo "chifrinho" (20-30cm) de bananeiras sadias.</p><ul><li>Plante no centro da cova, sem enterrar o rizoma muito fundo.</li><li>Regue bem após o plantio (20L de água).</li></ul>' },
-        { day: 30, title: 'Adubação de Cobertura 1', desc: 'Nitrogênio.', guide: '<h3>✨ Primeira Cobertura</h3><p>Banana precisa de muito Nitrogênio para crescer rápido.</p><ul><li>Aplique 100g de Ureia em círculo ao redor da planta (30cm do pseudocaule).</li><li>Cubra levemente com terra.</li></ul>' },
-        { day: 60, title: 'Adubação de Cobertura 2', desc: 'NPK.', guide: '<h3>🌿 Segunda Cobertura</h3><p>Agora a planta precisa de equilíbrio.</p><ul><li>Use NPK 20-05-20: 150g por planta.</li><li>Banana extrai muito Potássio do solo.</li></ul>' },
-        { day: 90, title: 'Desbaste de Perfilhos', desc: 'Família Controlada.', guide: '<h3>✂️ Controle da Touceira</h3><p>Bananeira gera muitos "filhos". Deixe apenas 3 por touceira.</p><ul><li><strong>Mãe:</strong> A planta que está produzindo.</li><li><strong>Filha:</strong> A que vai produzir depois.</li><li><strong>Neta:</strong> A reserva.</li><li>Elimine os outros com facão (corte rente ao chão).</li></ul>' },
-        { day: 120, type: 'routine', freq: 'monthly', title: 'Adubação Mensal', desc: 'Manutenção.', guide: '<h3>🔄 Adubação Contínua</h3><p>A partir do 4º mês, adube mensalmente.</p><ul><li>NPK 20-05-20: 200g/planta/mês.</li><li>Aumente para 300g quando aparecer o cacho.</li></ul>' },
-        { day: 270, title: 'Florescimento', desc: 'Cacho Aparecendo.', guide: '<h3>🌺 Nasceu o Cacho!</h3><p>Entre 9-12 meses, a bananeira emite a inflorescência.</p><ul><li><strong>Coração:</strong> A flor roxa no final do cacho pode ser cortada após as pencas se formarem (economiza energia).</li><li><strong>Ensacamento:</strong> Proteja o cacho com saco plástico azul para evitar pragas e melhorar a cor.</li></ul>' },
-        { day: 360, title: 'Colheita', desc: 'Ponto de Corte.', guide: '<h3>🍌 Hora de Colher</h3><p>Banana leva 12-15 meses do plantio até a primeira colheita.</p><ul><li><strong>Ponto:</strong> Quando os frutos estão "cheios" (quinas arredondadas), ainda verdes.</li><li>Corte o cacho inteiro com facão.</li><li>Deixe amadurecer em local sombreado e ventilado.</li></ul>' }
+        {
+            day: -60,
+            title: 'Preparo da Área e Calagem',
+            desc: 'Limpeza e correção química profunda.',
+            guide: `<h3>🍌 O Solo para a Bananeira de Alta Produtividade</h3><p>A bananeira é uma planta extremamente exigente em fertilidade e água, sendo muito sensível à acidez excessiva. Antes de iniciar, limpe bem a área e aplique <b>{{CALC_GM2}}g/m²</b> de calcário dolomítico para elevar o pH para a faixa de 6.0 a 6.5. A calagem deve ser feita com antecedência de 60 dias para permitir a reação no solo. Atente-se à drenagem: a banana "bebe" muita água mas morre se as raízes ficarem submersas em solo encharcado (anoxia radicular). Escolha terrenos com boa declividade ou instale drenos se o solo for muito argiloso. Solo bem corrigido garante que a planta absorva o Potássio com eficiência, nutriente vital para o peso final dos cachos.</p>`
+        },
+        {
+            day: -30,
+            title: 'Abertura e Adubação de Covas',
+            desc: 'Preparo físico e orgânico.',
+            guide: `<h3>🕳️ Construindo o Lar da Bananeira</h3><p>As covas para banana devem ser generosas, com pelo menos 40x40x40cm, para permitir a expansão rápida do sistema radicular do rizoma. O espaçamento ideal varia de 3x3m para variedades altas (como a Prata-Anã) até 2x2m para variedades menores. Na cova, misture a terra de cima com 20 litros de esterco de curral bem curtido e 500g de superfosfato simples. A matéria orgânica é fundamental para manter a umidade e a biologia do solo ativa, o que previne doenças como o Mal-do-Panamá. Deixe a cova descansar por 30 dias antes de colocar a muda para que a fermentação do adubo não queime os tecidos jovens.</p>`
+        },
+        {
+            day: 0,
+            title: 'Plantio Técnico de Mudas',
+            desc: 'Implantação e pegamento inicial.',
+            guide: `<h3>🌱 Técnica de Plantio e Afogamento</h3><p>Utilize mudas de procedência garantida, preferencialmente do tipo "chifrinho" com 20 a 30cm. Ao plantar, coloque a muda no centro da cova garantindo que o rizoma não fique muito fundo nem muito exposto à superfície. Pressione a terra ao redor para eliminar bolsas de ar que podem apodrecer as raízes iniciais. Logo após o plantio, realize uma rega abundante com pelo menos 20 litros de água para garantir o contato íntimo da terra com a muda. Se o sol estiver muito forte, faça um sombreamento leve com folhas de palmeira ou capim seco para evitar o dessecamento do caule (pseudocaule) até que a planta comece a emitir as primeiras folhas novas.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Adubação de Cobertura 1 (Manutenção)',
+            desc: 'Foco em nitrogênio e potássio.',
+            guide: `<h3>✨ Nutrição para Crescimento Acelerado</h3><p>Após 30 dias do plantio, a bananeira começa sua fase de expansão vegetativa vigorosa. Aplique a primeira cobertura usando <b>{{NPK_GM2}}g</b> de NPK rico em Nitrogênio e Potássio (fórmula 20-05-20 ou similar). Distribua o adubo em um círculo ao redor da planta, respeitando uma distância de 30cm do pseudocaule para evitar queimaduras fitotóxicas. O Nitrogênio impulsiona o surgimento de folhas largas (a fábrica de energia), enquanto o Potássio começa a preparar a planta para o futuro cacho. Mantenha o solo sempre úmido através de regas regulares ou cobertura morta, pois a falta de água nesta fase atrasa irremediavelmente o ciclo de colheita em vários meses.</p>`
+        },
+        {
+            day: 90,
+            title: 'Manejo de Desbaste de Perfilhos',
+            desc: 'Controle da "família" (Mãe, Filha e Neta).',
+            guide: `<h3>✂️ Gestão da Touceira e Energia Genética</h3><p>Uma bananeira sem manejo vira um matagal impenetrável onde os cachos ficam pequenos e as pragas se escondem. O segredo da produtividade é o desbaste: mantenha apenas 3 plantas por touceira, obedecendo à hierarquia: 1. **Mãe** (a planta principal que dará o cacho); 2. **Filha** (o broto mais forte ao lado); 3. **Neta** (o rebento menor). Elimine todos os outros "seguidores" cortando-os rente ao solo com um facão afiado ou ferramenta específica de desbrota. Isso garante que a energia do solo e o sol não sejam divididos entre muitas competidoras, resultando em cachos muito mais pesados, uniformes e com frutos maiores para o consumo ou venda.</p>`
+        }
     ],
 
     // 15. Coqueiro
     coqueiro: [
-        { day: -90, title: 'Análise de Solo', desc: 'Preparo Antecipado.', guide: '<h3>🥥 Coqueiro é Investimento de Longo Prazo</h3><p>Coqueiro vive 60+ anos. Prepare bem o solo.</p><ul><li><strong>pH Ideal:</strong> 5.5-6.5.</li><li><strong>Calagem:</strong> Aplicar 90 dias antes se pH < 5.5.</li><li><strong>Drenagem:</strong> Essencial. Coqueiro não tolera raiz encharcada.</li></ul>' },
-        { day: -60, title: 'Abertura de Covas', desc: 'Covas Profundas.', guide: '<h3>🕳️ Cova de Coqueiro</h3><p>Coqueiro tem raízes profundas nos primeiros anos.</p><ul><li><strong>Tamanho:</strong> 80x80x80cm (cova grande!).</li><li><strong>Espaçamento:</strong> 7x7m (Anão) ou 9x9m (Gigante).</li><li><strong>Adubação de Base:</strong> 40L de esterco + 500g de superfosfato + 200g de FTE (micronutrientes).</li></ul>' },
-        { day: 0, title: 'Plantio da Muda', desc: 'Implantação.', guide: '<h3>🌴 Plantio</h3><p>Use mudas com 6-8 meses, já com 4-6 folhas.</p><ul><li>Plante no nível do solo (não enterre o colo).</li><li><strong>Tutoramento:</strong> Amarre a muda a uma estaca para evitar tombar com vento.</li><li>Regue abundantemente (40L).</li></ul>' },
-        { day: 30, title: 'Adubação de Formação 1', desc: 'Nitrogênio.', guide: '<h3>✨ Primeira Cobertura</h3><p>Nos primeiros 2 anos, o foco é crescimento vegetativo.</p><ul><li>Aplique 200g de Ureia em círculo (50cm do caule).</li><li>Não deixe o adubo encostar no tronco.</li></ul>' },
-        { day: 60, type: 'routine', freq: 'monthly', title: 'Adubação Mensal (Ano 1-2)', desc: 'Crescimento.', guide: '<h3>🔄 Adubação de Formação</h3><p>Nos primeiros 2 anos, adube mensalmente.</p><ul><li><strong>Fórmula:</strong> NPK 20-05-20 ou similar.</li><li><strong>Dose:</strong> 200g/mês no 1º ano, 400g/mês no 2º ano.</li><li><strong>Micronutrientes:</strong> Aplique FTE BR-12 (50g) a cada 6 meses.</li></ul>' },
-        { day: 180, title: 'Controle de Pragas', desc: 'Anel Vermelho.', guide: '<h3>🪲 Broca-do-Olho (Rhynchophorus)</h3><p>A principal praga do coqueiro.</p><ul><li><strong>Prevenção:</strong> Evite ferir o palmito. Não deixe restos de poda acumulados.</li><li><strong>Armadilha:</strong> Use pedaços de cana ou estipe de coqueiro velho como isca com inseticida.</li></ul>' },
-        { day: 730, title: 'Início da Produção', desc: 'Primeiros Cocos.', guide: '<h3>🥥 Primeira Floração</h3><p>Coqueiro Anão começa a produzir com 2-3 anos. Gigante com 5-7 anos.</p><ul><li><strong>Adubação de Produção:</strong> Aumente a dose de Potássio (K). Use NPK 16-04-24.</li><li><strong>Dose:</strong> 1-2 kg/planta/ano, dividido em 4 aplicações.</li></ul>' },
-        { day: 1095, title: 'Produção Plena', desc: 'Maturidade.', guide: '<h3>🌴 Coqueiro Adulto</h3><p>Com 3+ anos, o coqueiro atinge produção estável.</p><ul><li><strong>Produção:</strong> Anão: 100-150 cocos/ano. Gigante: 60-80 cocos/ano.</li><li><strong>Colheita:</strong> Coco verde aos 6-7 meses. Coco seco aos 11-12 meses.</li><li><strong>Adubação:</strong> Mantenha NPK 16-04-24 (2kg/planta/ano) + Esterco (40L/ano).</li></ul>' }
+        {
+            day: -90,
+            title: 'Análise de Solo e Calagem de Longo Prazo',
+            desc: 'Preparo para 60 anos de produção.',
+            guide: `<h3>🥥 Coqueiro: O Investimento na Base</h3><p>Um coqueiro bem cuidado pode produzir por mais de 60 anos, mas seu sucesso depende inteiramente dos primeiros meses de solo. O pH ideal deve estar entre 5.5 e 6.5. Se a análise indicar acidez, aplique <b>{{CALC_GM2}}g/m²</b> de calcário e misture profundamente. O coqueiro é extremamente sensível à falta de Magnésio e Cálcio, que são fornecidos pela calagem. Além disso, escolha locais com boa drenagem; embora o coqueiro goste de água, o encharcamento prolongado apodrece as raízes e atrai doenças fúngicas letais como a lixa-do-coqueiro. Prepare a área com antecedência para que o solo esteja quimicamente equilibrado no dia do plantio das mudas selecionadas.</p>`
+        },
+        {
+            day: -60,
+            title: 'Abertura e Adubação de Super Covas',
+            desc: 'Preparo físico para raízes vigorosas.',
+            guide: `<h3>🕳️ A Cova Ideal: Estrutura e Reserva Nutricional</h3><p>Como o coqueiro é uma planta de grande porte, ele exige covas profundas e largas (mínimo de 80x80x80cm) para romper qualquer camada compactada do solo. Espaçamentos recomendados são de 7,5m para anões e 9m para gigantes. Na cova, realize uma adubação pesada: misture a terra de cima com 40 litros de esterco de curral bem curtido, 500g de superfosfato simples e 200g de micronutrientes (FTE). Essa reserva garantirá que a planta se estabeleça rapidamente nos primeiros dois anos, fase crucial onde o coqueiro define sua robustez estrutural para suportar os ventos e o peso dos futuros cachos de coco.</p>`
+        },
+        {
+            day: 0,
+            title: 'Plantio Técnico da Muda',
+            desc: 'Identificação e pegamento inicial.',
+            guide: `<h3>🌴 Plantio e Proteção da Muda</h3><p>Utilize mudas com 6 a 8 meses, que apresentem 4 a 6 folhas vigorosas. Ao plantar, posicione a muda de forma que o colo (o "pescoço" entre a raiz e as folhas) fique nivelado com a superfície do solo; nunca enterre o colo, pois isso causa o "afogamento" e morte da planta. Comprima a terra firmemente ao redor do torrão para evitar bolsas de ar. Instale estacas (tutores) para evitar que o vento balance a muda e quebre as raízes novas. Realize uma rega imediata com pelo menos 40 litros de água para garantir o pegamento. Em regiões de sol muito intenso, proteja a base da planta com cobertura morta (palhada) para evitar o superaquecimento do solo radicular.</p>`
+        },
+        {
+            day: 30,
+            title: 'Adubação de Formação 1 (Nitrogênio)',
+            desc: 'Impulso para o crescimento das folhas.',
+            guide: `<h3>✨ Nutrição Vegetativa e Vigor Inicial</h3><p>Nos primeiros dois anos, o foco total deve ser o crescimento das folhas e do estipe (tronco). Aplique <b>{{NPK_GM2}}g</b> de NPK nitrogenado em círculo ao redor da planta, respeitando uma distância de 50cm do tronco para evitar a queima dos tecidos. O Nitrogênio é o "combustível" para a folhagem verde e larga, que por sua vez capta energia para o crescimento radicular. Monitore a cor das folhas: se estiverem amareladas, aumente a dose de matéria orgânica ou Nitrogênio. Manter a planta bem nutrida nesta fase acelera o início da produção em até um ano, transformando o coqueiro anão em produtivo muito mais cedo.</p>`
+        },
+        {
+            day: 60,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Manejo Mensal de Adubação e Pragas',
+            desc: 'Manutenção contínua e vigilância.',
+            guide: `<h3>🔄 Manejo de Saúde e Produtividade Contínua</h3><p>Adube mensalmente com fórmulas balanceadas e ricas em Potássio, conforme a planta cresce. O coqueiro demanda vigilância constante contra a **Broca-do-Olho** (Rhynchophorus palmarum), que pode matar a árvore em poucos dias ao comer o meristema apical. Evite realizar ferimentos desnecessários no tronco ou folhas, pois o cheiro da seiva atrai o inseto. Utilize armadilhas luminosas ou com iscas de cana-de-açúcar e inseticida se notar a presença do besouro na propriedade. Da mesma forma, monitore ataques de ácaros nas flores e frutos jovens; a nutrição equilibrada é a melhor defesa natural da planta contra pragas e doenças oportunistas.</p>`
+        }
     ],
 
     // --- DETALHAMENTO ESPECÍFICO (SEM CLONES GENÉRICOS) ---
@@ -1222,105 +1440,979 @@ const cropTemplates = {
 
     // 20. Couve (Brásicas)
     couve: [
-        { day: -10, title: 'Preparo com Calcário', desc: 'Indispensável.', guide: '<h3>🥬 Couve Ama Cálcio</h3><p>Sem calcário, a borda da folha queima e dá pulgão fácil.</p><ul><li>Use <b>{{CALC_GM2}}g/m²</b>.</li><li>Incorpore bem matéria orgânica.</li></ul>' },
-        { day: 0, title: 'Plantio das Mudas', desc: 'Espaçamento.', guide: '<h3>🌱 Espaço para Crescer</h3><p>Couve cresce muito.</p><ul><li><strong>Espaçamento:</strong> 50cm a 80cm entre plantas.</li><li>Enterre até as primeiras folhas para firmar o talo.</li></ul>' },
-        { day: 15, title: 'Controle de Pulgão', desc: 'Praga nº 1.', guide: '<h3>🐞 O Terror da Couve</h3><p>Pulgão cinzento ama couve.</p><ul><li><strong>Receita:</strong> Calda de sabão de coco + fumo ou óleo de neem.</li><li>Aplique no final da tarde, focando debaixo da folha.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'weekly', title: 'Colheita e Limpeza', desc: 'De Baixo pra Cima.', guide: '<h3>✂️ Colheita Certa</h3><p>Colha as folhas de baixo para cima.</p><ul><li>Elimine folhas amarelas (dreno de energia).</li><li>Mantenha o caule limpo.</li></ul>' }
+        {
+            day: -10,
+            title: 'Preparo de Canteiro e Adubação Orgânica',
+            desc: 'Solo rico para produção contínua.',
+            guide: `<h3>🥬 O Canteiro da Couve-Manteiga</h3><p>A couve é uma das hortaliças que mais demanda Nitrogênio e matéria orgânica, devido à sua produção constante de folhas largas. Prepare um canteiro alto (20cm) para garantir que a água não pare nas raízes. Aplique <b>{{CALC_GM2}}g/m²</b> de calcário e, principalmente, uma carga generosa de 4 a 5kg de esterco curtido por metro quadrado. A couve prefere solos com alta CTC para manter os nutrientes sempre disponíveis. Misture <b>{{NPK_GM2}}g/m²</b> do adubo NPK <b>{{NPK_FORMULA}}</b> para fornecer o arranque necessário. Um solo bem nutrido e profundo é a base para colher folhas verdes, macias e sem o aspecto amarelado de desnutrição.</p>`
+        },
+        {
+            day: 0,
+            title: 'Plantio Técnico das Mudas',
+            desc: 'Espaçamento e técnicas de fixação.',
+            guide: `<h3>🌱 Transplantio e Estabelecimento</h3><p>A couve-manteiga cresce vigorosamente e precisa de espaço lateral. Use o espaçamento de 50x50cm para garantir que as folhas não se sobreponham, o que facilitaria o aparecimento de pragas. Realize o transplante preferencialmente no final da tarde ou em dias nublados para reduzir o estresse térmico da muda. Enterre a planta até a altura da primeira folha; isso dará estabilidade mecânica contra o vento e permitirá que ela desenvolva raízes extras no caule. Firme bem a terra ao redor da base e regue imediatamente. Mudas bem estabelecidas nesta fase são muito mais resistentes à geada leve e ataques iniciais de insetos.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Adubação de Cobertura Semanal',
+            desc: 'Nitrogênio líquido para folhas gigantes.',
+            guide: `<h3>✨ Turbo Verde: Suplementação de Nitrogênio</h3><p>Para colher folhas de tamanho profissional todas as semanas, você deve alimentar a couve constantemente. O Nitrogênio (N) é o componente essencial da clorofila e das proteínas foliares. Aplique semanalmente uma solução de ureia ou sulfato de amônio diluído (20g para 10 litros de água) na base das plantas, ou utilize chorume de compostagem bem curtido. Esta técnica de fertirrigação garante que a planta nunca entre em déficit nutricional, mantendo as folhas novas sempre crescendo com vigor. Evite aplicar o adubo nas folhas sob sol forte, pois isso pode causar queimaduras químicas irreversíveis que depreciam a qualidade da colheita.</p>`
+        },
+        {
+            day: 20,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Controle Sanitário de Pulgões e Lagartas',
+            desc: 'Manutenção da saúde foliar.',
+            guide: `<h3>🐛 Vigilância Contra Insetos Sugadores</h3><p>O pulgão-da-couve e a lagarta-da-couve são os maiores inimigos desta cultura. O pulgão se aloja no verso das folhas e no centro da planta, sugando a seiva e enrugando as folhas novas. Faça inspeções semanais e, ao notar os primeiros focos, aplique calda de fumo ou solução de sabão neutro (2%) no final da tarde. Para as lagartas, a catação manual é eficiente em hortas domésticas; em áreas maiores, use bioinseticidas à base de Bacillus thuringiensis. Manter o canteiro limpo, sem ervas daninhas, e atrair inimigos naturais como joaninhas e tesourinhas ajuda a manter a população de pragas sob controle biológico equilibrado.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Poda de Manejo e Colheita Estratégica',
+            desc: 'Longa vida produtiva.',
+            guide: `<h3>✂️ Técnica de Colheita e Renovação</h3><p>Diferente de outras alfaces, a couve não é colhida de uma só vez. Inicie a colheita retirando as folhas mais velhas de baixo para cima, cortando rente ao caule principal. Mantenha sempre 4 a 5 folhas no topo da planta (pontuário) para que ela continue realizando a fotossíntese e crescendo em altura. Se a planta começar a florescer precocemente devido ao calor intenso, corte a haste floral imediatamente para que a energia volte para as folhas. Com este manejo de poda e nutrição semanal, um único pé de couve pode produzir folhas de alta qualidade por 6 a 12 meses antes de precisar ser renovado no canteiro.</p>`
+        }
     ],
 
     // 21. Rúcula
     rucula: [
-        { day: 0, title: 'Semeadura Direta', desc: 'Não transplantar.', guide: '<h3>🌱 Direto na Terra</h3><p>Rúcula não gosta de transplante (espiga rápido).</p><ul><li>Faça sulcos rasos (1cm).</li><li>Semeie "pitadas" a cada 10cm.</li><li>Cobre rapidíssimo (30-40 dias).</li></ul>' },
-        { day: 20, title: 'Adubação Nitrogenada', desc: 'Vigor.', guide: '<h3>✨ Folhas Tenras</h3><p>Use adubo rico em N (Esterco líquido ou Ureia diluída) para a folha crescer rápido e não ficar picante demais/dura.</p>' }
+        {
+            day: -5,
+            title: 'Preparo do Solo e Fertilização Base',
+            desc: 'Criação de um berço rico e leve.',
+            guide: `<h3>🥗 Rúcula: A Folhosa de Ciclo Relâmpago</h3><p>A rúcula é uma cultura de ciclo curtíssimo, exigindo que o solo esteja perfeitamente preparado desde o primeiro dia. Revolva a terra a uma profundidade de 15 a 20cm, eliminando torrões para que o solo fique extremamente leve e aerado. Incorpore composto orgânico ou húmus de minhoca em abundância, além de <b>{{NPK_GM2}}g/m²</b> do adubo NPK <b>{{NPK_FORMULA}}</b>. A rúcula prefere solos com pH próximo a 6.0; se necessário, realize uma correção leve com calcário peneirado. Um solo Rico em matéria orgânica garante que as folhas cresçam rápidas e macias, evitando o estresse que tornaria o sabor excessivamente amargo e picante antes da hora.</p>`
+        },
+        {
+            day: 0,
+            title: 'Semeadura Direta e Densidade',
+            desc: 'Plantio por sementes no local final.',
+            guide: `<h3>🌱 Semeadura de Alta Densidade</h3><p>Diferente de hortaliças maiores, a rúcula é semeada de forma densa em linhas ou a lanço. Trace pequenos sulcos rasos (máximo 0,5cm) com distância de 15cm entre eles. Distribua as sementes de forma contínua e cubra com uma camada finíssima de terra ou substrato peneirado. A germinação ocorre rapidamente, entre 3 a 5 dias. Mantenha a superfície do canteiro sempre úmida com regas em forma de neblina fina; gotas grossas de água podem desenterrar as sementes ou soterrá-las demais, impedindo o nascimento uniforme. O sucesso da rúcula depende da rapidez: quanto mais rápido ela crescer, melhor será a qualidade culinária das folhas.</p>`
+        },
+        {
+            day: 10,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Irrigação e Hidratação Crítica',
+            desc: 'Água constante para folhas tenras.',
+            guide: `<h3>💧 O Segredo da Rúcula Macia</h3><p>A rúcula é composta por quase 95% de água. Qualquer estresse hídrico, mesmo que por poucas horas de sol forte, fará com que a planta ative mecanismos de defesa, aumentando a concentração de óleos mostarda que conferem o sabor amargo excessivo e tornam a fibra da folha dura. Irrigue o canteiro pelo menos duas vezes ao dia em clima seco, garantindo que o solo nunca forme uma crosta seca na superfície. O uso de telas de sombreamento (sombrite 30%) pode ser muito benéfico em regiões quentes para manter a temperatura do solo baixa e a umidade estável, resultando em uma colheita de padrão gourmet.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Adubação de Cobertura e Nitrogênio',
+            desc: 'Nutrição para crescimento explosivo.',
+            guide: `<h3>✨ Turbo Verde: Suplementação de Ciclo Curto</h3><p>Como a rúcula permanece pouco tempo no campo (máximo 40 dias), ela precisa de nutrientes prontamente disponíveis. Aplique uma fertirrigação leve semanalmente usando biofertilizante líquido ou ureia diluída (10g para 10 litros de água). O Nitrogênio (N) impulsiona a expansão foliar e a síntese de proteínas. **Atenção:** Evite o excesso de adubação nitrogenada nos últimos 7 dias antes da colheita para evitar o acúmulo excessivo de nitratos nas folhas. Uma planta bem nutrida apresenta folhas de cor verde esmeralda vibrante e uma textura crocante, sendo muito mais resistente a pequenos ataques de pulgões que ocorrem nesta fase intermediária do ciclo.</p>`
+        },
+        {
+            day: 25,
+            title: 'Colheita e Ponto de Sabor',
+            desc: 'Momento ideal para consumo ou venda.',
+            guide: `<h3>🥗 Colheita Estratégica e Pendoamento</h3><p>A colheita da rúcula deve ocorrer preferencialmente antes da planta emitir a haste floral (pendoamento). Quando as folhas atingirem entre 15 e 20cm de altura, elas estarão no auge do sabor e da textura. Você pode optar por arrancar a planta inteira com a raiz (o que mantém o frescor por mais tempo em feiras) ou realizar o corte rente ao solo, permitindo que a planta rebrote para uma segunda colheita menor. Colha nas horas mais frescas do dia (manhã cedo) para evitar o murchamento imediato. Lembre-se: rúcula "velha" ou que já começou a florir torna-se muito fibrosa e picante ao extremo, perdendo seu valor gastronômico ideal.</p>`
+        }
     ],
 
-    // 22. Cheiro-Verde (Cebolinha/Salsa)
+    // 22. Cheiro-Verde (Cebolinha + Salsa)
     cheiro_verde: [
-        { day: 0, title: 'Plantio Misto', desc: 'Consórcio.', guide: '<h3>🌿 O Duelo</h3><ul><li><strong>Salsa:</strong> Demora a nascer (até 20 dias). Deixe de molho na água por 1 dia antes.</li><li><strong>Cebolinha:</strong> Nasce rápido. Pode plantar por mudas (touceiras) ou semente.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Corte e Rebrote', desc: 'Colheita.', guide: '<h3>✂️ Colheita Contínua</h3><ul><li><strong>Cebolinha:</strong> Corte a 2 dedos do chão. Ela rebrota.</li><li><strong>Salsa:</strong> Tire as folhas de fora. Não corte o "olho" central.</li></ul>' }
+        {
+            day: -5,
+            title: 'Canteiro de Ervas e Base Orgânica',
+            desc: 'Preparo para temperos aromáticos.',
+            guide: `<h3>🌿 Cheiro-Verde: A Dupla Dinâmica da Cozinha</h3><p>O combo de cebolinha e salsa (cheiro-verde) exige um solo extremamente rico em matéria orgânica e nitrogênio para produzir folhas macias e perfumadas. Prepare o canteiro revolvendo bem a terra e incorporando 3 a 5kg de esterco de galinha ou bovino bem curtido por metro quadrado. A calagem leve com <b>{{CALC_GM2}}g/m²</b> é recomendada se o solo for muito ácido. O segredo do cheiro-verde é o equilíbrio: ele não tolera solos encharcados que apodrecem as raízes da salsa, mas precisa de umidade constante para a cebolinha não murchar. Um solo bem adubado com <b>{{NPK_GM2}}g/m²</b> de NPK balanceado garantirá um arranque vigoroso para ambas as espécies.</p>`
+        },
+        {
+            day: 0,
+            title: 'Semeadura Direta e Espaçamento',
+            desc: 'Cebolinha e Salsa no local definitivo.',
+            guide: `<h3>🌱 Plantio e Germinação Estratégica</h3><p>Você pode plantar cebolinha e salsa em linhas alternadas ou juntas no mesmo canteiro. A semente da salsa é notória por ser preguiçosa, demorando de 15 a 21 dias para germinar, enquanto a cebolinha nasce em cerca de 7 dias. Semeie em sulcos rasos (0,5cm) com 20cm de distância entre as linhas. Mantenha o solo sempre úmido durante todo o processo de nascimento; se a crosta do solo secar, as sementes minúsculas não terão força para romper a superfície. Dica: Deixe as sementes de salsa de molho em água morna por 12 horas antes do plantio para acelerar o processo e garantir uma germinação mais uniforme.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Irrigação e Gestão de Umidade',
+            desc: 'Água para folhas macias e vigorosas.',
+            guide: `<h3>💧 Hidratação para Aromas Intensos</h3><p>O cheiro-verde consome muita água para manter suas folhas verdes e cheias de seiva. Irrigue diariamente, de preferência nas primeiras horas da manhã, garantindo que o canteiro esteja sempre úmido. A cebolinha, sendo uma hortaliça de bulbos pequenos, é muito sensível à seca. Já a salsa, se submetida a estresse hídrico, tende a pendoar (florir) precocemente, tornando as folhas duras e sem sabor. O uso de uma camada fina de cobertura morta (palhada) ajuda a manter a umidade e a biologia do solo, além de evitar que a terra suje as folhas durante as chuvas ou regas, facilitando a limpeza pós-colheita.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Adubação Orgânica e Nutrição',
+            desc: 'Renovação dos nutrientes foliares.',
+            guide: `<h3>🍂 Comida Natural para Sabores Autênticos</h3><p>A cada 30 dias, reforce a nutrição do canteiro. O cheiro-verde responde muito melhor a adubos orgânicos do que a químicos fortes. Aplique húmus de minhoca ou um punhado de esterco bem curtido entre as linhas, incorporando levemente à terra. Se as folhas da cebolinha começarem a ficar amareladas nas pontas, é sinal de falta de Nitrogênio ou solo compactado. A adubação orgânica garante que os óleos essenciais, responsáveis pelo aroma característico, sejam produzidos em abundância. Evite o uso de adubos clorados em excesso, pois podem alterar negativamente o sabor delicado da salsa, depreciando sua qualidade culinária.</p>`
+        },
+        {
+            day: 40,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Técnica de Colheita Contínua',
+            desc: 'Corte e rebrota para colheita perpétua.',
+            guide: `<h3>✂️ Colha Certo para Colher Sempre</h3><p>A grande vantagem do cheiro-verde é o poder de rebrota. Para colher sem matar a planta, siga a técnica: na **salsa**, retire as folhas externas cortando na base do talo, deixando o centro (olho) para continuar produzindo. Na **cebolinha**, corte as folhas 2 a 3cm acima do solo; em poucos dias, novas folhas surgirão do bulbo. Nunca arranque a planta toda a menos que queira liberar o canteiro. Com esse manejo de colheita circular e adubação mensal, você terá tempero fresco disponível por vários meses. Lembre-se de descartar folhas amareladas ou secas para manter a planta limpa e evitar o surgimento de fungos e pragas como a mosca-minadora.</p>`
+        }
     ],
 
-    // 23. Manjericão/Ervas
+    // 23. Manjericão
     manjericao: [
-        { day: 0, title: 'Plantio', desc: 'Sol Pleno.', guide: '<h3>🌿 O Rei da Horta</h3><p>Gosta de sol e água, mas odeia frio.</p><ul><li>Adube com muito composto orgânico.</li></ul>' },
-        { day: 45, type: 'routine', freq: 'weekly', title: 'Poda de Flores', desc: 'Segredo do Sabor.', guide: '<h3>✂️ Não Deixe Florir!</h3><p>Se o manjericão soltar o pendão floral, as folhas ficam amargas e pequenas.</p><ul><li>Corte as pontas (flores) toda semana. Isso força ele a soltar mais folhas laterais e virar uma moita linda.</li></ul>' }
+        {
+            day: 0,
+            title: 'Plantio e Escolha de Local (Sol e Drenagem)',
+            desc: 'Estabelecimento do Rei dos Temperos.',
+            guide: `<h3>🌿 Manjericão: O Coração da Horta Mediterrânea</h3><p>O manjericão é uma planta de clima quente que exige sol pleno (mínimo de 6 horas diárias) para produzir seus óleos aromáticos em abundância. Plante em solo muito bem drenado e rico em matéria orgânica; o manjericão odeia "pés molhados" e morre rapidamente se a água acumular nas raízes. Use o espaçamento de 30cm entre as plantas. Além da matéria orgânica, incorpore uma dose equilibrada de <b>{{NPK_GM2}}g</b> de NPK para o arranque inicial. Se for plantar em vasos, garanta que o recipiente tenha furos e uma camada de pedriscos no fundo para drenagem eficiente. O aroma intenso e a cor verde vibrante são indicadores diretos de que a planta está recebendo sol e nutrição adequados.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Poda de Formação e Controle de Floração',
+            desc: 'Truque para dobrar a produção de folhas.',
+            guide: `<h3>✂️ O Segredo da Longevidade: Corte as Flores!</h3><p>O manjericão tem uma missão biológica única: florescer e produzir sementes. Assim que ele termina essa missão, a planta naturalmente entra em senescência (morre). Para evitar isso e dobrar sua produção de folhas, você deve realizar o "beliscamento": corte todas as hastes florais assim que começarem a surgir no topo. Isso envia um sinal hormonal para a planta continuar produzindo ramos laterais e folhas em vez de gastar energia com sementes. Uma planta podada regularmente torna-se um arbusto cheio e vigoroso, podendo durar mais de 6 meses no canteiro, enquanto uma planta que floresce fica lenhosa, perde o sabor e morre em poucas semanas.</p>`
+        },
+        {
+            day: 20,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Manejo Hídrico de Precisão',
+            desc: 'Água na medida para evitar fungos.',
+            guide: `<h3>💧 Rega Consciente e Proteção Foliar</h3><p>O manjericão é extremamente sensível a fungos de solo e foliares. O manejo da água deve ser preciso: regue sempre na base da planta, preferencialmente nas primeiras horas da manhã, evitando molhar as folhas. Folhas molhadas durante a noite são o convite perfeito para o mofo-branco e o apodrecimento. A planta deve subir para o sol e secar rapidamente. Se notar folhas murchando sob sol forte mesmo com solo úmido, é sinal de solo compactado ou drenagem ruim. O manjericão prefere regas frequentes porém de baixo volume, mantendo a umidade sem encharcamento. Uma camada de cobertura morta leve ajuda a manter as raízes frescas e protegidas da oscilação térmica.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Nutrição Orgânica para Aroma Intenso',
+            desc: 'Alimentando os óleos essenciais.',
+            guide: `<h3>🍂 Fertilizantes Naturais vs. Químicos</h3><p>Para temperos culinários, a nutrição orgânica é sempre superior à química. Adubos sintéticos podem acelerar o crescimento, mas muitas vezes resultam em folhas com sabor aguado e menos óleos essenciais. Aplique húmus de minhoca ou bokashi (1 colher de sopa por planta) a cada 30 dias ao redor da base. O "chá de compostagem" diluído também funciona como um excelente tônico. O Nitrogênio orgânico garante folhas verde-escuras e tenras, enquanto os micronutrientes presentes no composto estabilizam a saúde geral da planta. Se notar manchas pretas ou folhas amareladas, revise a drenagem antes de carregar no adubo, pois o excesso de comida em solo encharcado é fatal.</p>`
+        },
+        {
+            day: 40,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Colheita Técnica de Ramos Inteiros',
+            desc: 'Momento de máximo aroma e sabor.',
+            guide: `<h3>🌿 Colha Certo: O Horário da Sabedoria</h3><p>O melhor momento para colher o manjericão é pela manhã, logo após o orvalho secar e antes do calor intenso do meio-dia. É nesse horário que os óleos essenciais estão mais concentrados nas glândulas da folha. Nunca colha apenas folhas isoladas; colha ramos inteiros acima de um par de folhas laterais. Isso estimula a planta a ramificar nos pontos de corte, tornando-a ainda mais densa (efeito "hidra"). Se colher demais, a planta pode enfraquecer, então nunca retire mais de 1/3 da folhagem total de uma só vez. O manjericão colhido fresco deve ser consumido imediatamente ou guardado em um copo com água como flores; se colocado na geladeira direto, as folhas ficam pretas devido ao frio excessivo.</p>`
+        }
     ],
     alecrim: [
-        { day: 0, title: 'Plantio em Local Seco', desc: 'Rústico.', guide: '<h3>🌿 Alecrim Odeia Pé Molhado</h3><p>Origem mediterrânea.</p><ul><li>Misture areia na terra se for argilosa.</li><li>Quase não precisa de adubo químico. Excesso de Nitrogênio mata o alecrim.</li></ul>' }
+        {
+            day: 0,
+            title: 'Plantio e Estratégia de Drenagem Absoluta',
+            desc: 'Estabelecimento da erva do Mediterrâneo.',
+            guide: `<h3>🌿 Alecrim: Sol, Vento e Solo Pobre</h3><p>O alecrim é oriundo de regiões áridas e pedregosas do Mediterrâneo, tendo evoluído para sobreviver em condições de escassez hídrica e solos pobres. O erro mais comum no plantio é usar terra muito rica e pesada. O alecrim detesta umidade excessiva nas raízes, o que causa podridão radicular fulminante. Utilize um solo arenoso ou misture areia grossa e pedriscos à terra do canteiro. O sol pleno é obrigatório (mínimo de 8 horas). Não adicione fertilizantes nitrogenados fortes; a planta prefere uma base mineral estável. Se plantar em vaso, a drenagem deve ser perfeita (muitos furos e leito de drenagem). Lembre-se: no caso do alecrim, a negligência moderada no trato é melhor que o excesso de cuidado e rega.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Manejo Hídrico Restritivo',
+            desc: 'Água apenas no limite da sobrevivência.',
+            guide: `<h3>💧 O Jejum de Água para Aromas Refinados</h3><p>A irrigação do alecrim deve ser feita com parcimônia extrema. Aguarde até que o solo esteja completamente seco nos primeiros 5cm de profundidade antes de regar novamente. Em períodos de inverno ou alta umidade, a planta pode passar semanas sem necessidade de rega manual. O excesso de água dilui os óleos essenciais da folha, resultando em um alecrim com pouco aroma e sabor. Se as folhas começarem a ficar cinzentas e cair, é sinal de raízes sofrendo por asfixia devido ao encharcamento. Uma planta estabelecida tem raízes profundas e lenhosas, sendo capaz de resistir a longos períodos de seca sem perder o vigor ou o perfume característico.</p>`
+        },
+        {
+            day: 60,
+            type: 'routine',
+            freq: 'quarterly',
+            title: 'Poda de Formação e Controle Lenhoso',
+            desc: 'Modelagem do arbusto para brotação constante.',
+            guide: `<h3>✂️ Modelagem e Renovação do Alecrim</h3><p>Com o passar do tempo, a base do alecrim torna-se lenhosa (madeira seca) e para de produzir folhas. Para manter o arbusto sempre jovem e produtivo, realize podas trimestrais de formação. Corte as pontas dos ramos (cerca de 1/3 do comprimento) logo acima de um par de folhas verdes. **Atenção:** Nunca corte na parte puramente lenhosa onde não há folhas verdes, pois o alecrim não tem capacidade de rebrotar de madeira velha. A poda estimula a planta a ramificar e se manter "cheia". Além disso, a poda melhora a ventilação interna do arbusto, prevenindo o surgimento de cochonilhas de carapaça, que adoram se esconder em ramos densos e abafados.</p>`
+        },
+        { day: 90, type: 'routine', freq: 'quarterly', title: 'Adubação Mínima de Manutenção', desc: 'Nutrição esparsa para vigor estrutural.', guide: '<h3>🍂 Menos é Mais: Nutrição de Longo Prazo</h3><p>O alecrim cresce melhor em solos de baixa fertilidade. O excesso de adubo, especialmente o Nitrogênio químico, produz um crescimento desordenado de ramos "moles" que são frágeis ao vento e ao ataque de pragas. Aplique uma pequena dose de composto orgânico muito bem maturado ou uma pitada de NPK 10-10-10 em dose mínima a cada 3 ou 4 meses apenas para manter o metabolismo basal. O alecrim prefere solos com pH ligeiramente alcalino; a adição periódica de um pouco de farinha de ossos ou casca de ovo moída fornece o Cálcio necessário sem elevar excessivamente a fertilidade do solo, mantendo a planta robusta e com aroma potente.</p>' },
+        {
+            day: 120,
+            title: 'Colheita Medicinal e Aromática Técnica',
+            desc: 'Ponto de colheita dos óleos essenciais.',
+            guide: `<h3>🌿 A Colheita dos Galhos Sagrados</h3><p>A colheita do alecrim pode ser feita durante todo o ano, mas o sabor é mais potente antes da floração primaveril. Utilize tesouras de poda afiadas para colher galhos de 10 a 15cm. Evite arrancar as folhas individualmente com a mão, pois isso machuca os ramos lenhosos e pode facilitar a entrada de doenças. Colha preferencialmente em dias ensolarados, após o orvalho secar totalmente. O alecrim mantém suas propriedades mesmo após seco, diferentemente do manjericão. Se desejar secar, amarre os galhos em buquês e pendure de cabeça para baixo em local ventilado e na penumbra. O alecrim é rico em ácido rosmarínico e óleos voláteis que beneficiam a memória e a circulação sanguínea.</p>`
+        }
     ],
     hortela: [
-        { day: 0, title: 'Plantio Controlado', desc: 'Invasora.', guide: '<h3>🌿 A Invasora</h3><p>A raiz da hortelã anda por baixo da terra e invade tudo.</p><ul><li><strong>Dica:</strong> Plante dentro de um balde sem fundo enterrado no canteiro, ou em vasos/bacias separadas.</li><li>Gosta de terra úmida sempre.</li></ul>' }
+        {
+            day: 0,
+            title: 'Plantio e Estratégia de Contenção Radicular',
+            desc: 'Como cultivar hortelã sem perder o controle.',
+            guide: `<h3>🌿 Hortelã: A Invasora Generosa</h3><p>A hortelã é uma das ervas mais fáceis de cultivar, mas seu comportamento é agressivo e invasivo devido aos rizomas subterrâneos (estolões) que se espalham rapidamente por todo o jardim. O segredo do sucesso é o plantio em vasos individuais ou canteiros isolados por barreiras físicas profundas (como tubos de concreto ou plásticos resistentes). A hortelã ama solos ricos, pretos e com muita matéria orgânica. Diferente do alecrim, ela tolera e até prefere locais de meia-sombra, onde o sol direto não queime suas folhas sensíveis. Incorpore esterco curtido e húmus de minhoca em abundância; a nutrição inicial é o que garantirá folhas grandes e um aroma refrescante inigualável.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Irrigação Abundante e Gestão Hídrica',
+            desc: 'Água constante para um frescor intenso.',
+            guide: `<h3>💧 Hortelã: Sede Insaciável por Umidade</h3><p>A hortelã é originária de zonas ripárias (beiras de riachos) e, por isso, exige um solo sempre úmido. Se a terra secar totalmente por um único dia de verão, as folhas murcharão e a planta sofrerá um estresse que pode reduzir seu vigor por semanas. Irrigue diariamente, de preferência nas horas mais frescas. O solo deve estar sempre com aspecto de esponja úmida, mas nunca com água parada que possa atrair larvas de mosca. Em vasos, o uso de pratos com pedriscos úmidos ajuda a manter a umidade relativa do ar próxima à folhagem, o que expande a produção de folhas novas e mantém os óleos essenciais (mentol) em níveis máximos de concentração.</p>`
+        },
+        {
+            day: 20,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Poda de Manejo e Controle de Expansão',
+            desc: 'Corte agressivo para renovação constante.',
+            guide: `<h3>✂️ A Arte do Rejuvenescimento pela Poda</h3><p>A hortelã responde de forma espetacular à poda agressiva. Quanto mais você corta, mais ela ramifica e produz folhas novas e tenras. Sem poda, os ramos ficam longos, caídos e as folhas perdem o vigor. Toda semana, corte as pontas dos ramos para estimular o crescimento lateral. Fique atento também aos rebentos que tentam escapar da contenção (estolões rasteiros); remova-os imediatamente. A poda também serve para eliminar partes da planta que comecem a florescer, pois a florada reduz o aroma das folhas. No final do outono, você pode realizar uma "poda drástica", cortando toda a massa verde rente ao solo; os rizomas subterrâneos garantirão um renascimento explosivo na primavera seguinte.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Adubação Nitrogenada de Reposição',
+            desc: 'Nitrogênio líquido para massa foliar.',
+            guide: `<h3>✨ Combustível Verde: Nutrição Mensal</h3><p>Para manter uma produção de massa verde ininterrupta, a hortelã consome muito Nitrogênio. A cada 30 dias, reponha os nutrientes aplicando uma dose de esterco líquido ou adubo NPK 10-10-10 dissolvido em água. O Nitrogênio é o responsável direto pela cor verde escura e pela textura suculenta da folha. Como colhemos a parte vegetativa constantemente, a planta vive em um estado de "eterna juventude" que demanda suporte nutricional. Se notar que as folhas centrais estão ficando amareladas ou pequenas demais, é um sinal claro de exaustão do solo. Em vasos pequenos, a troca total da terra a cada 6 meses (ou adubação pesada com húmus) é necessária para evitar a compactação radicular.</p>`
+        },
+        {
+            day: 40,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Colheita Aromática em Grande Escala',
+            desc: 'Corte técnico para chás e óleos.',
+            guide: `<h3>🌿 Colheita e Curadoria de Aromas</h3><p>Colha a hortelã preferencialmente no início da manhã, quando a planta está túrgida e os óleos essenciais estão no pico. Corte ramos inteiros (10-15cm) em vez de arrancar folhas soltas. A colheita frequente é o melhor método de manejo para evitar que a planta fique velha e lenhosa. Para uso em chá, colha os ramos e use-os frescos ou seque-os em local sombreado e ventilado para preservar o mentol. A hortelã é conhecida por suas propriedades digestivas e refrescantes. Mantenha os canteiros livres de ervas daninhas, pois a hortelã compete mal por luz rasa, perdendo espaço para gramíneas se não for protegida pelo criador. O sucesso da hortelã está na mão de quem não tem medo de usar o facão!</p>`
+        }
     ],
 
     // 24. Pimentão
     pimentao: [
-        { day: 0, title: 'Transplante', desc: 'Sensível.', guide: '<h3>🫑 Primo Rico do Tomate</h3><p>Exige solo muito fértil (Adubação: {{NPK_GM2}}g/cova).</p><ul><li>Cuidado com o colo da planta (não enterrar demais).</li></ul>' },
-        { day: 30, title: 'Tutoramento', desc: 'Peso.', guide: '<h3>🪵 Precisa de Apoio</h3><p>O galho quebra fácil com o peso / vento.</p><ul><li>Passe fitilho ou use estacas (meia-estaca).</li><li><strong>Queima de Sol:</strong> As folhas protegem os frutos. Se podar demais, o sol queima o pimentão (mancha branca).</li></ul>' }
+        {
+            day: 0,
+            title: 'Transplante e Adubação de Base Potássica',
+            desc: 'Início cuidadoso da cultura do pimentão.',
+            guide: `<h3>🫑 Pimentão: O Primo Exigente do Tomate</h3><p>O pimentão exige solos de alta fertilidade e, acima de tudo, equilíbrio térmico. Realize o transplante das mudas sadias preferencialmente ao final da tarde para evitar o estres de murchamento. Na cova, aplique <b>{{NPK_GM2}}g</b> de adubo NPK rico em Fósforo para o desenvolvimento radicular. O pimentão é muito sensível ao frio e ao encharcamento. Prepare canteiros elevados e garanta uma drenagem impecável. Se o solo for ácido, o pimentão apresentará deficiência de Cálcio, resultando em frutos com manchas necróticas. O uso de cobertura morta é fundamental para manter a temperatura do solo estável e proteger o sistema radicular sensível desta cultura mediterrânea.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Adubação de Cobertura Nitrogenada',
+            desc: 'Impulso vegetativo e formação foliar.',
+            guide: `<h3>✨ Construindo a Fábrica Verde</h3><p>Nesta fase de crescimento acelerado, o pimentão demanda Nitrogênio para formar uma estrutura de galhos forte o suficiente para suportar o peso dos frutos futuros. Aplique semanalmente uma dose leve de ureia ou esterco líquido bem curtido ao redor da planta, tomando extremo cuidado para não encostar o adubo no caule delicado. O Nitrogênio garante folhas largas e verdes que protegerão os frutos da queima solar. Se a planta apresentar um crescimento muito lento e folhas pálidas, reforce a nutrição orgânica com húmus de minhoca. Lembre-se que o pimentão "come" pouco mas constantemente, preferindo doses pequenas e frequentes de nutrientes.</p>`
+        },
+        {
+            day: 30,
+            title: 'Tutoramento e Proteção Física',
+            desc: 'Suporte para galhos quebradiços.',
+            guide: `<h3>🪵 Sustentação e Manejo de Luz Solar</h3><p>Os galhos do pimentão são extremamente frágeis e quebram com facilidade sob o peso dos frutos ou pela ação do vento. O tutoramento com estacas ou fitilhos é obrigatório para manter a planta vertical e arejada. **Dica Crítica:** Ao contrário do tomate, não remova as folhas que cobrem os frutos. O pimentão é muito sensível à insolação direta nos frutos; a insolação causa manchas brancas de "queima de sol" que apodrecem o pimentão antes da colheita. Amarre o caule principal com folga e use estacas de apoio lateral. O equilíbrio entre ventilação (para evitar fungos) e sombreamento foliar (para proteger os frutos) é o segredo do produtor de elite.</p>`
+        },
+        {
+            day: 45,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Controle de Pragas Sugadoras',
+            desc: 'Vigilância contra pulgões e ácaros.',
+            guide: `<h3>🐛 Defesa Ativa Contra Invasores</h3><p>Pimentões são ímãs para pulgões, ácaros e mosca branca, que transmitem viroses letais para a planta. Monitore semanalmente o verso das folhas novas. Ao notar a presença de insetos ou folhas começando a encarquilhar (enrolar), aplique óleo de neem ou extrato de fumo no final da tarde. Ácaros, em particular, adoram clima seco e calor; eles travam o crescimento do ponteiro da planta. A aplicação preventiva de enxofre pautável pode ajudar no controle de ácaros e também funciona como nutriente. Uma planta bem nutrida e hidratada é muito menos atraente para as pragas, pois possui tecidos mais firmes e mecanismos de defesa química ativos.</p>`
+        },
+        {
+            day: 60,
+            title: 'Adubação de Frutificação (Potássio)',
+            desc: 'Qualidade, espessura e doçura do fruto.',
+            guide: `<h3>🫑 Doçura e Parede Grossa: O Papel do Potássio</h3><p>Com o surgimento das primeiras flores e frutos, a demanda por Potássio (K) dispara. O Potássio é o nutriente responsável por "encher" o pimentão, garantindo paredes grossas, suculentas e o brilho intenso da casca. Utilize uma fórmula NPK rica em K e micronutrientes como o Boro e o Zinco, essenciais para evitar o abortamento de flores. Aplique a adubação em solo úmido e incorpore levemente. Evite o excesso de Nitrogênio nesta fase, pois isso faria a planta abortar os frutos para continuar produzindo apenas folhas. A colheita deve ser feita com tesoura para não machucar os galhos quebradiços da planta-mãe.</p>`
+        }
     ],
 
     // 25. Pepino
     pepino: [
-        { day: 0, title: 'Semeadura', desc: 'Cova.', guide: '<h3>🥒 Crescimento Explosivo</h3><p>Ciclo muito rápido (45-50 dias colhendo).</p><ul><li>Adubação pesada na cova.</li></ul>' },
-        { day: 20, title: 'Condução Vertical', desc: 'Rede/Tutor.', guide: '<h3>🕸️ Subindo a Rede</h3><p>Pepino no chão dá doença e fica torto (enrola).</p><ul><li>Use rede de tutoramento ou fitilho vertical.</li><li>Tire os brotos (desbrota) até o 4º nó (perto do chão) para ventilar.</li></ul>' },
-        { day: 15, type: 'routine', freq: 'weekly', title: 'Vigilância Oídio', desc: 'Pó Branco.', guide: '<h3>⚪ Oídio (Míldio)</h3><p>Aquele pó branco nas folhas.</p><ul><li>Pepino pega muito fácil.</li><li>Use leite cru (10%) ou calda bordalesa preventiva.</li></ul>' }
+        {
+            day: 0,
+            title: 'Semeadura Direta e Adubação de Cova',
+            desc: 'Início do ciclo explosivo do pepino.',
+            guide: `<h3>🥒 Pepino: Crescimento Ultra-Rápido</h3><p>O pepino é uma das culturas de ciclo mais curto, podendo iniciar a colheita em apenas 45 a 50 dias. Semeie diretamente no local definitivo em covas ricas em matéria orgânica e fósforo. Coloque 3 sementes por cova a 2cm de profundidade e, após o nascimento, mantenha apenas a planta mais forte. O pepino exige solos soltos e muito férteis. Incorpore <b>{{NPK_GM2}}g</b> de NPK balanceado na cova, misturando bem com a terra. Como a planta cresce quase milímetros por hora, qualquer deficiência nutricional inicial atrasará todo o ciclo. Garanta que o local receba sol pleno durante todo o dia para evitar o estiramento (estiolamento) das ramas.</p>`
+        },
+        {
+            day: 10,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Irrigação Frequente e Gestão de Amargor',
+            desc: 'Água constante para frutos suculentos.',
+            guide: `<h3>💧 O Segredo do Pepino Doce: Hidratação Total</h3><p>O pepino é composto por mais de 95% de água. Se o solo secar por algumas horas durante o dia, a planta produzirá substâncias amargas (cucurbitacinas) como mecanismo de defesa, tornando os frutos intragáveis. Irrigue diariamente na base da planta, preferencialmente por gotejamento, evitando molhar as folhas para não favorecer doenças fúngicas. O solo deve estar sempre úmido como uma esponja bem espremida. O uso de cobertura morta (palhada) ajuda a estabilizar a umidade e a temperatura das raízes, que são superficiais e muito sensíveis ao calor excessivo. Pepino com sede é pepino amargo e torto.</p>`
+        },
+        {
+            day: 20,
+            title: 'Condução Vertical e Desbrota Inicial',
+            desc: 'Suporte para frutos limpos e retos.',
+            guide: `<h3>🕸️ Verticalizando a Produção: Redes e Tutores</h3><p>Cultivar pepino no chão atrai doenças fúngicas e faz com que os frutos fiquem manchados e tortos. Conduza as ramas verticalmente usando redes de tutoramento, cercas ou fitilhos. Realize a desbrota dos ramos laterais até o quarto ou quinto nó (perto do chão); isso melhora a ventilação da base da planta e evita o ataque de fungos radiculares. Ajude as gavinhas a encontrarem o suporte. A condução vertical facilita imensamente a colheita e a aplicação de tratamentos preventivos, além de garantir que os frutos cresçam retos e uniformes por gravidade, aumentando seu valor estético e comercial.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Vigilância Contra Oídio e Míldio',
+            desc: 'Proteção contra o "Pó Branco".',
+            guide: `<h3>⚪ Guerra Contra os Fungos de Folha</h3><p>O pepino é extremamente vulnerável a ataques de Oídio (aquele pó branco nas folhas) e Míldio (manchas amareladas). Essas doenças destroem a área de fotossíntese rapidamente se o clima estiver úmido e quente. Use soluções preventivas como leite cru diluído (10% em água) ou calda bordalesa no final da tarde. Melhore a ventilação removendo folhas velhas ou doentes da base. A nutrição equilibrada com Potássio e Cálcio fortalece as paredes celulares das folhas, dificultando a entrada dos fungos. Uma planta doente para de produzir frutos doces e morre prematuramente, interrompendo a colheita que poderia durar várias semanas.</p>`
+        },
+        {
+            day: 45,
+            type: 'routine',
+            freq: 'daily',
+            title: 'Colheita Frequente e Estímulo Produtivo',
+            desc: 'Colher para produzir continuamente.',
+            guide: `<h3>🥒 Colheita Diária: O Segredo da Abundância</h3><p>O pepino deve ser colhido quase diariamente. Quanto mais você colhe, mais a planta entende que deve continuar produzindo novas flores e frutos. Se você deixar um pepino ficar gigante e seco no pé, a planta parará de produzir novos frutos para focar a energia na maturação das sementes daquele fruto velho. Colha os frutos ainda jovens, quando a casca estiver brilhante e firme. Use sempre uma tesoura de colheita para não tracionar e machucar as ramas delicadas. Pepinos colhidos pequenos são muito mais crocantes, suculentos e possuem sementes imperceptíveis, sendo ideais para saladas de alta gastronomia.</p>`
+        }
     ],
 
     // 26. Quiabo
     quiabo: [
-        { day: 0, title: 'Plantio Solar', desc: 'Calor.', guide: '<h3>☀️ Quiabo Ama Calor</h3><p>Não adianta plantar no frio.</p><ul><li>Sementes duras: Deixe na água morna por 1 noite para germinar rápido.</li></ul>' },
-        { day: 45, type: 'routine', freq: 'daily', title: 'Colheita Diária', desc: 'Ponto de Colheita.', guide: '<h3>🔪 Não Deixe Passar</h3><p>Quiabo cresce milímetros por hora.</p><ul><li><strong>Ponto:</strong> Quebre a pontinha. Se estalar, tá bom. Se dobrar, tá fibroso (duro).</li><li>Colha todo dia ou dia sim/dia não. Se ficar velho no pé, a planta para de produzir novos.</li></ul>' }
+        {
+            day: 0,
+            title: 'Plantio e Estratégia Térmica Solar',
+            desc: 'Acordando as sementes para o sol.',
+            guide: `<h3>☀️ Quiabo: O Filho do Sol e do Calor</h3><p>O quiabo é uma cultura rústica que exige altas temperaturas para se desenvolver. Não adianta plantar quiabo no frio intenso, pois a semente não germinará. **Dica de Mestre:** As sementes de quiabo possuem uma casca muito dura e impermeável. Para acelerar o nascimento, deixe as sementes de molho em água morna (não quente!) por 12 a 24 horas antes do plantio. Semeie em covas ricas em matéria orgânica com espaçamento de 1m entre linhas. O quiabo se adapta bem a solos mais pobres, mas responde de forma explosiva a uma boa adubação de base com NPK balanceado. Garanta que o local receba sol pleno o dia todo; quiabo na sombra produz pouco e fica raquítico.</p>`
+        },
+        {
+            day: 20,
+            title: 'Desbaste e Limpeza de Canteiro',
+            desc: 'Garantindo vigor para a planta principal.',
+            guide: `<h3>✂️ Gestão de Vigor e Controle de Mato</h3><p>Cerca de 20 dias após a germinação, realize o desbaste: mantenha apenas a planta mais forte e central de cada cova. O quiabo torna-se um arbusto lenhoso e grande, e a competição entre duas plantas na mesma cova resultará em produções medíocres para ambas. Mantenha o pé da planta sempre limpo, removendo as ervas daninhas manualmente. Como o quiabo tem um sistema radicular profundo e vigoroso, ele aguenta períodos curtos de seca, mas a limpeza inicial é fundamental para que ele domine o espaço e não perca nutrientes para o mato. A amontoa (chegar terra no pé) ajuda a firmar a planta contra o vento.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Adubação de Cobertura e Renovação Orgânica',
+            desc: 'Energia para produção de longo prazo.',
+            guide: `<h3>✨ Vigor Continuado: A Dieta do Quiabeiro</h3><p>O quiabeiro é capaz de produzir por muitos meses se receber nutrição constante. Aplique mensalmente uma cobertura rica em Nitrogênio e matéria orgânica ao redor de cada planta. O esterco bovino curtido ou a cama de frango são excelentes para manter a biologia do solo ativa. O Nitrogênio garante o surgimento de novas ramificações laterais, que serão os locais de futuras flores. Se as folhas começarem a apresentar manchas amarelas ou crescimento estagnado, reforce a adubação de cobertura. Uma planta bem alimentada atinge facilmente os 2 metros de altura e produz quiabos de cor verde intensa e textura crocante durante todo o verão e outono.</p>`
+        },
+        {
+            day: 45,
+            type: 'routine',
+            freq: 'daily',
+            title: 'Colheita Diária e Ponto de Fibras',
+            desc: 'O tempo é o maior inimigo da qualidade.',
+            guide: `<h3>🔪 O Ponto de Ouro: Colha Antes da Fibra</h3><p>O quiabo cresce em velocidade impressionante. O fruto passa do ponto ideal para o "ponto de pau" (fibroso e duro) em questão de horas. Realize a colheita pelo menos a cada dois dias. **O Teste:** Tente quebrar a pontinha do quiabo com os dedos; se estalar suavemente, está no ponto; se dobrar sem quebrar, já está fibroso e deve ser descartado. Colher os quiabos jovens estimula a planta a continuar produzindo flores. Se você deixar frutos velhos no pé, a planta entenderá que já "cumpriu sua missão" de produzir sementes e entrará em declínio produtivo. Use luvas, pois os pelos dos talos podem causar irritação na pele de algumas pessoas.</p>`
+        },
+        {
+            day: 90,
+            title: 'Poda de Renovação e Rejuvenescimento',
+            desc: 'Truque para estender a vida útil da lavoura.',
+            guide: `<h3>✂️ Rejuvenescendo a Planta Alta</h3><p>Se as plantas de quiabo ficarem altas demais para a colheita ou começarem a produzir frutos pequenos e deformados, você pode realizar uma poda de renovação. Corte a haste principal a cerca de 60cm do solo após uma colheita completa. Isso forçará a planta a emitir novos brotos vigorosos na base, que iniciarão um novo ciclo produtivo em poucas semanas. Combine esta poda com uma adubação pesada de cobertura e irrigação abundante. Esta técnica permite que um mesmo plantio produza o dobro do tempo normal, economizando o trabalho de um novo preparo de solo e semeadura. O quiabo é a prova de que a poda estratégica vence o envelhecimento biológico.</p>`
+        }
     ],
 
     // 27. Abóbora/Melancia
     abobora: [
-        { day: 0, title: 'Covas Distantes', desc: 'Espaço.', guide: '<h3>🎃 A Gigante</h3><p>Abóbora precisa de espaço (ramas de 5m+).</p><ul><li><strong>Espaçamento:</strong> 3x3m ou 4x4m entre covas.</li><li><strong>Adubo:</strong> Coloque todo o adubo na cova (é lá que a boca está). O resto a raiz busca.</li></ul>' },
-        { day: 40, title: 'Penteado das Ramas', desc: 'Organização.', guide: '<h3>🌿 Direcionando</h3><p>Jogue as ramas para dentro da roça, não deixe invadir a estrada.</p><ul><li><strong>Polinização:</strong> Flores amarelas grandes precisam de abelhas. Não aplique inseticida de manhã (hora da abelha).</li></ul>' }
+        {
+            day: 0,
+            title: 'Semeando as Gigantes: Espaço e Nutrição',
+            desc: 'Ocupando o território com abóboras.',
+            guide: `<h3>🎃 Abóbora: A Conquistadora de Espaço</h3><p>As abóboras (morangas, cabotiás ou abóboras-de-leite) exigem grandes áreas para se espalharem, com ramas que podem atingir 5 a 10 metros de comprimento. Prepare covas amplas, separadas por 3 a 4 metros, e incorpore quantidades massivas de matéria orgânica (esterco bovino ou composto). **O Segredo:** Toda a adubação química deve ser concentrada na cova, onde a raiz principal está instalada; use <b>{{NPK_GM2}}g</b> de NPK balanceado. A abóbora tem "fome" de nutrientes e sede de água. Monitore a drenagem, pois embora goste de umidade, o excesso de barro no pé da cova pode causar a morte súbita por fungos de solo (Phytophthora). Solo fértil e profundo garantirá abóboras pesadas e com casca resistente.</p>`
+        },
+        {
+            day: 20,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Irrigação de Base e Gestão Foliar',
+            desc: 'Água para manter as grandes folhas vivas.',
+            guide: `<h3>💧 Hidratação de Grandes Superfícies</h3><p>As folhas gigantes da abóbora transpiram uma quantidade enorme de água, especialmente nas horas de sol intenso. Irrigue as covas abundantemente duas a três vezes por semana em clima seco. **Atenção:** Evite molhar a folhagem durante as regas para prevenir o Oídio (pó branco), que é a principal doença das cucurbitáceas. Use gotejamento ou regue diretamente no solo, em torno do caule principal. Se as folhas "murcharem" ao meio-dia mas recuperarem o vigor ao entardecer, é um mecanismo natural de defesa térmica da planta, mas fique atento se o solo estiver excessivamente seco, o que pode abortar os primeiros frutos em formação.</p>`
+        },
+        {
+            day: 40,
+            title: 'Penteado das Ramas e Gestão das Abelhas',
+            desc: 'Organização do crescimento e polinização.',
+            guide: `<h3>🌿 Direcionando a Vida no Campo</h3><p>Conforme as ramas crescem, realize o "penteado": direcione-as para dentro da área de plantio, mantendo-as longe de estradas ou áreas de trânsito. Isso protege as hastes e frutos da quebra. **A Ciência da Fruta:** Sabia que abóboras têm flores macho e fêmea separadas e precisam de abelhas para a polinização? Nunca utilize inseticidas químicos durante as manhãs, que é o horário de maior atividade dos polinizadores. Se observar poucas abelhas, você pode realizar a polinização manual: pegue uma flor macho (sem a bolinha na base), retire as pétalas e esfregue o pólen no estigma da flor fêmea (que tem uma pequena abóbora miniatura na base). Sem polinização, a "abobrinha" amarela e cai sem crescer.</p>`
+        },
+        {
+            day: 60,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Monitoramento de Brocas de Rama',
+            desc: 'Defesa contra o inimigo interno.',
+            guide: `<h3>🐛 O Perigo Silencioso dentro do Caule</h3><p>A broca-das-cucurbitáceas é uma lagarta que perfura a rama da abóbora e se alimenta dos tecidos internos, bloqueando o fluxo de seiva e matando partes inteiras da planta ou até a cova inteira. Inspecione as ramas semanalmente em busca de orifícios com resto de "serragem" (excrementos do inseto). Se encontrar, você pode tentar a remoção manual ou injetar uma solução biológica de Bacillus thuringiensis no local. Manter a planta bem nutrida com Potássio endurece as cascas das ramas, dificultando a entrada da praga. Evite deixar frutos feridos ou restos de poda expostos, pois o cheiro atrai a mariposa que deposita os ovos desta praga devastadora.</p>`
+        },
+        {
+            day: 90,
+            title: 'Colheita Técnica e Cura ao Sol',
+            desc: 'Momento de colher e preparar para guardar.',
+            guide: `<h3>🎃 Ponto de Colheita e Armazenamento Secular</h3><p>Como saber se a abóbora está pronta sem cortá-la? O sinal mais claro é o talo (pedúnculo): ele deve estar seco, marrom e com aspecto "corticoso" (como cortiça). Além disso, a casca deve estar tão dura que você não consiga marcá-la com a unha. Colha mantendo um pedaço do talo preso ao fruto (isso evita a entrada de podridão). **A Cura:** Após colher, deixe as abóboras no sol por 3 a 5 dias para o processo de cura; o sol termina de endurecer a casca e concentra os açúcares. Abóboras bem curadas podem durar de 4 a 6 meses em local fresco e seco, sendo um verdadeiro "estoque de energia" para a fazenda durante a entressafra.</p>`
+        }
     ],
     melancia: [
-        { day: 0, title: 'Plantio', desc: 'Sensibilidade.', guide: '<h3>🍉 Melancia é Melindrosa</h3><p>Muito sensível a fungos nas folhas.</p><ul><li>Não molhe as folhas! Use gotejamento se possível.</li><li><strong>Fundo Preto:</strong> Falta de Cálcio também afeta melancia. Use a calagem certa ({{CALC_GM2}}g/m²).</li></ul>' },
-        { day: 45, title: 'Raleio de Frutos', desc: 'Qualidade.', guide: '<h3>✂️ Menos é Mais</h3><p>Se deixar todas, ficam pequenas e sem doce.</p><ul><li>Deixe apenas 2 ou 3 frutas por planta.</li><li>O sol deve bater nas folhas, não na fruta (queima). A fruta fica protegida debaixo da rama.</li></ul>' }
+        {
+            day: 0,
+            title: 'Semeando o Doce de Verão',
+            desc: 'O desafio da melancia no campo.',
+            guide: `<h3>🍉 Melancia: Delicada e Exigente em Cálcio</h3><p>A melancia é considerada a mais sensível de todas as cucurbitáceas. Ela exige calor intenso, baixa umidade nas folhas e um solo quimicamente equilibrado. O principal problema é a falta de Cálcio e Boro, que causa frutos com o fundo preto ou rachaduras internas ("coração vazio"). Aplique <b>{{CALC_GM2}}g/m²</b> de calcário semanas antes e adicione <b>{{NPK_GM2}}g</b> de adubo NPK rico em Potássio na cova. Semeie 3 a 4 sementes por cova com espaçamento de 2x2m. A melancia prefere solos leves e arenosos que esquentam rápido. Garanta que a drenagem seja perfeita, pois as raízes da melancia apodrecem se ficarem em solo frio e encharcado por mais de 24 horas.</p>`
+        },
+        {
+            day: 20,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Irrigação Cirúrgica e Manejo de Umidade',
+            desc: 'Água sem doenças fúngicas.',
+            guide: `<h3>💧 O Dilema da Água: Raízes Molhadas, Folhas Secas</h3><p>Diferente da maioria das plantas, a melancia odeia ter suas folhas molhadas. A umidade foliar é a porta de entrada para o Antracnose e o Míldio, que devastam a lavoura em dias úmidos. Utilize irrigação por gotejamento ou crie sulcos ao redor das covas (montinhos) para que a água nunca toque no caule ou nas folhas. Irrigue preferencialmente pela manhã para que qualquer respingo seque sob o sol. O solo deve estar úmido durante a fase de crescimento do fruto, mas as regas devem ser reduzidas drasticamente nos últimos 15 dias antes da colheita; o estresse hídrico final concentra os açúcares, garantindo frutos muito mais doces e saborosos.</p>`
+        },
+        {
+            day: 45,
+            title: 'Raleio de Frutos e Gestão da Qualidade',
+            desc: 'Limitando a produção para obter tamanho.',
+            guide: `<h3>✂️ "Menos é Mais": A Seleção da Campeã</h3><p>Se você deixar que uma única planta de melancia carregue todos os frutos que produzir, você colherá muitas melancias pequenas e com pouco açúcar. Para obter frutos de padrão comercial (grandes e doces), realize o raleio: mantenha apenas 2 ou 3 frutos por planta, os mais bem formados e localizados. Retire os frutos tortos ou pequenos demais. Nesta fase, as folhas devem proteger o fruto do sol direto; o sol excessivo pode "cozinhar" a polpa por dentro antes do tempo. Mantenha a rama saudável para que as folhas ajam como painéis solares fornecendo energia para o fruto campeão. O equilíbrio nutricional com Potássio é vital agora para a espessura da casca e transporte de açúcar.</p>`
+        },
+        {
+            day: 60,
+            title: 'Virada dos Frutos e Proteção de Casca',
+            desc: 'Uniformizando a cor e evitando manchas.',
+            guide: `<h3>🍉 Fruta com Cor de Cinema: A Virada Manual</h3><p>Conforme a melancia cresce, a parte que fica em contato com o solo tende a ficar amarelada ou branca devido à falta de luz e excesso de umidade do chão. Vire os frutos com extremo cuidado (para não quebrar a rama) a cada 15 dias. Isso garante que todo o fruto receba radiação solar e que a casca cure de forma uniforme. Além disso, coloque uma camada de palha seca ou um pedaço de telha/madeira embaixo do fruto para evitar o contato direto com a terra úmida, o que previne ataques de insetos de solo e podridão. Fruto limpo e com cor uniforme tem valor de mercado superior e casca mais resistente ao transporte.</p>`
+        },
+        {
+            day: 90,
+            title: 'O Teste da Maturação: Som e Gavinha',
+            desc: 'Como saber se está madura sem abrir.',
+            guide: `<h3>🍉 Está Madura? Os Sinais de Ouro do Produtor</h3><p>Colher melancia verde é o maior erro do iniciante, pois ela não amadurece depois de colhida. Use os três sinais clássicos: 1. **A Gavinha:** Aquela mola (cipozinho) que fica no ponto de inserção do fruto na rama deve estar totalmente SECA e marrom. 2. **O Tapinha:** Dê um tapa seco no fruto; se o som for agudo ("metálico"), está verde; se o som for grave e "oco", está madura. 3. **O Fundo:** A mancha de encosto (onde ela encosta no chão) deve estar AMARELA e não branca. Colha com tesoura mantendo 5cm de talo. Melancia madura tem peso desproporcional ao tamanho e emite um aroma doce suave próximo ao pedúnculo.</p>`
+        }
     ],
 
     // 28. Morango
     morango: [
-        { day: -15, title: 'Canteiro Alto + Mulching', desc: 'Plástico.', guide: '<h3>🍓 Cama de Lorde</h3><p>Morango não pode tocar na terra (apodrece).</p><ul><li>Faça canteiros altos (30cm).</li><li>Cubra com plástico preto (Mulching) ou muita palha.</li><li>Fure o plástico e plante a muda.</li></ul>' },
-        { day: 0, title: 'Plantio', desc: 'Coroa.', guide: '<h3>🌱 Coroa de Fora</h3><p>Não enterre o miolo (coroa) da muda, senão ela morre. Deixe o miolo aparecendo.</p>' },
-        { day: 30, type: 'routine', freq: 'weekly', title: 'Limpeza e Estolão', desc: 'Poda.', guide: '<h3>✂️ Tira-Tudo</h3><ul><li><strong>Estolões:</strong> Aqueles "cipós" que a planta solta para fazer muda nova. CORTE TUDO se quer fruta. O estolão rouba força.</li><li><strong>Folhas velhas:</strong> Tire as folhas secas/doentes de baixo sem dó.</li></ul>' }
+        {
+            day: -15,
+            title: 'Canteiro Elevado e Estratégia de Mulching',
+            desc: 'Proteção física contra doenças de solo.',
+            guide: `<h3>🍓 Morango: Técnica da Cama de Lorde</h3><p>O morango é uma das frutas mais sensíveis ao contato direto com o solo úmido, que apodrece os frutos em poucos dias. O preparo do canteiro deve ser impecável: faça leiras altas (30cm) e cubra-as com plástico preto (mulching) ou uma camada espessa de palhada seca. O mulching mantém a umidade, controla ervas daninhas e garante que os frutos fiquem limpos e sadios. Antes de cobrir, incorpore <b>{{NPK_GM2}}g/m²</b> de NPK e esterco de galinha bem curtido. Esta base nutricional fornecerá o Fósforo necessário para um enraizamento profundo antes do início das florações constantes.</p>`
+        },
+        {
+            day: 0,
+            title: 'Plantio Técnico e Gestão da Coroa',
+            desc: 'Posicionamento vital da muda.',
+            guide: `<h3>🌱 O Segredo da Coroa: Nem Funda, Nem Rasa</h3><p>O erro mais fatal no plantio do morango é enterrar a "coroa" (o ponto central de onde saem as folhas). Se a coroa for enterrada, a planta apodrecerá com a umidade; se ficar muito exposta, as raízes secarão. Plante preferencialmente no final da tarde, garantindo que a base das raízes esteja mergulhada na terra mas o "miolo" da planta esteja visível acima da superfície. Use o espaçamento de 30cm entre plantas em zigue-zague. Regue imediatamente após o plantio para assentar a terra ao redor das raízes, evitando bolsas de ar que podem causar a morte prematura da muda por desidratação.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Vigilância Contra Ácaros e Mofos',
+            desc: 'Controle sanitário preventivo.',
+            guide: `<h3>🐛 Defesa Ativa no Morangueiro</h3><p>O morango é o alvo favorito de ácaros-rajados e do mofo cinzento (Botrytis). Os ácaros são microscópicos e fazem a folha ficar dura, quebradiça e com aspecto bronzeado, travando o crescimento. Inspecione o verso das folhas semanalmente; ao primeiro sinal, aplique óleo de neem ou enxofre pautável no final do dia. Para evitar mofos, mantenha o canteiro bem ventilado e remova qualquer folha ou fruto que apresente sinais de podridão. A higiene do canteiro é sua melhor ferramenta defensiva: uma planta limpa e com boa circulação de ar produzirá frutos muito mais brilhantes e duráveis.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Poda de Limpeza e Manejo de Estolões',
+            desc: 'Direcionando energia para os frutos.',
+            guide: `<h3>✂️ "Tira-Tudo": A Limpeza do Vigor</h3><p>O morangueiro solta ramos longos rasteiros chamados "estolões" para fazer clones de si mesmo. Se você quer colher morangos grandes, corte todos os estolões assim que surgirem! Eles roubam a energia que deveria ir para os frutos. Além disso, remova as primeiras flores que surgirem nos primeiros 30 dias; isso força a planta a ficar mais robusta e criar raízes fortes antes de começar a produzir seriamente. Remova também as folhas velhas de baixo que estiverem avermelhadas ou secas. Este manejo de poda constante mantém a planta "jovem" e focada 100% na qualidade dos morangos.</p>`
+        },
+        {
+            day: 45,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Fertirrigação e Suplementação de Potássio',
+            desc: 'Doçura e firmeza do fruto.',
+            guide: `<h3>✨ Nutrição Líquida para Frutos Gourmet</h3><p>À medida que os frutos começam a crescer, a demanda por Potássio (K) torna-se crítica para garantir o sabor doce e a resistência da polpa. O morango responde de forma espetacular à fertirrigação ou adubação foliar semanal. Use fórmulas ricas em K e micronutrientes para evitar deformações nos frutos. Aplique doses pequenas mas frequentes (pouco e sempre). O Cálcio também é fundamental nesta fase para dar "tempo de prateleira" ao fruto, evitando que ele amoleça rápido demais após a colheita. Frutos bem nutridos apresentam cor vermelha rubi profunda e um aroma que invade o ambiente.</p>`
+        },
+        {
+            day: 60,
+            type: 'routine',
+            freq: 'daily',
+            title: 'Colheita e Cura Térmica Matinal',
+            desc: 'O ápice da qualidade.',
+            guide: `<h3>🍓 Colheita Diária e Manejo de Frescor</h3><p>O morango não amadurece após ser retirado da planta, portanto colha apenas quando estiverem totalmente vermelhos e brilhantes. O melhor horário é pela manhã bem cedo, quando os frutos ainda estão frios do orvalho; isso aumenta significativamente a durabilidade. Use uma tesoura afiada para cortar o pedúnculo (talo), mantendo cerca de 1cm de cabo preso ao morango; nunca puxe o fruto com a mão, pois a pele é extremamente frágil e qualquer pressão causa hematomas que apodrecem o fruto. Coloque-os delicadamente em caixas rasas. Morangos frescos colhidos no ponto certo têm um equilíbrio perfeito entre acidez e doçura.</p>`
+        }
     ],
 
     // 29. Raízes Específicas
     beterraba: [
-        { day: 0, title: 'Semeadura', desc: 'Glomérulo.', guide: '<h3>🌱 Uma semente = Várias plantas</h3><p>A "semente" da beterraba é um coquinho com 3 ou 4 sementes dentro.</p><ul><li>Vai nascer muita junta. Prepare-se para o desbaste.</li><li>Gosta de boro (Bórax). Se faltar, fica com o coração preto e duro.</li></ul>' },
-        { day: 25, title: 'Desbaste', desc: 'Espaçamento.', guide: '<h3>✂️ Um Corpo, Um Lugar</h3><p>Deixe apenas uma planta a cada 10cm.</p>' }
+        {
+            day: 0,
+            title: 'Semeadura e Estratégia de Micronutrientes',
+            desc: 'Iniciando o crescimento da raiz púrpura.',
+            guide: `<h3>🌱 Beterraba: Uma Semente, Muitas Vida</h3><p>A "semente" da beterraba é na verdade um pequeno glomérulo que contém de 2 a 4 sementes reais. Semeie diretamente em solo bem destorroado e leve, com profundidade de 1cm. **Dica Crítica:** A beterraba é faminta por Boro (B). A falta deste micronutriente causa o "coração preto", uma mancha necrótica no centro da raiz que a torna dura e amarga. Aplique uma dose mínima de bórax ou fertilizante com Boro na base. Além disso, a calagem com <b>{{CALC_GM2}}g/m²</b> é fundamental, pois a beterraba odeia solos ácidos. Solo corrigido e rico em Potássio garantirá raízes lisas, doces e de cor rubi intensa para suas saladas.</p>`
+        },
+        {
+            day: 10,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Irrigação e Gestão de Fibrosidade',
+            desc: 'Água constante para textura macia.',
+            guide: `<h3>💧 Raiz Macia e Hidratada</h3><p>A beterraba acumula açúcares e água na raiz. Se o solo sofrer períodos de seca seguidos por regas pesadas, a raiz pode rachar ou ficar extremamente fibrosa ("lenhosa"). Mantenha o canteiro sempre úmido, mas nunca encharcado, através de regas regulares e leves. O uso de cobertura morta fina ajuda a manter a temperatura da raiz estável. Regas eficientes garantem que as folhas cresçam vigorosas (e elas também são comestíveis e deliciosas, ricas em ferro!). Se notar murchamento nas horas de calor, aumente a frequência de irrigação para garantir que a planta nunca entre em estresse de sobrevivência.</p>`
+        },
+        {
+            day: 25,
+            title: 'Desbaste Técnico e Espaçamento',
+            desc: 'Dando espaço para o crescimento radial.',
+            guide: `<h3>✂️ Um Corpo, Um Lugar: A Seleção Final</h3><p>Como nascem várias plantas no mesmo local (devido ao glomérulo), o desbaste é obrigatório quando as mudinhas atingirem 5cm. Deixe apenas a planta mais forte a cada 10cm de distância. **Aviso:** Não tente transplantar as mudas que você arrancou; a raiz pivotante da beterraba é muito sensível e, se for dobrada no transplante, a beterraba crescerá torta e pequena. As plantas removidas no desbaste podem ser usadas em saladas (baby beets). O espaçamento correto garante que cada beterraba tenha luz e nutrientes suficientes para atingir o formato redondo perfeito sem competir com as vizinhas.</p>`
+        },
+        {
+            day: 40,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Adubação de Cobertura e Força Foliar',
+            desc: 'Nutrição para enchimento de raiz.',
+            guide: `<h3>✨ Combustível para a Raiz: Nutrição e Vigor</h3><p>Aos 40 dias, a planta inicia o processo intensivo de translocação de energia das folhas para a raiz. Aplique uma cobertura de NPK balanceado ou esterco líquido bem curtido. O Nitrogênio deve ser moderado para não estimular apenas folhas; o foco agora deve ser o Potássio (K). O Potássio é o "transportador" de açúcar da folha para a beterraba. Se notar as folhas muito pálidas ou amareladas, a planta pode estar com carência de Nitrogênio ou Magnésio. Uma planta com folhagem verde-escura e talos roxos vibrantes é sinal de saúde plena e promessa de uma colheita doce e abundante.</p>`
+        },
+        {
+            day: 70,
+            title: 'Colheita e Ponto de Sabor Gourmet',
+            desc: 'Evitando o excesso de maturação.',
+            guide: `<h3>🥗 Tamanho é Documento: Colha no Ponto</h3><p>Diferente de outras raízes, a beterraba não deve ficar gigante no canteiro. Raízes muito grandes (maiores que uma bola de tênis) tendem a acumular fibras duras e perdem o sabor adocicado, tornando-se "terrosas" demais. O ponto ideal é quando atingem de 5 a 8cm de diâmetro. Colha puxando suavemente pela base das folhas ou use um pequeno enxadinho para soltar a terra lateral. Após a colheita, corte as folhas mantendo 2cm de talo (não corte rente à raiz para não "sangrar" e perder a cor durante o cozimento). Beterrabas colhidas jovens e frescas têm a casca fina e a polpa extremamente suculenta.</p>`
+        }
     ],
     batata_doce: [
-        { day: 0, title: 'Plantio de Ramas', desc: 'Leiras.', guide: '<h3>🍠 Plantio Rústico</h3><p>Não se planta batata, se planta o ramo (rama).</p><ul><li>Faça leiras (camalhões) altas de terra fofa.</li><li>Corte pontas de ramas com 30-40cm.</li><li>Enterre o meio da rama, deixando as pontas de fora.</li></ul>' },
-        { day: 60, title: 'Amontoa', desc: 'Rachadura.', guide: '<h3>🚜 Cobrir Rachaduras</h3><p>A batata cresce e empurra a terra. Se aparecer rachadura e o sol bater na batata, atrai broca (bichinho).</p><ul><li>Chegue terra nos pés (amontoa) para fechar as frestas.</li></ul>' }
+        {
+            day: 0,
+            title: 'Plantio de Ramas em Leiras Elevadas',
+            desc: 'Estratégia de drenagem e espaço radicular.',
+            guide: `<h3>🍠 Batata-Doce: Plantando o Sucesso em Ramas</h3><p>A batata-doce é uma cultura rústica e extremamente produtiva, mas seu plantio exige técnica: não se planta a batata, mas sim os pedaços de ramas (pontas com 30-40cm). O preparo do solo deve ser feito com camalhões ou leiras altas (30-40cm de altura) de terra bem fofa e adubada com <b>{{NPK_GM2}}g/m²</b> de NPK rico em Potássio. O Potássio é vital para o engrossamento das raízes tuberosas. Enterre o meio da rama horizontalmente, deixando as pontas com folhas para fora. Esse método favorece a ramificação das raízes em toda a extensão enterrada, produzindo muito mais batatas por planta do que o plantio vertical.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Limpeza de Canteiro e Amontoa Inicial',
+            desc: 'Eliminando competição e protegendo raízes.',
+            guide: `<h3>🌿 Liberdade para as Ramas: Limpeza Crítica</h3><p>Nos primeiros 40 dias, a batata-doce é lenta para cobrir o chão e sofre muito com a competição de ervas daninhas. Mantenha as leiras totalmente limpas; após esse período, as ramas se espalharão como um tapete verde e sufocarão qualquer mato naturalmente. Aproveite a limpeza para realizar a amontoa (chegar terra fofa no pé da planta). A terra solta e alta facilita o crescimento radial das batatas e as protege do sol direto. Um solo compactado ou com mato resultará em batatas finas, tortas e com baixo valor comercial. A hidratação nesta fase deve ser regular para garantir o pegamento total das ramas.</p>`
+        },
+        {
+            day: 60,
+            title: 'Amontoa de Proteção Contra Brocas',
+            desc: 'Blindagem física das batatas subterrâneas.',
+            guide: `<h3>🚜 Fechando as Portas para as Pragas</h3><p>Conforme as batatas-doces engrossam, elas empurram a terra e causam rachaduras superficiais na leira. Se o sol ou o ar entrarem nessas frestas, o cheiro atrairá a broca-da-batata-doce (Cylas formicarius), que perfura a batata e a torna amarga e intragável. Passe pelas leiras cobrindo qualquer rachadura com terra fofa. Esta manutenção é o seguro de vida da sua colheita. Além disso, a cobertura de terra evita que as batatas fiquem expostas e fiquem verdes (solanina), o que depreciaria a qualidade. Uma leira bem cuidada e "fechada" garante batatas limpas de pragas e com casca uniforme e brilhante.</p>`
+        },
+        {
+            day: 90,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Manejo de Levantamento de Ramas',
+            desc: 'Concentrando energia na "mãe".',
+            guide: `<h3>🍠 Foco Total na Raiz Principal: O Truque da Rama</h3><p>As ramas da batata-doce têm o hábito de criar raízes extras por onde passam. Se você permitir que essas raízes secundárias enraizem no chão, a planta espalhará sua energia e produzirá muitas "batatinhas" finas e sem valor em todo o quintal. Para colher batatas grandes na leira principal, levante as ramas do chão uma vez por mês, impedindo que elas se fixem fora do camalhão. Isso força a planta a translocar todo o açúcar produzido nas folhas para as raízes mestras localizadas sob o pé original. Esse pequeno esforço manual é o que diferencia uma colheita doméstica de uma produção profissional de alto rendimento.</p>`
+        },
+        {
+            day: 120,
+            title: 'Colheita e Cura Térmica de Doçura',
+            desc: 'Momento de cavar e concentrar o vigor.',
+            guide: `<h3>🍠 A Hora da Verdade: Colheita e Curagem</h3><p>A batata-doce não apresenta sinal externo de maturação (as folhas continuam verdes). O único jeito é cavar um cantinho da leira e verificar o tamanho. Geralmente, entre 120 e 150 dias elas estão ideais. Colha com cuidado usando uma forcada ou enxada, evitando ferir a pele delicada das batatas. **O Segredo Final:** Após colher, não consuma imediatamente! Deixe as batatas em local sombreado e ventilado por 10 dias (cura). Durante esse tempo, parte do amido se transforma em açúcar, tornando a batata muito mais doce e suculenta, além de cicatrizar pequenos ferimentos da casca, aumentando a vida útil em meses.</p>`
+        }
     ],
 
     // 30. Abacaxi
     abacaxi: [
-        { day: 0, title: 'Plantio de Mudas', desc: 'Filhotes.', guide: '<h3>🍍 O Rei demora 18 meses</h3><p>Use mudas do tipo "filhote" (que saem na base do fruto) ou "rebentão".</p><ul><li><strong>Cura:</strong> Deixe as mudas no sol por 1 semana viradas para baixo (para matar fungos da base).</li><li><strong>Plantio:</strong> Espaçamento largo (90x30cm) pois espeta muito na colheita.</li></ul>' },
-        { day: 300, title: 'Indução Floral (Opcional)', desc: 'Carbureto.', guide: '<h3>🌺 Forçar Florada</h3><p>Para colher todos iguais.</p><ul><li>Aos 10-12 meses (planta grande), aplica-se carbureto (etileno) no "olho" da planta à noite para ela florescer.</li><li>Sem isso, cada um dá numa época.</li></ul>' }
+        {
+            day: 0,
+            title: 'Plantio de Mudas e Cura Sanitária',
+            desc: 'Estabelecimento lento da coroa tropical.',
+            guide: `<h3> Pineapple: O Rei das Bromélias</h3><p>O abacaxi é uma cultura de paciência (ciclo de 18 meses) e rigor sanitário. Use mudas do tipo "filhote" ou "rebentão". **Técnica de Ouro:** Antes de plantar, deixe as mudas de cabeça para baixo no sol por 7 dias; isso cura o ferimento da base e mata fungos de solo. Realize o plantio em valas ou covas adubadas com <b>{{NPK_GM2}}g</b> de NPK. O espaçamento deve ser largo (90x30cm) pois as folhas são extremamente espinhosas e dificultam o manejo futuro. O solo deve ter boa drenagem e ser ligeiramente ácido, condições ideais para que o sistema radicular se desenvolva sem apodrecimento.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Adubação Foliar Axilar e Nitrogênio',
+            desc: 'Alimentando a planta pela base das folhas.',
+            guide: `<h3>✨ Nutrição Digital: Alimentando pelas Axilas</h3><p>Diferente de outras plantas, o abacaxi absorve muitos nutrientes pelas axilas das folhas (o "copo" formado na base). Aplique adubo nitrogenado (ureia ou NPK) diretamente sobre as folhas inferiores, garantindo que o adubo caia nessas frestas. **Cuidado:** Nunca jogue adubo no "olho" (centro) da planta, pois isso queima o meristema apical e mata a planta. O abacaxi exige Nitrogênio constante para formar uma coroa grande e folhas vigorosas, que são a bateria de energia para o futuro fruto. Solo úmido potencializa a absorção desses nutrientes aplicados via foliar.</p>`
+        },
+        {
+            day: 60,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Manejo de Cochonilhas e Murchose',
+            desc: 'Defesa contra o maior inimigo do abacaxi.',
+            guide: `<h3>🐛 A Batalha Contra a Cochonilha-do-Abacaxi</h3><p>A cochonilha é a praga mais devastadora, pois transmite o vírus da murchose, que faz a planta secar de cima para baixo. Elas vivem escondidas na base das folhas e são frequentemente "pastoreadas" por formigas doceiras. O controle deve focar na eliminação das formigas e no uso de óleo de neem ou inseticidas sistêmicos se notar a presença do pó branco característico da cochonilha. Mantenha a lavoura livre de ervas daninhas que servem de ponte para as formigas. Uma inspeção semanal rigorosa nas axilas das folhas é o único modo de garantir que sua produção chegue ao final de 18 meses com saúde.</p>`
+        },
+        {
+            day: 300,
+            title: 'Indução Floral Estratégica (Uniformidade)',
+            desc: 'Forçando o nascimento do fruto.',
+            guide: `<h3>🌺 Indução Floral: Colheita Programada</h3><p>Para evitar que cada pé de abacaxi dê fruto em uma época diferente, utiliza-se a indução floral. Aos 10-12 meses, quando a planta estiver grande e robusta, pode-se aplicar carbureto de cálcio ou etileno no centro da planta durante a noite ou em dias nublados. Essa técnica "engana" a planta, forçando-a a iniciar a floração de forma uniforme em todo o talhão. Isso facilita imensamente o manejo final e a venda, pois você terá todos os frutos prontos ao mesmo tempo. Sem a indução, o abacaxi pode demorar mais de 2 anos para florescer naturalmente, dependendo das variações climáticas e queda de temperatura.</p>`
+        },
+        {
+            day: 450,
+            title: 'Proteção Solar do Fruto (Ensachamento)',
+            desc: 'Evitando a queima solar da polpa.',
+            guide: `<h3>☀️ Chapéu no Rei: Protegendo contra a Queima</h3><p>Próximo à colheita, o abacaxi fica exposto ao sol forte que pode "cozinhar" a polpa por dentro, causando manchas amarelas moles e fermentação precoce. O ensachamento ou proteção é fundamental. Amarre as folhas superiores sobre o fruto ou use sacos de papel Kraft para sombrear o abacaxi. Essa técnica simples preserva a cor, o aroma e garante que o fruto chegue à mesa com a polpa doce e firme. Verifique também se o fruto não está tombando com o peso; se necessário, use uma pequena estaca de apoio. O abacaxi protegido tem valor de mercado muito superior e sabor significativamente mais equilibrado.</p>`
+        }
     ],
 
     // 31. Vagem
     vagem: [
-        { day: 0, title: 'Plantio Tutorado', desc: 'Trepadeira.', guide: '<h3>🫘 Feijão de Metro?</h3><p>A maioria das vagens comerciais são trepadeiras.</p><ul><li>Precisa de cerca cruzada (tipo X) ou tutor vertical.</li><li>Ciclo rápido (60 dias colhendo).</li></ul>' },
-        { day: 50, type: 'routine', freq: 'weekly', title: 'Colheita Frequente', desc: 'Não deixe granar.', guide: '<h3>✂️ Colha Cedo</h3><p>Se o grão inchar (granar), a vagem fica fibrosa e ruim de mercado.</p><ul><li>Colha a cada 2 ou 3 dias.</li></ul>' }
+        {
+            day: 0,
+            title: 'Plantio Tutorado e Adubação de Sulco',
+            desc: 'Início da cultura trepadeira.',
+            guide: `<h3>🫘 Vagem: A Leguminosa de Ciclo Relâmpago</h3><p>A vagem (ou feijão-vagem) é uma cultura de crescimento extremamente rápido, iniciando a colheita em 60 dias. A maioria das variedades comerciais é do tipo trepadeira e exige tutoramento. Prepare sulcos adubados com <b>{{NPK_GM2}}g</b> de NPK e garanta que o solo seja rico em fósforo para o arranque inicial. Semeie com espaçamento de 50cm entre plantas. O tutoramento em "X" (cerca cruzada) ou em varais de fitilho é essencial para manter as vagens longe do chão, o que evita podridão e manchas. As leguminosas também se beneficiam da fixação biológica de Nitrogênio, mas uma base inicial de adubo garante o vigor necessário para a escalada vertical.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Irrigação Frequente e Floração Crítica',
+            desc: 'Água constante para evitar o abortamento.',
+            guide: `<h3>💧 Hidratação para Flores e Vagens</h3><p>A vagem é extremamente sensível à falta de água durante o período de florescimento. Qualquer estresse hídrico nesta fase fará com que as flores caiam (abortamento), reduzindo drasticamente a produção. Mantenha o solo sempre úmido, aplicando regas diárias ou por gotejamento na base das plantas. Evite regas por aspersão nas horas mais quentes para não favorecer doenças fúngicas foliares. O solo deve estar com aspecto de terra fresca; se ficar seco e duro, as vagens crescerão tortas e fibrosas. A umidade estável é o principal segredo para colher vagens macias, retas e com grãos bem formados.</p>`
+        },
+        {
+            day: 25,
+            title: 'Amarração, Condução e Desbrota Base',
+            desc: 'Ajudando a planta a escalar.',
+            guide: `<h3>🪵 Condução Vertical: A Escalada do Sabor</h3><p>Conforme os "bicos" da vagem começam a crescer, ajude a planta a encontrar o tutor. Enrole suavemente a rama principal no sentido horário ao redor da estaca ou fitilho. Realize uma limpeza na base da planta, removendo os primeiros brotos laterais muito baixos para favorecer a circulação de ar. Isso previne o surgimento de podridões radiculares. Uma planta bem conduzida distribui melhor a fotossíntese por toda a massa foliar, resultando em vagens distribuídas por todo o comprimento do tutor. O tutoramento firme também evita que o vento derrube a plantação quando ela estiver carregada de frutos e folhas pesadas.</p>`
+        },
+        {
+            day: 40,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Monitoramento de Percevejos Sugadores',
+            desc: 'Defesa contra danos nos grãos.',
+            guide: `<h3>🐛 Percevejo Verde: O Furador Silencioso</h3><p>O percevejo é a principal praga da vagem. Ele insere seu estilete no fruto para sugar a seiva do grão em formação, deixando a vagem com manchas amarelas e o grão "chocho" (seco e sem sabor). Inspecione as plantas pela manhã, quando os percevejos estão menos ativos. Em pequenas áreas, a catação manual é eficiente; em áreas maiores, use repelentes orgânicos como calda de neem ou defensivos biológicos. Manter a lavoura limpa e livre de ervas daninhas hospedeiras reduz a infestação. Um ataque de percevejos pode desvalorizar toda a colheita, tornando as vagens esteticamente feias e ruins para o consumo.</p>`
+        },
+        {
+            day: 50,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Colheita Frequente e Ponto de Mercado',
+            desc: 'Evitando a vagem fibrosa e granada.',
+            guide: `<h3>✂️ Colheita Cirúrgica: O Momento da Maciez</h3><p>O ponto ideal de colheita da vagem é antes dos grãos ficarem muito evidentes (granar). Vagem "granada" fica fibrosa, dura e perde o valor culinário. Colha a cada 2 ou 3 dias para estimular a planta a continuar produzindo novas flores. Use sempre uma tesoura ou mãos delicadas para não tracionar a rama principal do tutor. Vagens colhidas jovens têm aquela crocância característica e são muito mais aceitas no mercado e na cozinha. Se você deixar passar do ponto, a semente dentro da vagem sugará toda a energia da planta, interrompendo o ciclo de novas brotações. Colher rápido é sinônimo de colher por muito mais tempo!</p>`
+        }
     ],
 
     // 33. Pecuária Menor Específica
     caprinos: [
-        { day: 0, title: 'Manejo Alimentar', desc: 'Ramoneio.', guide: '<h3>🐐 Cabra não é Ovelha</h3><p>A cabra gosta de comer "o que está no alto" (folhas de arbustos), não só pasto baixo.</p><ul><li>Permita acesso a arbustos ou forneça ramos (Amora, Leucena).</li><li><strong>Casco:</strong> Sofre muito com umidade. Mantenha local seco.</li></ul>' },
-        { day: 30, type: 'routine', freq: 'monthly', title: 'Vermifugação (Famacha)', desc: 'Controle.', guide: '<h3>👁️ Olho nela</h3><p>A cabra é muito sensível a verme. Use o método FAMACHA (cor da mucosa do olho) todo mês.</p>' }
+        {
+            day: 0,
+            title: 'Manejo Alimentar de Ramoneio e Contenção',
+            desc: 'Estratégia nutricional para animais seletivos.',
+            guide: `<h3>🐐 Caprinos: A Arte do Ramoneio</h3><p>Os caprinos (cabras e bodes) possuem um hábito alimentar único chamado ramoneio: eles preferem comer folhagens de arbustos e árvores, mantendo a cabeça elevada, ao contrário das ovelhas que pastam no chão. Para uma saúde plena, forneça acesso a áreas com arbustos ou ofereça ramos frescos de Amora, Leucena ou Gliricídia. **Dica Crítica:** O casco dos caprinos é extremamente sensível à umidade excessiva, que causa a podridão do pé (footrot). Garanta um aprisco com piso ripado ou solo muito bem drenado e seco. Cabras felizes são aquelas que têm onde subir (pequenas plataformas) e uma dieta rica em fibras arbustivas e minerais de qualidade.</p>`
+        },
+        {
+            day: 7,
+            type: 'routine',
+            freq: 'daily',
+            title: 'Higiene de Instalações e Gestão de Amônia',
+            desc: 'Mantendo o ambiente seco e saudável.',
+            guide: `<h3>🧼 Higiene Rigorosa: O Segredo da Sanidade</h3><p>O acúmulo de esterco e urina em ambientes úmidos libera amônia, um gás irritante que causa pneumonia e problemas oculares nos caprinos. Limpe as instalações diariamente, removendo a matéria orgânica e garantindo que o chão esteja sempre seco. Utilize cal virgem no piso após a limpeza para desinfetar e absorver a umidade residual. O manejo de resíduos é fundamental para evitar a proliferação de moscas e bactérias que causam a linfadenite caseosa (mal do caroço). Um ambiente limpo e ventilado reduz drasticamente a necessidade de medicamentos e garante um leite e carne de qualidade superior, sem odores desagradáveis.</p>`
+        },
+        {
+            day: 15,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Suplementação Mineral e Equilíbrio Metabólico',
+            desc: 'Minerais específicos para pequenos ruminantes.',
+            guide: `<h3>🧂 Mineralização: O Combustível Invisível</h3><p>Caprinos possuem uma demanda mineral altíssima, especialmente de Zinco e Selênio, para manter a pele saudável e o sistema reprodutivo ativo. Nunca use sal mineral comum para bovinos, pois a concentração de Cobre pode ser tóxica para caprinos em certas fases, ou insuficiente em outras. Mantenha o cocho de sal sempre seco e protegido da chuva. O acesso constante ao sal mineral evita o hábito de "comer terra" ou lamber paredes (pica), que sinaliza desequilíbrios graves. Uma cabra bem mineralizada apresenta pelos brilhantes, olhos vivos e uma imunidade natural muito mais forte contra parasitas e mudanças bruscas de clima.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Monitoramento Parasitário via Método FAMACHA',
+            desc: 'Identificando a anemia antes que seja fatal.',
+            guide: `<h3>👁️ Olho na Saúde: O Método FAMACHA</h3><p>O maior inimigo dos caprinos é o verme Haemonchus contortus, que suga o sangue do animal. Use o método FAMACHA mensalmente: avalie a cor da mucosa do olho do animal. Mucosa vermelha indica saúde; mucosa rosa claro ou branca indica anemia profunda por verminose. Trate individualmente apenas os animais com score 4 ou 5 (pálidos) para evitar a resistência dos vermes aos medicamentos. Este manejo seletivo é a única forma sustentável de controlar parasitas a longo prazo. Combine esta prática com o manejo rotacionado de pastagens, nunca deixando os animais em áreas baixas e úmidas onde as larvas de vermes se concentram pela manhã.</p>`
+        },
+        {
+            day: 60,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Corte e Higienização de Cascos (Pedicure)',
+            desc: 'Prevenindo manqueiras e deformações ósseas.',
+            guide: `<h3>✂️ Casqueamento: Sustentação e Conforto</h3><p>Em ambientes de criação, o casco dos caprinos não sofre o desgaste natural que teria em áreas rochosas selvagens. Se o casco crescer demais, ele dobra sobre si mesmo, acumulando barro e bactérias, o que leva à manqueira e artrite. Uma vez por mês, inspecione e apare as pontas dos cascos com uma tesoura de casqueamento ou canivete afiado, deixando a sola reta e nivelada. Isso garante que o animal caminhe corretamente e consiga se alimentar bem. O casqueamento regular também é uma oportunidade para verificar sinais iniciais de ferimentos ou infecções, sendo um dos pilares do bem-estar animal na caprinocultura moderna.</p>`
+        }
     ],
     codornas: [
-        { day: 0, title: 'Ambiente Protegido', desc: 'Vento e Frio.', guide: '<h3>🐦 Sensíveis</h3><p>Codorna morre fácil com vento encanado.</p><ul><li>Gaiolas fechadas ou viveiro protegido.</li><li><strong>Proteína:</strong> Precisam de ração forte (22-24% proteína), mais que galinha.</li></ul>' },
-        { day: 40, title: 'Início Postura', desc: 'Luz.', guide: '<h3>💡 Luz = Ovo</h3><p>Codorna precisa de 14h-16h de luz por dia para botar bem.</p><ul><li>Complete o dia com lâmpada até as 21h.</li></ul>' }
+        {
+            day: 0,
+            title: 'Ambiência Controlada e Proteção de Vento',
+            desc: 'Gestão térmica para aves de alto metabolismo.',
+            guide: `<h3>🐦 Codornas: Pequenas e Altamente Produtivas</h3><p>As codornas possuem um metabolismo acelerado e são extremamente sensíveis a correntes de ar frias ("vento encanado"), que podem causar mortes súbitas por estresse térmico. Garanta que o viveiro ou a bateria de gaiolas esteja protegido por cortinas ou paredes sólidas. **Nutrição de Elite:** Codornas exigem uma ração com teor de proteína muito superior ao das galinhas (22% a 24%). Sem essa proteína, elas param de botar quase instantaneamente. O ambiente deve ser calmo, pois barulhos repentinos podem fazer as aves pularem bruscamente e se ferirem no teto da gaiola. Conforto térmico e silêncio são os pilares para uma postura diária e constante.</p>`
+        },
+        {
+            day: 1,
+            type: 'routine',
+            freq: 'daily',
+            title: 'Higiene de Bebedouros e Qualidade da Água',
+            desc: 'Prevenindo contaminações bacterianas rápidas.',
+            guide: `<h3>💧 Água Fresca e Higienizada</h3><p>Devido ao pequeno tamanho, uma codorna desidrata ou adoece por água contaminada em poucas horas. Lave os bebedouros diariamente para remover o biofilme (limo) e restos de ração que as aves deixam ao beber. Utilize água fresca e preferencialmente clorada ou tratada. Em sistemas de niples, verifique se todos estão funcionando corretamente. Bebedouros sujos são a principal via de transmissão de coccidiose e colibacilose no plantel. Uma ave pequena exige cuidados cirúrgicos com a higiene para manter sua performance de botar praticamente um ovo por dia durante todo o ciclo produtivo.</p>`
+        },
+        {
+            day: 7,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Gestão de Dejetos e Controle de Amônia',
+            desc: 'Higiene ambiental e prevenção respiratória.',
+            guide: `<h3>🧹 Controle de Amônia e Limpeza de Bandejas</h3><p>As codornas geram uma grande quantidade de dejetos em relação ao seu peso corporal. Se criadas em gaiolas, as bandejas coletoras devem ser limpas ou trocadas semanalmente. O acúmulo de esterco úmido libera gases tóxicos que queimam as vias respiratórias sensíveis das aves. Polvilhe cal ou maravalha seca nas bandejas para absorver a umidade e reduzir o odor. Esse dejeto de codorna é um dos adubos orgânicos mais potentes que existem (rico em Nitrogênio), mas dentro do galpão ele é um risco sanitário. Mantenha a ventilação alta para garantir que o ar esteja sempre renovado e sem cheiro de "galinheiro".</p>`
+        },
+        {
+            day: 20,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Suplementação de Cálcio e Fortalecimento de Casca',
+            desc: 'Suporte para a intensa exportação de minerais.',
+            guide: `<h3>🥚 Casca Dura: O Desafio do Cálcio</h3><p>Uma codorna bota um ovo que representa quase 10% do seu peso corporal todos os dias. Isso gera uma demanda exaustiva de Cálcio do organismo. Além da ração balanceada, ofereça semanalmente uma fonte extra de cálcio, como farinha de ostra fina ou casca de ovo moída e higienizada. A falta de cálcio causa "ovos de casca mole" (ovo peteca) e pode levar à descalcificação progressiva dos ossos da ave (fadiga de gaiola), impedindo-a de ficar em pé. O equilíbrio entre Cálcio e Fósforo na dieta é o que garante a saúde duradoura da ave e a qualidade comercial dos ovos para o consumo.</p>`
+        },
+        {
+            day: 40,
+            title: 'Programa de Luz e Estímulo Hormonal',
+            desc: 'Gerenciando o ciclo de postura.',
+            guide: `<h3>💡 A Luz é o Gatilho da Postura</h3><p>As codornas são aves fotossensíveis; elas precisam de pelo menos 14 a 16 horas de luz total (dia + luz artificial) para manter os hormônios de postura ativos. Quando os dias encurtam no inverno, a produção cai drasticamente se não houver suplementação luminosa. Instale um timer para ligar uma lâmpada LED fraca ao entardecer e desligar por volta das 21h. **Atenção:** Evite luzes muito fortes ou intermitentes, que podem causar canibalismo e agressividade no grupo. O programa de luz constante sinaliza para o organismo da ave que a "primavera" é eterna, garantindo ovos na mesa durante o ano inteiro, independentemente da estação.</p>`
+        }
     ],
     patos: [
-        { day: 0, title: 'Piscina?', desc: 'Água.', guide: '<h3>🦆 Aves Aquáticas</h3><p>Não *precisam* de lago para viver, mas precisam molhar a cabeça.</p><ul><li>Bebedouro tem que ser fundo o suficiente para ele enfiar o bico e lavar os olhos.</li><li>São muito rústicos e resistentes a doenças.</li></ul>' }
+        {
+            day: 0,
+            title: 'Manejo Hídrico e Higiene Ocular',
+            desc: 'Necessidades específicas de aves aquáticas rústicas.',
+            guide: `<h3>🦆 Patos: Rústicos mas Dependentes de Água</h3><p>Embora os patos modernos não precisem obrigatoriamente de um lago para sobreviver, eles possuem uma necessidade biológica vital de molhar a cabeça e os olhos. O bebedouro deve ser fundo o suficiente para que o pato consiga submergir o bico e a cabeça inteira; isso serve para limpar as membranas oculares e evitar infecções. O pato é uma das aves mais rústicas da fazenda, sendo naturalmente resistente a muitas doenças que matam galinhas. Contudo, são animais que fazem muita sujeira e "barro", exigindo áreas de circulação que suportem umidade sem virar focos de contaminação para outras espécies.</p>`
+        },
+        {
+            day: 1,
+            type: 'routine',
+            freq: 'daily',
+            title: 'Troca de Água de Mergulho e Bebedouros',
+            desc: 'Mantendo o vigor através da água limpa.',
+            guide: `<h3>💧 Água Limpa: O Desafio com Patos</h3><p>Patos têm o hábito instintivo de misturar ração e terra na água em que bebem e se banham. Isso transforma bacias de água em verdadeiras "sopas de bactérias" em poucas horas. Troque a água dos bebedouros e das bacias de banho diariamente, preferencialmente pela manhã. A água suja é a principal porta de entrada para verminoses e problemas intestinais. Se possível, posicione os bebedouros sobre uma área britada ou ripada para evitar que o entornamento de água crie lamaçais eternos no galpão. Patos com acesso a água limpa para banho mantêm a plumagem impermeável e a saúde respiratória impecável.</p>`
+        },
+        {
+            day: 10,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Higiene de Dormitórios e Gestão de Palhada',
+            desc: 'Prevenindo fungos e pododermatites.',
+            guide: `<h3>🧹 Cama Seca para Pés Felizes</h3><p>Apesar de serem aves aquáticas durante o dia, os patos devem dormir em locais estritamente secos. Se passarem a noite sobre uma cama úmida e fria, desenvolverão fungos nas patas e problemas articulares. Troque a palhada ou maravalha da área de dormir semanalmente, garantindo uma camada grossa e absorvente. O dejeto do pato é muito úmido, o que exige atenção redobrada à ventilação do abrigo. Cama seca e limpa previne o "bumblefoot" (feridas na sola dos pés), que pode ser fatal para aves pesadas. O conforto noturno é o que garante que o pato tenha energia para o ramoneio e pastoreio diário.</p>`
+        },
+        {
+            day: 30,
+            type: 'routine',
+            freq: 'monthly',
+            title: 'Controle Parasitário e Vermifugação Estratégica',
+            desc: 'Eliminando parasitas de ambientes úmidos.',
+            guide: `<h3>🦠 Guerra Contra os Vermes de Poça</h3><p>Patos adoram fuçar em poças e lamas, onde as larvas de diversos vermes intestinais se concentram. Isso os torna alvos fáceis para endoparasitas poderosos. Realize uma vermifugação estratégica a cada 3 ou 4 meses, utilizando produtos via água ou ração recomendados por um veterinário. Animais com vermes apresentam perda de peso, penas arrepiadas e queda na postura de ovos. Manter o gramado baixo e as áreas de lazer sem água parada ajuda a quebrar o ciclo biológico dos parasitas. O controle preventivo é muito mais barato e eficaz do que tentar tratar uma ave já debilitada e anêmica.</p>`
+        },
+        {
+            day: 150,
+            title: 'Manejo de Ciclo Final: Carne ou Ovos',
+            desc: 'Estratégia de abate e início de postura.',
+            guide: `<h3>🦆 Colhendo os Frutos da Criação</h3><p>O pato atinge sua maturidade produtiva de forma rápida. Para produção de carne, o abate deve ocorrer preferencialmente entre a 10ª e a 14ª semana, antes que comece a troca de penas (empenamento), que dificulta a limpeza da carcaça. Se o objetivo for a postura de ovos, os patos iniciam o ciclo entre o 5º e 6º mês de vida. Os ovos de patos são maiores e excelentes para confeitaria devido à riqueza da gema. Forneça ninhos no chão, em locais escuros e protegidos, pois patas preferem esconder seus ovos da luz direta. A colheita de ovos deve ser diária para evitar que as aves os escondam ou sujem excessivamente.</p>`
+        }
+    ],
+
+    // --- CONSÓRCIOS ---
+
+    consorcio_milpa: [
+        // Milho (5 tarefas)
+        {
+            day: 0,
+            title: 'Milho: O Pilar e Suporte da Milpa',
+            desc: 'Estabelecimento da estrutura vertical do sistema.',
+            guide: `<h3>🌽 Milho: A Escada da Vida</h3><p>No sistema Milpa (Três Irmãs), o milho é o primeiro a ser plantado para servir de suporte físico ao feijão. Escolha variedades de porte alto e colmo robusto. Prepare as covas com <b>{{NPK_GM2}}g</b> de NPK <b>{{NPK_FORMULA}}</b> e garanta que o solo tenha recebido <b>{{CALC_GM2}}g/m²</b> de calcário previamente. O milho deve ganhar altura rapidamente; sem um suporte forte, o feijão acabará derrubando a planta mãe no final do ciclo. Plante em covas distantes 1 metro entre si, garantindo que o milho tenha sol pleno para crescer reto e vigoroso, servindo como o esqueleto deste ecossistema ancestral e altamente produtivo.</p>`
+        },
+        {
+            day: 20,
+            title: 'Milho: Adubação de Base e Vigor Estrutural',
+            desc: 'Nitrogênio para garantir a resistência do suporte.',
+            guide: `<h3>✨ Construindo o Suporte Perfeito</h3><p>Aos 20 dias, o milho entra na fase de crescimento acelerado. Aplique uma cobertura rica em Nitrogênio (Ureia) para garantir que o colmo engrosse e ganhe rigidez. Um colmo fraco não suportará o peso da massa foliar do feijão e da abóbora que virão a seguir. Mantenha o solo úmido ao redor da base. Este é o momento de realizar a primeira amontoa (chegar terra no pé), o que estimula a formação de raízes de suporte (âncoras). O milho bem nutrido nesta fase é o seguro de que todo o sistema Milpa chegará ao final do ciclo em pé e produtivo.</p>`
+        },
+        {
+            day: 40,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Milho: Monitoramento do Cartucho e Pragas',
+            desc: 'Proteção contra danos ao ponto de crescimento.',
+            guide: `<h3>🐛 Defesa do Cartucho e Sanidade do Suporte</h3><p>Enquanto o feijão começa a se abraçar ao milho, a vigilância contra a lagarta-do-cartucho deve ser intensa. A lagarta pode destruir o ápice de crescimento do milho, impedindo-o de continuar subindo. Realize monitoramentos semanais e use apenas defensivos biológicos (Bacillus thuringiensis) para não prejudicar os polinizadores que visitarão as flores da abóbora logo abaixo. Uma planta de milho doente ou atacada perde sua capacidade de suporte, comprometendo também a produção do feijão que depende dela para fugir da umidade do solo. Mantenha a sanidade foliar para garantir a fotossíntese máxima do sistema.</p>`
+        },
+        {
+            day: 60,
+            title: 'Milho: Adubação de Cobertura e Enchimento',
+            desc: 'Último boost para garantir espigas grandes.',
+            guide: `<h3>✨ O Impulso Final para os Grãos</h3><p>Nesta fase, o milho inicia o pendoamento. A demanda por Nitrogênio e Potássio é máxima para garantir que as espigas encham de grãos doces. Aplique a adubação de cobertura em filete lateral. O feijão já estará subindo pelo caule, então tome cuidado para não sufocá-lo ou queimar suas raízes delicadas ao aplicar o adubo. O milho bem alimentado agora garantirá uma colheita verde excelente (pamonha e milho cozido) em poucos dias, enquanto o restolho da planta continuará servindo de armação morta para o feijão terminar sua secagem natural no pé.</p>`
+        },
+        {
+            day: 90,
+            title: 'Milho: Colheita Verde e Gestão do Restolho',
+            desc: 'Primeira colheita e manutenção da estrutura seca.',
+            guide: `<h3>🌽 Colheita Verde: Sabor e Estratégia</h3><p>Colha as espigas de milho preferencialmente quando os cabelos estiverem marrons e secos, indicando o ponto de milho verde. **Técnica Vital:** Não arranque a planta de milho! Colha apenas as espigas e mantenha o pé de milho (caule e folhas) no lugar. Ele continuará servindo de suporte para o feijão até que este complete seu ciclo de secagem. O milho verde colhido na hora tem o máximo de açúcar e sabor. A área foliar do milho agora começa a diminuir, permitindo que mais luz solar chegue ao feijão e à abóbora que dominam o andar de baixo e o andar médio do canteiro.</p>`
+        },
+        // Feijão (5 tarefas)
+        {
+            day: 15,
+            title: 'Feijão: O Companheiro Nitrogenado (Plantio)',
+            desc: 'Fixação de nitrogênio e início da escalada.',
+            guide: `<h3>🫘 Feijão: O Adubo Vivo do Sistema</h3><p>Plante o feijão (variedades trepadoras) ao pé de cada milho quando este atingir cerca de 20-30cm de altura. O feijão tem o papel fundamental de fixar Nitrogênio do ar no solo através de suas raízes, "alimentando" as outras irmãs (milho e abóbora). Plante 2 a 3 sementes por pé de milho. O feijão usará o caule do milho como guia natural para subir e buscar luz, longe da umidade excessiva do chão. Esta parceria é o coração da Milpa: o milho dá o apoio e o feijão devolve a fertilidade, criando um ciclo de sustentabilidade natural sem necessidade de excesso de adubos químicos.</p>`
+        },
+        {
+            day: 35,
+            title: 'Feijão: Condução Inicial e Abraço de Luz',
+            desc: 'Direcionando as gavinhas para o suporte vivo.',
+            guide: `<h3>🤝 O Primeiro Abraço: Conduzindo a Gavinha</h3><p>À medida que o feijão cresce, ajude as primeiras gavinhas a encontrarem o caule do milho, enrolando-as suavemente no sentido horário. Este manejo evita que o feijão se espalhe pelo chão, onde ficaria vulnerável a podridões e pragas. O feijoeiro bem conduzido terá as folhas expostas ao sol acima da abóbora, mas abaixo da copa do milho, aproveitando o estrato médio de luz. Verifique se não há excesso de plantas por pé de milho; o raleio garante que o feijão tenha vigor para produzir vagens cheias e sadias sem sobrecarregar o suporte físico com peso excessivo.</p>`
+        },
+        {
+            day: 50,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Feijão: Monitoramento de Vírus e Sanidade',
+            desc: 'Defesa contra mosca branca e mosca minadora.',
+            guide: `<h3>🐞 Protegendo o Companheiro Frágil</h3><p>O feijoeiro é a parte mais sensível do sistema à viroses. Monitore a presença de mosca branca; se as folhas começarem a ficar com manchas amarelas mosaicas, a produção será comprometida. No sistema Milpa, a biodiversidade ajuda a confundir as pragas, mas a inspeção semanal ainda é necessária. Use repelentes orgânicos (calda de fumo ou neem) se necessário. Uma folhagem de feijão sadia garante a fixação contínua de Nitrogênio para a abóbora que está crescendo rápido no chão, mantendo a produtividade total do conjunto em níveis elevados e sustentáveis.</p>`
+        },
+        {
+            day: 70,
+            title: 'Feijão: Formação de Vagens e Enchimento',
+            desc: 'Água e nutrientes para grãos perfeitos.',
+            guide: `<h3>🫘 Energia Escalonada: O Momento do Grão</h3><p>Com o feijão em plena floração e início de formação de vagens, a necessidade de água é crítica. A abóbora, cobrindo o solo lá embaixo, ajuda a manter a terra fresca e úmida, protegendo as raízes do feijão. Se o clima estiver muito seco, reforce a irrigação na base. O feijão transforma agora todo o Nitrogênio acumulado em proteína nos grãos. Evite mexer excessivamente na folhagem para não derrubar as flores delicadas. Uma boa florada de feijão dentro da Milpa é sinal de que o equilíbrio entre as três irmãs está funcionando perfeitamente, com luz e sombra na medida certa.</p>`
+        },
+        {
+            day: 100,
+            title: 'Feijão: Colheita de Grãos Secos',
+            desc: 'Colheita final e armazenamento de energia.',
+            guide: `<h3>🫘 O Tesouro Seco da Milpa</h3><p>Colha o feijão quando as vagens estiverem totalmente secas, com aspecto de papelão e os grãos fazendo barulho de chocalho ao serem sacudidos. O milho já terá sido colhido verde ou estará seco, servindo apenas de estaca. Retire as vagens manualmente com cuidado. Colher o feijão seco no pé garante maior durabilidade e melhor sabor para o cozimento. Após a colheita, você pode incorporar os restos culturais (palhada de feijão e milho) ao solo; essa biomassa é riquíssima em matéria orgânica e nutrientes, deixando o canteiro preparado para a próxima cultura com muito mais fertilidade do que no início.</p>`
+        },
+        // Abóbora (5 tarefas)
+        {
+            day: 15,
+            title: 'Abóbora: A Protetora do Solo (Plantio)',
+            desc: 'Cobertura viva para controle de umidade e mato.',
+            guide: `<h3>🎃 Abóbora: A Irmã Protetora</h3><p>Plante as abóboras entre as covas de milho, com espaçamento de 3 a 4 metros. O papel da abóbora no sistema Milpa é agir como um "mulching vivo". Suas folhas gigantes cobrem o solo completamente, impedindo o crescimento de ervas daninhas e mantendo a umidade da terra para o milho e o feijão. Prepare a cova da abóbora com muita matéria orgânica e adubo NPK <b>{{NPK_FORMULA}}</b>. Além da proteção do solo, a abóbora possui pelos espinhosos nos caules que ajudam a repelir pequenos animais e predadores, funcionando como uma cerca viva de proteção para a base do sistema produtivo.</p>`
+        },
+        {
+            day: 30,
+            title: 'Abóbora: Expansão Foliar e Mulching Vivo',
+            desc: 'Gestão de ramos e cobertura total da terra.',
+            guide: `<h3>🌿 Dominando o Andar de Baixo</h3><p>Conforme os ramos (ramas) da abóbora se espalham, direcione-as para que preencham todo o espaço vazio entre o milho e o feijão. A meta é não deixar nenhum pedaço de terra nua exposto ao sol. Isso cria um microclima fresco e úmido na superfície do solo, o que beneficia as raízes superficiais do feijão e do milho. Monitore a saúde das grandes folhas; se notar manchas brancas (Oídio), faça uma aplicação preventiva de calda de leite (10%). O solo coberto pelas folhas da abóbora economiza até 50% de água de irrigação, provando a eficiência hídrica deste sistema milenar.</p>`
+        },
+        {
+            day: 45,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Abóbora: Monitoramento de Brocas e Sanidade',
+            desc: 'Proteção contra danos estruturais nas ramas.',
+            guide: `<h3>🐛 Defesa da Base Alada</h3><p>A broca da rama é o principal inimigo da abóbora. Como ela está no chão, protegida pela sombra, a umidade pode favorecer também o surgimento de caramujos e lesmas. Inspecione a base da planta e as articulações das ramas. A sanidade da abóbora é vital: se as folhas morrerem prematuramente, o solo ficará exposto, o mato nascerá e a umidade subirá, prejudicando o feijão e o milho. Mantenha as ramas sadias para garantir a polinização das grandes flores amarelas que começarão a surgir, atraindo abelhas que beneficiarão indiretamente todas as culturas lindeiras da propriedade.</p>`
+        },
+        {
+            day: 65,
+            title: 'Abóbora: Polinização e Formação de Frutos',
+            desc: 'Fomento aos polinizadores e gestão de flores.',
+            guide: `<h3>🌼 O Festival das Flores Amarelas</h3><p>As flores da abóbora são grandes, ricas em néctar e essenciais para atrair polinizadores para todo o sistema. Se houver pouca atividade de abelhas, realize a polinização manual pela manhã. Com o surgimento dos primeiros frutos, a planta demanda mais Potássio. A abóbora agora atua como uma barreira física final, impedindo qualquer erosão do solo pelas chuvas tardias. Verifique se os frutos não estão em locais com acúmulo de água; se necessário, coloque uma base de palha seca sob o fruto para evitar o apodrecimento da casca em contato com a terra úmida do sistema Milpa.</p>`
+        },
+        {
+            day: 120,
+            title: 'Abóbora: Colheita Final e Cura ao Sol',
+            desc: 'Colheita dos frutos duráveis e finalização do ciclo.',
+            guide: `<h3>🎃 O Tesouro Final: Colheita e Cura</h3><p>A abóbora é a última a ser colhida no sistema Milpa. Colha os frutos quando o pedúnculo (talo) estiver seco e com aspecto de cortiça. O milho e o feijão já terão sido colhidos, sobrando apenas a palhada seca sobre as abóboras maduras. Deixe os frutos no sol por alguns dias para a cura da casca; isso as torna extremamente duráveis (até 6 meses). A Milpa completa seu ciclo entregando três tipos diferentes de alimentos (carboidrato do milho, proteína do feijão e vitaminas/fibras da abóbora), tudo cultivado no mesmo metro quadrado com eficiência e equilíbrio biológico total.</p>`
+        }
+    ],
+
+    consorcio_aromatico: [
+        // Tomate (5 tarefas)
+        {
+            day: 0,
+            title: 'Tomate: Plantio e Base Nutricional',
+            desc: 'O rei da horta com foco em cálcio e fósforo.',
+            guide: `<h3>🍅 Tomateiro: O Centro das Atenções</h3><p>Nesse consórcio clássico, o tomate é o foco principal. Prepare a cova com <b>{{NPK_GM2}}g</b> de NPK e realize a calagem com <b>{{CALC_GM2}}g/m²</b> de calcário semanas antes para prevenir a "podridão apical". O tomateiro servirá de barreira de luz para o manjericão lá embaixo. Mantenha o solo profundo e solto; o tomateiro exige solo bem drenado para evitar doenças radiculares que podem contaminar também o manjericão vizinho. O uso de matéria orgânica curtida é o segredo para frutos saborosos e com durabilidade pós-colheita.</p>`
+        },
+        {
+            day: 15,
+            title: 'Tomate: Tutoramento e Suporte Vertical',
+            desc: 'Manutenção da estrutura aérea.',
+            guide: `<h3>🪵 Subida Estruturada: Estacas e Fitilhos</h3><p>Amarre o tomateiro verticalmente com estacas ou fitilhos. Isso é vital para liberar o espaço do solo para o manjericão crescer sem ser esmagado pelas ramas do tomate. O tutoramento melhora a ventilação do sistema consorciado, reduzindo em 70% o risco de fungos foliares. Use nós largos para não "enforcar" o caule do tomate que engrosse rápido. Uma planta bem conduzida distribui melhor a fotossíntese por toda a massa foliar, resultando em tomates maiores e manjericões mais cheirosos logo abaixo de sua sombra parcial benefíca.</p>`
+        },
+        {
+            day: 25,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Tomate: Poda de Manejo (Desbrota)',
+            desc: 'Eliminação de brotos laterais para vigor.',
+            guide: `<h3>✂️ Limpeza e Concentração de Energia</h3><p>Retire semanalmente os brotos axilares ("chupões") do tomateiro. Isso garante que a energia da planta seja canalizada para os frutos e não para folhagem lateral excessiva. A poda lateral também permite que o manjericão receba a luminosidade difusa necessária para produzir óleos essenciais. Mantendo o tomateiro com haste única, você facilita a aplicação de tratamentos biológicos em ambas as culturas e garante uma colheita escalonada e de alta qualidade estética e sanitária.</p>`
+        },
+        {
+            day: 50,
+            title: 'Tomate: Suplementação de Potássio e Sabor',
+            desc: 'Foco no brilho e na doçura do fruto.',
+            guide: `<h3>✨ Potássio: O Segredo do Tomate Doce</h3><p>Com o início da maturação dos primeiros cachos, a demanda por Potássio (K) dispara. O Potássio é o nutriente que transporta o açúcar da folha para o fruto. O manjericão, sendo uma erva mediterrânea, também adora solos bem nutridos com minerais. Aplique o adubo em círculo, longe do caule. O K garante frutos vermelhos, brilhantes e carnudos. Note que a parceria com o manjericão ajuda a repelir pragas como a mosca branca, permitindo que o tomateiro foque 100% da sua força no enchimento dos frutos sem o estresse de ataques constantes.</p>`
+        },
+        {
+            day: 80,
+            title: 'Tomate: Colheita de Frutos de Ciclo Completo',
+            desc: 'O ápice do sabor e da produtividade.',
+            guide: `<h3>🥗 Ponto de Maturação: Colheita no Pé</h3><p>Colha os tomates quando atingirem a cor vermelha intensa, no auge da maturação fisiológica. Tomates colhidos maduros no pé possuem até 3x mais aroma do que os de supermercado. O manjericão vizinho estará no ponto máximo de perfume agora, prontos para a famosa combinação culinária. Use tesouras de colheita para não abalar as estacas. O sistema consorciado prova aqui sua eficácia: você obteve proteção contra pragas e aproveitamento máximo de espaço, entregando dois ingredientes essenciais para a gastronomia de elite em um único canteiro.</p>`
+        },
+        // Manjericão (5 tarefas)
+        {
+            day: 7,
+            title: 'Manjericão: O Escudo Aromático (Plantio)',
+            desc: 'Barreira química contra pragas do tomate.',
+            guide: `<h3>🌿 Manjericão: O Guarda-Costas do Tomate</h3><p>Plante o manjericão nas entrelinhas do tomateiro, a cerca de 15-20cm de distância. O manjericão exala odores fortes que confundem os sensores das pragas (como pulgões e tripes) que buscam o tomateiro pelo cheiro. Em troca, o tomateiro oferece a sombra parcial que o manjericão adora nos horários de pico de sol. Esta é a parceria perfeita: "um protege o outro". Prepare o solo com muito húmus de minhoca; o manjericão adora fertilidade orgânica para produzir folhas largas e extremamente perfumadas desde a primeira semana de campo.</p>`
+        },
+        {
+            day: 20,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Manjericão: Poda de Floração e Vigor',
+            desc: 'Manutenção da massa foliar e aroma.',
+            guide: `<h3>✂️ O Segredo da Longevidade: Sem Flores!</h3><p>Não permita que o manjericão floresça durante o consórcio. Assim que surgirem os botões florais no topo, "belisque-os" (corte com a unha ou tesoura). Isso força a planta a continuar produzindo ramos laterais e folhas em vez de sementes. O manjericão podado torna-se um arbusto denso, aumentando sua eficiência como repelente natural para o tomateiro. Além disso, a poda frequente mantém o sabor das folhas doce e intenso; folhas de plantas que já floriram tendem a ficar amargas e lenhosas, perdendo seu valor culinário e aromático.</p>`
+        },
+        {
+            day: 35,
+            title: 'Manjericão: Monitoramento Foliar e Sanidade',
+            desc: 'Gestão de luz e prevenção de fungos.',
+            guide: `<h3>🍃 Perfume na Mão e Vigilância no Olho</h3><p>Com o crescimento do tomateiro acima dele, o manjericão pode sofrer com o abafamento. Verifique semanalmente se não há fungos (mofo branco) na parte inferior das folhas. O aroma intenso do manjericão é um bioindicador de saúde: se o cheiro estiver fraco, a planta pode estar precisando de mais luz ou menos água superficial. O manjericão gosta de "pés frescos" mas "cabeça quente". Mantenha o canteiro livre de folhas velhas que caem do tomateiro sobre ele, garantindo a higiene total deste ecossistema aromático de alta performance.</p>`
+        },
+        {
+            day: 60,
+            title: 'Manjericão: Colheita Técnica de Ramos',
+            desc: 'Produção contínua e fomento à rebrota.',
+            guide: `<h3>🔪 Colheita e Pesto: A Arte do Corte</h3><p>Inicie a colheita dos ramos superiores do manjericão quando as ramas atingirem 15cm. Sempre colha acima de um par de folhas; isso estimula o surgimento de dois novos ramos no local do corte (lei da hidra). O manjericão colhido neste momento está carregado de óleos essenciais, sendo ideal para molhos e infusões. A planta continuará produzindo até que o tomateiro finalize seu ciclo. O manjericão é tão generoso que você pode colher até 1/3 da planta por vez sem comprometer seu vigor, mantendo a proteção química do consórcio sempre ativa e renovada.</p>`
+        },
+        {
+            day: 80,
+            title: 'Manjericão: Colheita Final e Renovação',
+            desc: 'Finalização da parceria aromática.',
+            guide: `<h3>🥗 Dupla Imbatível na Mesa</h3><p>Ao final da safra de tomate, realize a colheita total do manjericão. As raízes do manjericão terão deixado o solo mais poroso e rico em microrganismos. O consórcio entre tomate e manjericão não é apenas culinário; é um exemplo de agricultura sinérgica onde o resultado final é maior que a soma das partes. O solo remanescente estará riquíssimo em matéria orgânica, pronto para receber uma cultura de raízes (como cenoura ou beterraba) na próxima estação, aproveitando o "descanso" dado pelo sistema aromático.</p>`
+        }
+    ],
+
+    consorcio_canteiro: [
+        // Alface (5 tarefas)
+        {
+            day: 15,
+            title: 'Alface: Transplantio e Cobertura Rápida',
+            desc: 'Ocupando o espaço vago entre as linhas da cenoura.',
+            guide: `<h3>🥬 Alface: A Velocista do Canteiro</h3><p>No consórcio de canteiro, a alface é plantada 15 dias após a cenoura para ganhar espaço enquanto a "irmã lenta" ainda é pequena. Transplantar mudas de alface entre as linhas de cenoura garante o aproveitamento de 100% da área e ajuda a sombrear o solo precocemente, reduzindo o crescimento do mato. A alface colherá os benefícios da adubação nitrogenada de base e agirá como um protetor térmico para o solo radicular da cenoura. O espaçamento deve ser calculado para que a alface seja colhida exatamente quando suas folhas começarem a encostar na cenoura, liberando o espaço no momento crítico.</p>`
+        },
+        {
+            day: 25,
+            title: 'Alface: Nutrição Foliar e Vigor Instantâneo',
+            desc: 'Apostando no crescimento vegetativo rápido.',
+            guide: `<h3>✨ Explosão Verde: Energia Extra</h3><p>Aplique Nitrogênio foliar ou fertirrigação na alface para que ela feche o dossel o mais rápido possível. A alface tem a missão de "pagar o aluguel" do canteiro mais cedo. Com <b>{{NPK_GM2}}g/m²</b> de nutrição bem aplicada, a alface crescerá suculenta e doce. A cenoura abaixo se beneficiará da umidade residual das regas da alface. Monitore a cor das folhas; alface amarela indica que a cenoura e ela estão competindo demais por Nitrogênio, exigindo uma reposição orgânica rápida para manter o vigor de ambas as culturas consorciadas no canteiro planejado.</p>`
+        },
+        {
+            day: 35,
+            type: 'routine',
+            freq: 'weekly',
+            title: 'Alface: Irrigação Local e Refresco Térmico',
+            desc: 'Hidratação constante para evitar o amargor.',
+            guide: `<h3>💧 Sede de Alface: O Motor da Crocância</h3><p>Mantenha o canteiro sempre úmido. Se a terra secar, a alface amarga e solta o pendão de flores precocemente, impossibilitando a colheita. A rega constante da alface é crucial para a cenoura também, que precisa de solo fofo e úmido para as raízes descerem retas. O consórcio otimiza a água: o que você regaria para uma só planta agora alimenta duas. Evite regas bruscas que possam enterrar as pequenas folhagens da cenoura sob a lama; prefira o sistema de microaspersão ou gotejamento na entrelinha das folhosas dominantes.</p>`
+        },
+        {
+            day: 45,
+            title: 'Alface: Colheita Antecipada e Gestão de Espaço',
+            desc: 'Liberando o sol para a cenoura crescer.',
+            guide: `<h3>🥗 Missão Cumprida: Abrindo o Canteiro</h3><p>Colha a alface assim que ela atingir o tamanho comercial. Não deixe a alface ficar velha no consórcio, pois nesse ponto ela começará a sombrear demais a cenoura e roubar todo o Potássio do solo. Ao retirar a alface, você "abre as cortinas" de sol para a cenoura, que agora terá 100% da luminosidade para realizar a fotossíntese final e engrossar a raiz. A retirada da alface deve ser cirúrgica, cortando no colo para não abalar as raízes vizinhas da cenoura que estão em pleno desenvolvimento subterrâneo.</p>`
+        },
+        {
+            day: 50,
+            title: 'Alface: Pós-Colheita e Limpeza Radicular',
+            desc: 'Organização sanitária do canteiro para a vizinha.',
+            guide: `<h3>🧹 Limpando o Terreno para a Cenoura</h3><p>Após colher as alfaces, limpe o canteiro retirando restos de folhas velhas que ficaram no chão. Esses restos podem atrair fungos e pragas (como tripes) que atacariam a cenoura remanescente. Com a saída da alface, a cenoura entra na sua fase de "explosão radial". O solo, que foi mantido úmido e fofo pela sombra da alface, agora é o berço perfeito para a cenoura atingir o diâmetro ideal de mercado. A economia de espaço aqui resultou em duas colheitas no tempo de uma, maximizando a rentabilidade da sua horta doméstica ou comercial.</p>`
+        },
+        // Cenoura (5 tarefas)
+        {
+            day: 0,
+            title: 'Cenoura: Semeadura Profunda e Preparo Físico',
+            desc: 'Início lento da raiz que dominara o canteiro.',
+            guide: `<h3>🥕 Cenoura: O Começo Silencioso</h3><p>Semeie a cenoura em linhas profundas com solo extremamente destorroado. Revire a terra até 30cm para que a raiz possa descer sem obstáculos pedregosos. Use <b>{{CALC_GM2}}g/m²</b> de calcário e <b>{{NPK_GM2}}g/m²</b> de P2O5 (Fóforo) na base. A cenoura nasce devagar (até 15 dias), por isso o consórcio com a alface (que vem 15 dias depois) é ideal para ocupar o solo "vazio". A semente da cenoura deve ser coberta por apenas 1cm de terra fina. Este é o alicerce do sistema: solo macio e quimicamente equilibrado para garantir raízes retas e sem bifurcações deformantes.</p>`
+        },
+        {
+            day: 10,
+            title: 'Cenoura: Germinação e Umidade Crítica',
+            desc: 'Gestão da crosta do solo para nascimento uniforme.',
+            guide: `<h3>🌱 A Primeira Folha de Agulha</h3><p>O momento da germinação da cenoura é o mais frágil. Qualquer secamento da camada superficial do solo criará uma "crosta" dura que impedirá o nascimento das plantinhas. Mantenha o canteiro sempre com aspecto de terra escura e úmida. O nascimento uniforme garante que você não terá espaços vazios no canteiro. Logo após as primeiras cenouras surgirem, você estará pronto para introduzir a alface, que agirá como protetora do solo. Inspecione se há pequenos insetos de solo (grilos) que podem cortar as plântulas recém-nascidas, destruindo o stand inicial da lavoura.</p>`
+        },
+        {
+            day: 25,
+            title: 'Cenoura: Desbaste Estratégico (Raleio)',
+            desc: 'Dando espaço vital para a raiz engrossar.',
+            guide: `<h3>✂️ Deixando Apenas as Campeãs</h3><p>Realize o raleio das cenouras, deixando um espaçamento de 5 a 8cm entre as plantas. Se as cenouras crescerem amontoadas, elas se entrelaçarão e ficarão finas como "dedos". O desbaste deve ser feito quando as plantas tiverem 5cm de altura. A alface vizinha estará crescendo rápido agora e ajudará a esconder as raízes de cenoura que ficaram expostas no raleio. **Dica:** Não tente replantar a cenoura arrancada, ela não pegará bem. Use as cenourinhas do raleio como "baby beets" em saladas; elas são deliciosas e ricas em vitaminas e nutrientes concentrados do início do ciclo.</p>`
+        },
+        {
+            day: 60,
+            title: 'Cenoura: Adubação de Enchimento (Potássio)',
+            desc: 'Apostando na cor e doçura após a saída da alface.',
+            guide: `<h3>🥕 Raiz Laranja e Doce: O Poder do K</h3><p>Agora que as alfaces foram colhidas, a cenoura tem todo o canteiro e todo o sol para si. Aplique uma cobertura rica em Potássio (K). O Potássio é o nutriente que dá a cor laranja intensa e o sabor adocicado à cenoura. Sem concorrência, a folhagem da cenoura agora cresce livre. Mantenha a umidade constante; se o solo secar agora e você regar demais depois, as cenouras podem rachar (splitting). A cenoura bem nutrida com Potássio terá uma casca lisa e brilhante, indicando qualidade superior para o consumo final da família ou venda.</p>`
+        },
+        {
+            day: 90,
+            title: 'Cenoura: Colheita Final e Raízes de Ouro',
+            desc: 'Ouro debaixo da terra: a recompensa do consórcio.',
+            guide: `<h3>🥕 Colheita de Sucesso e Solo Renovado</h3><p>Colha as cenouras quando atingirem o diâmetro de 3 a 5cm no "ombro" (perto da folha). O solo, que foi intensamente trabalhado para ser fofo e protegido pela alface no início, entregará raízes longas, retas e extremamente doces. A colheita final do consórcio canteiro marca o fim de um ciclo de alta eficiência. O solo restante estará em excelente condição física para uma próxima cultura de folhosas. A satisfação de retirar cenouras perfeitas da terra é a prova de que o manejo consorciado respeita a biologia do solo e maximiza a produtividade natural da área.</p>`
+        }
     ]
 };
 
